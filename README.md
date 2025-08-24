@@ -52,6 +52,7 @@ Storybookは[http://localhost:6006](http://localhost:6006)で起動します。
 - **Tailwind CSS 4** - スタイリング
 - **shadcn/ui** - UIコンポーネント
 - **Storybook** - コンポーネント開発・ドキュメント
+- **i18n対応準備** - 日本語/英語/ポルトガル語対応予定
 - **Prettier** - コードフォーマッター
 - **ESLint** - コード品質
 - **Docker** - 開発環境の統一
