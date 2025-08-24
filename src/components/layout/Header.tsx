@@ -31,7 +31,7 @@ export function Header() {
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 py-4 flex items-center justify-center relative">
         <Link href="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
-          Y-Plaza Unofficial
+          you-plaza 出雲 非公式サイト
         </Link>
         
         <div className="absolute right-0 flex items-center space-x-4">
