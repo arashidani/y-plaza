@@ -1,16 +1,21 @@
-// 将来的な国際化対応のための準備ファイル
+import { SUPPORTED_LOCALES, type Locale } from '@/constants/locales';
 
-export const locales = ['ja', 'en', 'pt'] as const;
-export type Locale = (typeof locales)[number];
+/**
+ * 国際化対応のユーティリティ関数
+ */
 
-export const defaultLocale: Locale = 'ja';
-
-// ロケール判定関数（将来的にnext-intlで置き換え）
+/**
+ * 指定された文字列が有効なロケールかどうかを判定
+ * @param locale 判定する文字列
+ * @returns 有効なロケールの場合true
+ */
 export function isValidLocale(locale: string): locale is Locale {
-  return locales.includes(locale as Locale);
+  return SUPPORTED_LOCALES.includes(locale as Locale);
 }
 
-// 現在は日本語固定
-export function getCurrentLocale(): Locale {
-  return defaultLocale;
-}
+// Re-export constants for backward compatibility
+export { SUPPORTED_LOCALES as locales } from '@/constants/locales';
+export { LOCALE_DISPLAY_NAMES as localeNames } from '@/constants/locales';
+export { LOCALE_FLAG_CODES as localeFlagCodes } from '@/constants/locales';
+export { DEFAULT_LOCALE as defaultLocale } from '@/constants/locales';
+export type { Locale } from '@/constants/locales';
