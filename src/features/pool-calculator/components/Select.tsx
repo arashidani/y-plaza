@@ -10,7 +10,7 @@ export function Select<T extends string>({ value, onChange, options, className }
     <select 
       value={value} 
       onChange={(e) => onChange(e.target.value as T)} 
-      className={"w-full rounded border px-2 py-1 text-sm " + (className ?? "")}
+      className={'w-full rounded border px-2 py-1 text-sm ' + (className ?? '')}
     > 
       {options.map((o) => (
         <option key={o.value} value={o.value}>
@@ -18,5 +18,5 @@ export function Select<T extends string>({ value, onChange, options, className }
         </option>
       ))}
     </select>
-  );
+  )
 }

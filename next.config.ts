@@ -1,7 +1,7 @@
-import type { NextConfig } from "next";
-import createNextIntlPlugin from 'next-intl/plugin';
+import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -16,6 +16,6 @@ const nextConfig: NextConfig = {
       return config
     },
   }),
-};
+}
 
-export default withNextIntl(nextConfig);
+export default withNextIntl(nextConfig)

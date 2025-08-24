@@ -23,5 +23,5 @@ export function webAppJsonLd() {
     inLanguage: ['ja', 'en', 'pt'],
     // TODO: キーワードを設定
     keywords: '',
-  };
+  }
 }

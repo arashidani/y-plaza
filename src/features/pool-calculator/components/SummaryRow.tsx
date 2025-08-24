@@ -1,4 +1,4 @@
-import { YenMono } from './YenMono';
+import { YenMono } from './YenMono'
 
 interface SummaryRowProps {
   label: string;
@@ -11,5 +11,5 @@ export function SummaryRow({ label, value }: SummaryRowProps) {
       <span className="col-span-3">{label}</span>
       <YenMono value={value} className="w-28 font-medium" />
     </div>
-  );
+  )
 }
