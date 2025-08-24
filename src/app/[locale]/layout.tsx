@@ -4,7 +4,13 @@ import { LayoutClient } from '@/components/layout/LayoutClient';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { webAppJsonLd } from '@/lib/jsonLd';
+import { setRequestLocale } from "next-intl/server";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 import './globals.css';
+
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -42,13 +48,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  // SSG対応
+  setRequestLocale(locale);
+
+  // 言語ファイルの読み込み
+  const messages = await getMessages();
+
+
   return (
-    <LayoutClient>
+    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -57,11 +79,15 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="antialiased min-h-screen flex flex-col">
+        <NextIntlClientProvider messages={messages}>
+          <LayoutClient locale={locale}>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </LayoutClient>
+        </NextIntlClientProvider>
       </body>
-    </LayoutClient>
+    </html>
   );
 }

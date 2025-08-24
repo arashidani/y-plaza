@@ -1,0 +1,32 @@
+{
+  "header": {
+    "home": "Início",
+    "about": "Sobre",
+    "services": "Serviços",
+    "contact": "Contato",
+    "language": "Idioma"
+  },
+  "footer": {
+    "copyright": "© 2025 Y Plaza. Todos os direitos reservados.",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro",
+    "retry": "Tentar novamente",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior"
+  },
+  "meta": {
+    "title": "Y Plaza - Plataforma Abrangente",
+    "description": "Y Plaza é uma plataforma abrangente que suporta seu negócio.",
+    "keywords": "plataforma, negócios, serviços"
+  }
+}

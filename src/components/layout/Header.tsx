@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import {
   Select,
   SelectContent,
@@ -10,20 +9,21 @@ import {
 } from '@/components/ui/select';
 import { type Locale } from '@/constants/locales';
 import { locales, localeNames, localeFlagCodes } from '@/lib/i18n';
-import { useLanguageStore } from '@/store/languageStore';
 import { Globe } from 'lucide-react';
 import ReactCountryFlag from 'react-country-flag';
-import Link from 'next/link';
+import { Link, useRouter, usePathname } from '@/i18n/routing';
+import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export function Header() {
-  const { currentLocale, setLocale, initializeLocale } = useLanguageStore();
-
-  useEffect(() => {
-    initializeLocale();
-  }, [initializeLocale]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams();
+  const currentLocale = params.locale as Locale;
+  const t = useTranslations('header');
 
   const handleLanguageChange = (value: Locale) => {
-    setLocale(value);
+    router.push(pathname, { locale: value });
   };
 
   return (
@@ -38,7 +38,7 @@ export function Header() {
             <Globe className="h-4 w-4 text-muted-foreground" />
             <Select value={currentLocale} onValueChange={handleLanguageChange}>
               <SelectTrigger className="w-36">
-                <SelectValue placeholder="言語選択">
+                <SelectValue placeholder={t('language')}>
                   <div className="flex items-center gap-2">
                     <ReactCountryFlag
                       countryCode={localeFlagCodes[currentLocale]}

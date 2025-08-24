@@ -1,0 +1,32 @@
+{
+  "header": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "footer": {
+    "copyright": "© 2025 Y Plaza. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "meta": {
+    "title": "Y Plaza - Comprehensive Platform",
+    "description": "Y Plaza is a comprehensive platform that supports your business.",
+    "keywords": "platform, business, services"
+  }
+}

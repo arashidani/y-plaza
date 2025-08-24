@@ -1,17 +1,15 @@
 'use client';
 
-import { useLanguageStore } from '@/store/languageStore';
-
 interface LayoutClientProps {
   children: React.ReactNode;
+  locale?: string;
 }
 
-export function LayoutClient({ children }: LayoutClientProps) {
-  const { currentLocale } = useLanguageStore();
+export function LayoutClient({ children,locale }: LayoutClientProps) {
 
   return (
-    <html lang={currentLocale}>
+    <>
       {children}
-    </html>
+    </>
   );
 }
