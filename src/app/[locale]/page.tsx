@@ -5,13 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import type { LineType } from '@/features/pool-calculator/models/types';
-import { LOCKER_PER_USE } from '@/features/pool-calculator/models/pricing';
 import { usePoolCalculator } from '@/features/pool-calculator/hooks/usePoolCalculator';
 import { LineEditor } from '@/features/pool-calculator/components/LineEditor';
 import { Section } from '@/features/pool-calculator/components/Section';
 import { SummaryRow } from '@/features/pool-calculator/components/SummaryRow';
 import { YenMono } from '@/features/pool-calculator/components/YenMono';
 import { useTranslations } from 'next-intl';
+import Link from "next/link";
 
 export default function PoolCalculatorPage() {
   const t = useTranslations();
@@ -139,9 +139,9 @@ export default function PoolCalculatorPage() {
               {' '}
               {
                 t.rich('poolCalculator.note.lockerDetail', {
-                  price: 100,                         // 置換パラメータは値でOK
-                  br: () => <br />,                   // タグは “() => <要素>”
-                  link: (chunks) => <a href="/locker">{chunks}</a>
+                  price: 100,
+                  br: () => <br />,
+                  link: (chunks) => <Link href="/locker">{chunks}</Link>
                 })
               }
             </li>

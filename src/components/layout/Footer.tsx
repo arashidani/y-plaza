@@ -4,7 +4,6 @@ import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
   const t = useTranslations('footer');
 
   return (

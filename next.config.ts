@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   
   // Docker環境でのホットリロード対応
   ...(process.env.NODE_ENV === 'development' && {
-    webpack: (config: any) => {
+    webpack: (config: import('webpack').Configuration) => {
       config.watchOptions = {
         poll: 1000,
         aggregateTimeout: 300,

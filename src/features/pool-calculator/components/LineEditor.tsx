@@ -162,7 +162,7 @@ const LINE_TYPE_LABELS = {
                               onChange({ ...line, entries: newEntries });
                             }}
                           />
-                          <span className="text-xs">{useTranslations("poolCalculator")("disabledDiscount")}</span>
+                          <span className="text-xs">{tCommon("disabledDiscount")}</span>
                         </label>
                       </div>
 
@@ -343,7 +343,7 @@ const LINE_TYPE_LABELS = {
                     onChange({ ...line, disabledDiscount: e.target.checked })
                   }
                 />
-                <span>{useTranslations("poolCalculator")("disabledDiscount")}</span>
+                <span>{tCommon("disabledDiscount")}</span>
               </label>
               <div className="flex items-center gap-2">
                 <span className="text-sm">{tCommon("units")}</span>
