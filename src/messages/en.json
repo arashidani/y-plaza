@@ -58,7 +58,7 @@
     "notes": "Notes",
     "note": {
       "lockerTitle": "About Locker:",
-      "lockerDetail": "A changing room locker ({price}/each) is required when using the pool. It can be shared by about 2 people, but due to the changing space, it cannot be shared by 3 or more.",
+      "lockerDetail": "A changing room locker ({price} yen/each) is required when using the pool. It can be shared by about 2 people, but due to the changing space, it cannot be shared by 3 or more.",
       "discount": "Disability discount: half price for admission and membership (rounded down). Equipment is regular price.",
       "coupon": "Coupon book: Only the purchase price for a book of 11 tickets is calculated (not the number of uses).",
       "family": "Special categories such as family members of members are not supported."
