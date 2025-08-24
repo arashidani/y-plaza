@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { getCurrentLocale } from '@/lib/i18n';
+import { LayoutClient } from '@/components/layout/LayoutClient';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
 import './globals.css';
 
 const geistSans = Geist({
@@ -39,11 +41,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = getCurrentLocale();
-
   return (
-    <html lang={locale}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
-    </html>
+    <LayoutClient>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </body>
+    </LayoutClient>
   );
 }
