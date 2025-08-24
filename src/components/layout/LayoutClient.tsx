@@ -2,10 +2,9 @@
 
 interface LayoutClientProps {
   children: React.ReactNode;
-  locale?: string;
 }
 
-export function LayoutClient({ children,locale }: LayoutClientProps) {
+export function LayoutClient({ children }: LayoutClientProps) {
 
   return (
     <>
