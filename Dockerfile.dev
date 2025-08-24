@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+# pnpmをインストール
+RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
+
+# 作業ディレクトリを設定
+WORKDIR /app
+
+# 依存関係ファイルのみコピー
+COPY package.json pnpm-lock.yaml ./
+
+# 依存関係をインストール
+RUN pnpm install --force
+
+# ポート3000を公開
+EXPOSE 3000
+
+# 開発サーバーを起動（ホストのファイルをマウント）
+CMD ["pnpm", "dev"]

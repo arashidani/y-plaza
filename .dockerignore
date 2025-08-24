@@ -1,0 +1,46 @@
+# 依存関係
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+
+# 本番用ビルド
+/build
+
+# 環境変数
+.env*.local
+.env
+
+# ログ
+*.log
+
+# ランタイム
+.pids
+*.pid
+*.seed
+*.pid.lock
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# README
+README.md
