@@ -1,5 +1,6 @@
 {
   "header": {
+    "title": "You Plaza Izumo Unofficial Site",
     "home": "Home",
     "about": "About",
     "services": "Services",
@@ -28,5 +29,78 @@
     "title": "Y Plaza - Comprehensive Platform",
     "description": "Y Plaza is a comprehensive platform that supports your business.",
     "keywords": "platform, business, services"
+  },
+  "poolCalculator": {
+    "title": "Pool Fee Calculator",
+    "publicInfoLink": "Public Info",
+    "publicInfoNote": "This is a trial calculation tool based on public information. Please check the latest facility information for the final amount.",
+    "type": {
+      "pool": "Pool",
+      "gym": "Gym",
+      "locker": "Locker",
+      "membership": "Membership",
+      "coupon": "Coupon Book"
+    },
+    "clearAll": "Clear All",
+    "lockerRequired": "Locker is required when using the pool",
+    "lockerShareNote": "Locker can be shared by about 2 people, but not by 3 or more due to space.",
+    "addLocker": "Add Locker",
+    "noRows": "No rows. Please select an item from the checkboxes above.",
+    "breakdown": "Breakdown",
+    "subtotal": {
+      "pool": "Pool Fee Subtotal",
+      "locker": "Locker Subtotal",
+      "gym": "Gym Subtotal",
+      "membership": "Membership Subtotal",
+      "coupon": "Coupon Book Subtotal"
+    },
+    "total": "Total",
+    "notes": "Notes",
+    "note": {
+      "lockerTitle": "About Locker:",
+      "lockerDetail": "A changing room locker ({price}/each) is required when using the pool. It can be shared by about 2 people, but due to the changing space, it cannot be shared by 3 or more.",
+      "discount": "Disability discount: half price for admission and membership (rounded down). Equipment is regular price.",
+      "coupon": "Coupon book: Only the purchase price for a book of 11 tickets is calculated (not the number of uses).",
+      "family": "Special categories such as family members of members are not supported."
+    },
+    "footer": "*This is an unofficial reference tool. Please check the official facility information for the latest fees and conditions.",
+    "disabledDiscount": "Disability Discount",
+    "category": {
+      "adult": "Adult",
+      "senior": "Senior (65+)",
+      "student": "Elementary, Junior High & High School Student",
+      "preschool3plus": "Preschool (3+)",
+      "under2": "Under 2",
+      "companion_student_adult": "Adult with student (3–18)",
+      "companion_senior_adult": "Adult with senior"
+    },
+    "tariff": {
+      "season_9_6": "Sep–Jun",
+      "season_7_8": "Jul–Aug",
+      "evening": "Evening (after 5pm)",
+      "group": "Group (20+)"
+    },
+    "duration": {
+      "30d": "30 days",
+      "6m": "Half year",
+      "1y": "1 year"
+    },
+    "people": "People",
+    "entryFeeOnly": "Entry fee only",
+    "deleteRow": "Delete row",
+    "addCategory": "Add category",
+    "groupTariffWarning": "Group rates apply for a total of 20 or more people (currently: {count})",
+    "groupTariffSuggest": "For 20 or more people, please select the group rate (20+)",
+    "memberOrPoolUser": "Member or pool user (free)",
+    "adult": "Adult",
+    "student": "Student",
+    "gymNote": "※Use is limited to 1 hour",
+    "gymFreeNote": "Free for pool users and members",
+    "lockerCount": "Number of lockers",
+    "lockerUnit": "per locker",
+    "units": "Units",
+    "books": "Books",
+    "couponBookNote": "1 book = 11 tickets",
+    "peopleUnit": "people"
   }
 }

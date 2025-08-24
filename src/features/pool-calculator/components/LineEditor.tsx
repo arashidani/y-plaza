@@ -10,7 +10,7 @@ import type {
   Tariff,
   MembershipDuration,
 } from "../models/types";
-import { CATEGORY_LABEL, TARIFF_LABEL, DURATION_LABEL } from "../models/labels";
+import { useCategoryLabel, useTariffLabel, useDurationLabel } from "../models/labels";
 import { LOCKER_PER_USE } from "../models/pricing";
 import {
   calcLineTotal,
@@ -20,14 +20,9 @@ import {
 import { YenMono } from "./YenMono";
 import { NumberInput } from "./NumberInput";
 import { Select } from "./Select";
+import { useTranslations } from "next-intl";
 
-const LINE_TYPE_LABELS = {
-  pool: "プール",
-  gym: "ジム",
-  locker: "ロッカー",
-  membership: "会員券",
-  coupon: "回数券",
-} as const;
+
 
 // 金額列の共通クラス（幅固定＋右寄せ＋等幅数字）
 const AMOUNT_COL = "w-28 sm:w-32 justify-self-end text-right tabular-nums";
@@ -45,6 +40,22 @@ export function LineEditor({
   onDelete,
   hasPoolUserOrMember = false,
 }: LineEditorProps) {
+const TARIFF_LABEL = useTariffLabel();
+const CATEGORY_LABEL = useCategoryLabel();
+const DURATION_LABEL = useDurationLabel();
+
+const t = useTranslations("poolCalculator.type");
+const tCommon = useTranslations("poolCalculator");
+
+
+const LINE_TYPE_LABELS = {
+    pool: t("pool"),
+    gym: t("gym"),
+    locker: t("locker"),
+    membership: t("membership"),
+    coupon: t("coupon"),
+} as const;
+
   const total = calcLineTotal(line);
 
   return (
@@ -123,7 +134,7 @@ export function LineEditor({
 
                       <div className="flex flex-wrap items-center gap-3">
                         <div className="flex items-center gap-1">
-                          <span className="text-sm">人数:</span>
+                          <span className="text-sm">{tCommon("people")}</span>
                           <NumberInput
                             value={entry.count}
                             min={line.tariff === "group" ? 20 : 1}
@@ -151,7 +162,7 @@ export function LineEditor({
                               onChange({ ...line, entries: newEntries });
                             }}
                           />
-                          <span className="text-xs">障害者割引</span>
+                          <span className="text-xs">{useTranslations("poolCalculator")("disabledDiscount")}</span>
                         </label>
                       </div>
 
@@ -161,7 +172,7 @@ export function LineEditor({
                           className="text-sm font-medium tabular-nums"
                         />
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                          入場料のみ
+                            {tCommon("entryFeeOnly")}
                         </div>
                       </div>
 
@@ -178,7 +189,7 @@ export function LineEditor({
                               onChange({ ...line, entries: newEntries });
                             }}
                           >
-                            行を削除
+                            {tCommon("deleteRow", { defaultValue: "行を削除" })}
                           </Button>
                         </div>
                       )}
@@ -204,21 +215,23 @@ export function LineEditor({
                     onChange({ ...line, entries: [...line.entries, newEntry] });
                   }}
                 >
-                  + カテゴリ追加
+                  {tCommon("addCategory", { defaultValue: "カテゴリ追加" })}
                 </Button>
 
                 {line.tariff === "group" &&
                   line.entries.reduce((s, e) => s + e.count, 0) < 20 && (
                     <div className="text-xs text-red-600">
-                      団体料金は合計20名以上で適用されます（現在:
-                      {line.entries.reduce((s, e) => s + e.count, 0)}名）
+                      {tCommon("groupTariffWarning", {
+                        count: line.entries.reduce((s, e) => s + e.count, 0),
+                        defaultValue: "団体料金は合計20名以上で適用されます（現在:{count}名）"
+                      })}
                     </div>
                   )}
 
                 {line.tariff !== "group" &&
                   line.entries.reduce((s, e) => s + e.count, 0) >= 20 && (
                     <div className="text-xs text-amber-600">
-                      20名以上は団体料金(20名以上)を選択してください
+                      {tCommon("groupTariffSuggest", { defaultValue: "20名以上は団体料金(20名以上)を選択してください" })}
                     </div>
                   )}
               </div>
@@ -236,24 +249,24 @@ export function LineEditor({
                       ? [
                           {
                             value: "member_or_pool_user",
-                            label: "会員・プール利用者（無料）",
+                            label: tCommon("memberOrPoolUser"),
                           },
-                          { value: "adult", label: "大人" },
-                          { value: "student", label: "中・高生" },
+                          { value: "adult", label: tCommon("adult") },
+                          { value: "student", label: tCommon("student") },
                         ]
                       : [
-                          { value: "adult", label: "大人" },
-                          { value: "student", label: "中・高生" },
+                          { value: "adult", label: tCommon("adult") },
+                          { value: "student", label: tCommon("student") },
                           {
                             value: "member_or_pool_user",
-                            label: "会員・プール利用者（無料）",
+                            label: tCommon("memberOrPoolUser"),
                           },
                         ]
                   }
                 />
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm">人数</span>
+                <span className="text-sm">{tCommon("people")}</span>
                 <NumberInput
                   value={line.count}
                   min={1}
@@ -261,10 +274,10 @@ export function LineEditor({
                 />
               </div>
               <div className="sm:col-span-3 text-sm text-gray-600 dark:text-gray-300">
-                ※ご利用は1時間以内
+                {tCommon("gymNote")}
                 {hasPoolUserOrMember && line.who !== "member_or_pool_user" && (
                   <div className="text-xs text-blue-600 dark:text-blue-400">
-                    • プール利用者・会員は無料です
+                    • {tCommon("gymFreeNote")}
                   </div>
                 )}
               </div>
@@ -274,7 +287,7 @@ export function LineEditor({
           {line.type === "locker" && (
             <div className="grid gap-2 sm:grid-cols-3 sm:items-center">
               <div className="flex items-center gap-2">
-                <span className="text-sm">ロッカー数</span>
+                <span className="text-sm">{tCommon("lockerCount")}</span>
                 <NumberInput
                   value={line.count}
                   min={1}
@@ -282,7 +295,7 @@ export function LineEditor({
                 />
               </div>
               <div className="sm:col-span-2 text-sm text-gray-600 dark:text-gray-300">
-                1か所 <YenMono value={LOCKER_PER_USE} />
+                {tCommon("lockerUnit")} <YenMono value={LOCKER_PER_USE} />
               </div>
             </div>
           )}
@@ -330,10 +343,10 @@ export function LineEditor({
                     onChange({ ...line, disabledDiscount: e.target.checked })
                   }
                 />
-                <span>障害者割引</span>
+                <span>{useTranslations("poolCalculator")("disabledDiscount")}</span>
               </label>
               <div className="flex items-center gap-2">
-                <span className="text-sm">口数</span>
+                <span className="text-sm">{tCommon("units")}</span>
                 <NumberInput
                   value={line.count}
                   min={1}
@@ -361,7 +374,7 @@ export function LineEditor({
                 />
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm">冊数</span>
+                <span className="text-sm">{tCommon("books")}</span>
                 <NumberInput
                   value={line.books}
                   min={1}
@@ -369,7 +382,7 @@ export function LineEditor({
                 />
               </div>
               <div className="sm:col-span-3 text-sm text-gray-600 dark:text-gray-300">
-                1冊=11枚綴り
+                {tCommon("couponBookNote")}
               </div>
             </div>
           )}
@@ -380,9 +393,9 @@ export function LineEditor({
           <YenMono value={total} className="text-lg font-bold" />
           {line.type === "pool" && (
             <div className="mt-1 text-xs text-muted-foreground leading-snug">
-              合計{line.entries.reduce((s, e) => s + e.count, 0)}名
+              {tCommon("total")}{line.entries.reduce((s, e) => s + e.count, 0)}{tCommon("peopleUnit")}
               <br />
-              （入場料のみ）
+              （{tCommon("entryFeeOnly")}）
             </div>
           )}
         </div>

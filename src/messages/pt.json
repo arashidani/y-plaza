@@ -1,5 +1,6 @@
 {
   "header": {
+    "title": "you-plaza Izumo Site Não Oficial",
     "home": "Início",
     "about": "Sobre",
     "services": "Serviços",
@@ -28,5 +29,78 @@
     "title": "Y Plaza - Plataforma Abrangente",
     "description": "Y Plaza é uma plataforma abrangente que suporta seu negócio.",
     "keywords": "plataforma, negócios, serviços"
+  },
+  "poolCalculator": {
+    "title": "Calculadora de Taxas da Piscina",
+    "publicInfoLink": "Informação Pública",
+    "publicInfoNote": "Esta é uma ferramenta de cálculo baseada em informações públicas. Verifique as informações oficiais da instalação para o valor final.",
+    "type": {
+      "pool": "Piscina",
+      "gym": "Academia",
+      "locker": "Armário",
+      "membership": "Associação",
+      "coupon": "Talão de Cupons"
+    },
+    "clearAll": "Limpar Tudo",
+    "lockerRequired": "Armário é necessário ao usar a piscina",
+    "lockerShareNote": "O armário pode ser compartilhado por cerca de 2 pessoas, mas não por 3 ou mais devido ao espaço.",
+    "addLocker": "Adicionar Armário",
+    "noRows": "Nenhuma linha. Selecione um item nas caixas acima.",
+    "breakdown": "Detalhamento",
+    "subtotal": {
+      "pool": "Subtotal da Piscina",
+      "locker": "Subtotal do Armário",
+      "gym": "Subtotal da Academia",
+      "membership": "Subtotal da Associação",
+      "coupon": "Subtotal do Talão de Cupons"
+    },
+    "total": "Total",
+    "notes": "Notas",
+    "note": {
+      "lockerTitle": "Sobre o Armário:",
+      "lockerDetail": "É necessário um armário de vestiário ({price}/cada) ao usar a piscina. Pode ser compartilhado por cerca de 2 pessoas, mas devido ao espaço para troca de roupa, não pode ser compartilhado por 3 ou mais.",
+      "discount": "Desconto para deficientes: metade do preço para entrada e associação (arredondado para baixo). Equipamentos com preço normal.",
+      "coupon": "Talão de cupons: Apenas o valor de compra de um talão com 11 cupons é calculado (não o número de usos).",
+      "family": "Categorias especiais como familiares de associados não são suportadas."
+    },
+    "footer": "*Esta é uma ferramenta de referência não oficial. Verifique as informações oficiais da instalação para as taxas e condições mais recentes.",
+    "disabledDiscount": "Desconto para pessoas com deficiência",
+    "category": {
+      "adult": "Adulto",
+      "senior": "Sênior (65+)",
+      "student": "Estudante (Ensino Fundamental, Médio)",
+      "preschool3plus": "Pré-escolar (3+)",
+      "under2": "Menor de 2 anos",
+      "companion_student_adult": "Adulto acompanhado de estudante (3–18)",
+      "companion_senior_adult": "Adulto acompanhado de sênior"
+    },
+    "tariff": {
+      "season_9_6": "Set–Jun",
+      "season_7_8": "Jul–Ago",
+      "evening": "Noite (após 17h)",
+      "group": "Grupo (20+)"
+    },
+    "duration": {
+      "30d": "30 dias",
+      "6m": "Meio ano",
+      "1y": "1 ano"
+    },
+    "people": "Pessoas",
+    "entryFeeOnly": "Apenas taxa de entrada",
+    "deleteRow": "Excluir linha",
+    "addCategory": "Adicionar categoria",
+    "groupTariffWarning": "A tarifa de grupo se aplica para um total de 20 ou mais pessoas (atualmente: {count})",
+    "groupTariffSuggest": "Para 20 ou mais pessoas, selecione a tarifa de grupo (20+)",
+    "memberOrPoolUser": "Membro ou usuário da piscina (grátis)",
+    "adult": "Adulto",
+    "student": "Estudante",
+    "gymNote": "※O uso é limitado a 1 hora",
+    "gymFreeNote": "Grátis para usuários da piscina e membros",
+    "lockerCount": "Quantidade de armários",
+    "lockerUnit": "por armário",
+    "units": "Unidades",
+    "books": "Livros",
+    "couponBookNote": "1 livro = 11 bilhetes",
+    "peopleUnit": "pessoas"
   }
 }

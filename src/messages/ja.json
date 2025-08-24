@@ -1,5 +1,6 @@
 {
   "header": {
+    "title": "you-plaza 出雲 非公式サイト",
     "home": "ホーム",
     "about": "会社について",
     "services": "サービス",
@@ -28,5 +29,78 @@
     "title": "Y Plaza - 総合プラットフォーム",
     "description": "Y Plazaは、あなたのビジネスをサポートする総合プラットフォームです。",
     "keywords": "プラットフォーム, ビジネス, サービス"
+  },
+  "poolCalculator": {
+    "title": "プール料金 計算ツール",
+    "publicInfoLink": "公開情報",
+    "publicInfoNote": "を基に作成した試算用ツールです。最終的な金額は施設の最新案内をご確認ください。",
+    "type": {
+      "pool": "プール",
+      "gym": "トレーニングジム",
+      "locker": "ロッカー",
+      "membership": "会員券",
+      "coupon": "回数券"
+    },
+    "clearAll": "全クリア",
+    "lockerRequired": "プール利用時はロッカーが必要です",
+    "lockerShareNote": "2人程度での共有は可能ですが、着替えスペースの関係上、3人以上での共有はできません",
+    "addLocker": "ロッカー追加",
+    "noRows": "行がありません。上のチェックボックスから項目を選択してください。",
+    "breakdown": "内訳",
+    "subtotal": {
+      "pool": "プール入場料 小計",
+      "locker": "ロッカー 小計",
+      "gym": "トレーニングジム 小計",
+      "membership": "会員券 小計",
+      "coupon": "回数券 小計"
+    },
+    "total": "合計",
+    "notes": "メモと注意事項",
+    "note": {
+      "lockerTitle": "ロッカーについて：",
+      "lockerDetail": "プール利用時は更衣室ロッカー（{price}/個）が必要です。2〜3人での共有は可能ですが、着替えスペースの都合上、4人以上での共有はできません。",
+      "discount": "障害者割引は本人分の入場料金・会員券が半額（10円未満切り捨て）。備品関係は通常料金。",
+      "coupon": "回数券は 1冊=11枚綴りの購入金額のみを計上します（何回分消費するかの減算管理は含みません）。",
+      "family": "会員の家族等の特殊区分は未対応です。"
+    },
+    "footer": "*非公式の参考試算用ツールです。最新の料金・条件は必ず施設の公式情報をご確認ください。",
+    "disabledDiscount": "障害者割引",
+    "category": {
+      "adult": "大人",
+      "senior": "シルバー(65歳以上)",
+      "student": "小・中・高生",
+      "preschool3plus": "3歳以上(就学前)",
+      "under2": "2歳以下",
+      "companion_student_adult": "3歳〜高校生までと同伴の大人",
+      "companion_senior_adult": "シルバーと同伴の大人"
+    },
+    "tariff": {
+      "season_9_6": "9〜6月",
+      "season_7_8": "7・8月",
+      "evening": "イブニング(17時以降)",
+      "group": "団体(20名以上)"
+    },
+    "duration": {
+      "30d": "30日",
+      "6m": "半年",
+      "1y": "1年"
+    },
+    "people": "人数",
+    "entryFeeOnly": "入場料のみ",
+    "deleteRow": "行を削除",
+    "addCategory": "カテゴリ追加",
+    "groupTariffWarning": "団体料金は合計20名以上で適用されます（現在:{count}名）",
+    "groupTariffSuggest": "20名以上は団体料金(20名以上)を選択してください",
+    "memberOrPoolUser": "会員・プール利用者（無料）",
+    "adult": "大人",
+    "student": "中・高生",
+    "gymNote": "※ご利用は1時間以内",
+    "gymFreeNote": "プール利用者・会員は無料です",
+    "lockerCount": "ロッカー数",
+    "lockerUnit": "1か所",
+    "units": "口数",
+    "books": "冊数",
+    "couponBookNote": "1冊=11枚綴り",
+    "peopleUnit": "名"
   }
 }
