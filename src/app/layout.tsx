@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { LayoutClient } from '@/components/layout/LayoutClient';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { webAppJsonLd } from '@/lib/jsonLd';
 import './globals.css';
 
 const geistSans = Geist({
@@ -15,11 +16,11 @@ const geistMono = Geist_Mono({
   subsets: ['latin', 'latin-ext'],
 });
 
+// TODO: メタデータを設定する
 export const metadata: Metadata = {
-  // TODO: メタデータを設定する
-  // metadataBase: new URL(''),
   title: '',
   description: '',
+  keywords: [],
   openGraph: {
     title: '',
     description: '',
@@ -33,6 +34,11 @@ export const metadata: Metadata = {
       },
     ],
     type: 'website',
+    locale: 'ja_JP',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -43,6 +49,14 @@ export default function RootLayout({
 }>) {
   return (
     <LayoutClient>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(webAppJsonLd()),
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
         <Header />
         <main className="flex-1">{children}</main>
