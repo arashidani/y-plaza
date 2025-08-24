@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   Select,
@@ -6,26 +6,26 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { type Locale } from '@/constants/locales';
-import { locales, localeNames, localeFlagCodes } from '@/lib/i18n';
-import { Globe } from 'lucide-react';
-import ReactCountryFlag from 'react-country-flag';
-import { Link, useRouter, usePathname } from '@/i18n/routing';
-import { useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+} from '@/components/ui/select'
+import { type Locale } from '@/constants/locales'
+import { locales, localeNames, localeFlagCodes } from '@/lib/i18n'
+import { Globe } from 'lucide-react'
+import ReactCountryFlag from 'react-country-flag'
+import { Link, useRouter, usePathname } from '@/i18n/routing'
+import { useParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 export function Header() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const params = useParams();
-  const currentLocale = params.locale as Locale;
-  const t = useTranslations('header');
+  const router = useRouter()
+  const pathname = usePathname()
+  const params = useParams()
+  const currentLocale = params.locale as Locale
+  const t = useTranslations('header')
 
   const handleLanguageChange = (value: Locale) => {
-    router.push(pathname, { locale: value });
-  };
+    router.push(pathname, { locale: value })
+  }
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -76,5 +76,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }

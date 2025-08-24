@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import { Link } from '@/i18n/routing';
-import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 export function Footer() {
-  const t = useTranslations('footer');
+  const t = useTranslations('footer')
 
   return (
     <footer className="border-t bg-background">
@@ -30,5 +30,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

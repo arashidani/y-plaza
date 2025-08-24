@@ -1,27 +1,28 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import { LayoutClient } from '@/components/layout/LayoutClient';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { webAppJsonLd } from '@/lib/jsonLd';
-import { setRequestLocale } from "next-intl/server";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import './globals.css';
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { LayoutClient } from '@/components/layout/LayoutClient'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { webAppJsonLd } from '@/lib/jsonLd'
+import { setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { getMessages } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { routing } from '@/i18n/routing'
+import { ThemeProvider } from '@/components/providers/theme-provider'
+import './globals.css'
 
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin', 'latin-ext'], // latin-extを追加して拡張文字に対応
-});
+  // latin-extを追加して拡張文字に対応
+  subsets: ['latin', 'latin-ext'],
+})
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin', 'latin-ext'],
-});
+})
 
 // TODO: メタデータを設定する
 export const metadata: Metadata = {
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-};
+}
 
 export default async function RootLayout({
   children,
@@ -57,17 +58,17 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
 
-  const { locale } = await params;
+  const { locale } = await params
 
   if (!hasLocale(routing.locales, locale)) {
-    notFound();
+    notFound()
   }
 
   // SSG対応
-  setRequestLocale(locale);
+  setRequestLocale(locale)
 
   // 言語ファイルの読み込み
-  const messages = await getMessages();
+  const messages = await getMessages()
 
 
   return (
@@ -100,5 +101,5 @@ export default async function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
