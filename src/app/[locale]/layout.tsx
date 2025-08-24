@@ -4,14 +4,13 @@ import { LayoutClient } from '@/components/layout/LayoutClient';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { webAppJsonLd } from '@/lib/jsonLd';
-import { setRequestLocale } from "next-intl/server";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { setRequestLocale } from 'next-intl/server';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
+import { ThemeProvider } from '@/components/providers/theme-provider';
 import './globals.css';
-
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -51,12 +50,11 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params
+  params,
 }: Readonly<{
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
-
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -69,13 +67,26 @@ export default async function RootLayout({
   // 言語ファイルの読み込み
   const messages = await getMessages();
 
-
   return (
-    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
+        {/* SVG を使う */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* 互換性のためPNGも指定（ブラウザにより優先されることがある） */}
+        <link rel="icon" href="/favicon.png" sizes="32x32" />
+        {/* 古いブラウザやWindows用の.ico */}
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#0077b6" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
