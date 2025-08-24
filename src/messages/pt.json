@@ -58,7 +58,7 @@
     "notes": "Notas",
     "note": {
       "lockerTitle": "Sobre o Armário:",
-      "lockerDetail": "É necessário um armário de vestiário ({price}/cada) ao usar a piscina. Pode ser compartilhado por cerca de 2 pessoas, mas devido ao espaço para troca de roupa, não pode ser compartilhado por 3 ou mais.",
+      "lockerDetail": "É necessário um armário de vestiário ({price} yen/cada) ao usar a piscina. Pode ser compartilhado por cerca de 2 pessoas, mas devido ao espaço para troca de roupa, não pode ser compartilhado por 3 ou mais.",
       "discount": "Desconto para deficientes: metade do preço para entrada e associação (arredondado para baixo). Equipamentos com preço normal.",
       "coupon": "Talão de cupons: Apenas o valor de compra de um talão com 11 cupons é calculado (não o número de usos).",
       "family": "Categorias especiais como familiares de associados não são suportadas."
