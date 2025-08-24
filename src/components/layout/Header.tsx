@@ -14,6 +14,7 @@ import ReactCountryFlag from 'react-country-flag';
 import { Link, useRouter, usePathname } from '@/i18n/routing';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export function Header() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export function Header() {
         </Link>
         
         <div className="absolute right-0 flex items-center space-x-4">
+          <ThemeToggle />
           <div className="flex items-center space-x-2">
             <Globe className="h-4 w-4 text-muted-foreground" />
             <Select value={currentLocale} onValueChange={handleLanguageChange}>

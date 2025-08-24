@@ -1,101 +1,141 @@
-import Image from "next/image";
 import { useTranslations } from 'next-intl';
 
 export default function Home() {
   const t = useTranslations();
+  
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            {t('common.loading')}
-          </li>
-          <li className="tracking-[-.01em]">
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto text-center">
+          <h1 className="text-5xl font-bold text-primary mb-6">
             {t('meta.title')}
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </h1>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            {t('meta.description')}
+          </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <button className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+              Get Started
+            </button>
+            <button className="bg-secondary text-secondary-foreground px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+              Learn More
+            </button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Color Showcase Section */}
+      <section className="py-16 px-4 bg-card">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
+            Color Palette Showcase
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Primary Color */}
+            <div className="text-center">
+              <div className="w-32 h-32 bg-primary rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-lg">Primary</span>
+              </div>
+              <h3 className="font-semibold mb-2 text-foreground">Deep Blue</h3>
+              <p className="text-muted-foreground text-sm">
+                Represents water and trust. Creates a calm, reliable impression.
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">#1565C0</p>
+            </div>
+
+            {/* Secondary Color */}
+            <div className="text-center">
+              <div className="w-32 h-32 bg-secondary rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-secondary-foreground font-bold text-lg">Secondary</span>
+              </div>
+              <h3 className="font-semibold mb-2 text-foreground">Teal Green</h3>
+              <p className="text-muted-foreground text-sm">
+                Evokes waterside nature and tranquility. Harmonizes well with blue.
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">#26A69A</p>
+            </div>
+
+            {/* Tertiary Color */}
+            <div className="text-center">
+              <div className="w-32 h-32 bg-muted rounded-lg mx-auto mb-4 flex items-center justify-center border">
+                <span className="text-muted-foreground font-bold text-lg">Tertiary</span>
+              </div>
+              <h3 className="font-semibold mb-2 text-foreground">Blue Gray</h3>
+              <p className="text-muted-foreground text-sm">
+                Creates cleanliness and calmness for backgrounds and spacing.
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">#ECEFF1</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* UI Components Demo */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
+            UI Components
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Card Example */}
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-3 text-card-foreground">
+                Sample Card
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                This is a sample card component using the tertiary color as background.
+              </p>
+              <button className="bg-primary text-primary-foreground px-4 py-2 rounded hover:opacity-90 transition-opacity">
+                Primary Button
+              </button>
+            </div>
+
+            {/* Another Card */}
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-3 text-card-foreground">
+                Action Card
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                This card showcases the secondary color for call-to-action elements.
+              </p>
+              <button className="bg-secondary text-secondary-foreground px-4 py-2 rounded hover:opacity-90 transition-opacity">
+                Call to Action
+              </button>
+            </div>
+
+            {/* Info Card */}
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-3 text-card-foreground">
+                Info Card
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Clean and minimal design using the defined color palette.
+              </p>
+              <button className="border border-border text-foreground px-4 py-2 rounded hover:bg-muted transition-colors">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-primary">
+        <div className="container mx-auto text-center">
+          <h2 className="text-4xl font-bold text-primary-foreground mb-6">
+            Ready to Get Started?
+          </h2>
+          <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+            Experience the power of our unified color palette and design system.
+          </p>
+          <button className="bg-secondary text-secondary-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition-opacity">
+            Start Your Journey
+          </button>
+        </div>
+      </section>
     </div>
   );
 }

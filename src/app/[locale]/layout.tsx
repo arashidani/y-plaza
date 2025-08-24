@@ -9,6 +9,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import './globals.css';
 
 
@@ -80,13 +81,20 @@ export default async function RootLayout({
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col">
-        <NextIntlClientProvider messages={messages}>
-          <LayoutClient locale={locale}>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </LayoutClient>
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <LayoutClient locale={locale}>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </LayoutClient>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
