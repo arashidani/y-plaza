@@ -31,12 +31,27 @@ pnpm dev:docker:down
 
 ブラウザで[http://localhost:3000](http://localhost:3000)を開いて結果を確認してください。
 
+### Storybookでのコンポーネント開発
+
+UIコンポーネントの開発・確認にはStorybookを使用します：
+
+```bash
+# Storybookを起動
+pnpm storybook
+
+# Storybookをビルド
+pnpm build-storybook
+```
+
+Storybookは[http://localhost:6006](http://localhost:6006)で起動します。
+
 ## 使用技術
 
 - **Next.js 15** - React フレームワーク (App Router)
 - **TypeScript** - 型安全性
 - **Tailwind CSS 4** - スタイリング
 - **shadcn/ui** - UIコンポーネント
+- **Storybook** - コンポーネント開発・ドキュメント
 - **Prettier** - コードフォーマッター
 - **ESLint** - コード品質
 - **Docker** - 開発環境の統一
