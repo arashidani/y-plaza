@@ -6,7 +6,6 @@ import type {
   Line,
   Category,
   MembershipCategory,
-  MembershipLine,
   Tariff,
   MembershipDuration,
 } from '../models/types'
