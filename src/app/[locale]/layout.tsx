@@ -23,21 +23,59 @@ const geistMono = Geist_Mono({
   subsets: ['latin', 'latin-ext'],
 })
 
-// TODO: メタデータを設定する
 export const metadata: Metadata = {
-  title: '',
-  description: '',
-  keywords: [],
+  title: '出雲ゆうプラザ 非公式 料金計算ツール｜入場料・回数券・団体・イブニングの合計を自動計算',
+  description:
+    '出雲ゆうプラザの「季節区分（9〜6月 / 7・8月）」「イブニング（17時以降）」「団体（20名以上）」「回数券（11枚綴）」などをまとめて自動計算できる、非公式の料金シミュレーターです。ロッカー代など注記にも対応。プール・ジム利用の目安料金を手早く把握できます。',
+  keywords: [
+    '出雲ゆうプラザ',
+    'ゆうプラザ',
+    '料金',
+    '料金表',
+    '入場料',
+    '回数券',
+    '団体料金',
+    'イブニング',
+    'プール',
+    '温水プール',
+    '室内プール',
+    'レジャープール',
+    'トレーニングジム',
+    'シルバー割引',
+    '障害者割引',
+    'ロッカー代',
+    '出雲',
+    '島根',
+    '営業時間',
+    '混雑',
+    'アクセス',
+    '駐車場',
+    '計算ツール',
+    'シミュレーター',
+    'You Plaza Izumo',
+    'preço',
+    'piscina',
+    'ginásio',
+    'calculadora',
+    'Izumo',
+    'Shimane',
+  ],
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_SITE_URL,
+  },
   openGraph: {
-    title: '',
-    description: '',
-    url: '',
-    siteName: '',
+    title: '出雲ゆうプラザ 非公式 料金計算ツール',
+    description:
+      '季節・時間・人数・回数券をまとめて入力。出雲ゆうプラザの料金目安を自動で算出する非公式ツールです。',
+    url: process.env.NEXT_PUBLIC_SITE_URL || '',
+    siteName: '出雲ゆうプラザ 非公式 料金計算ツール',
     images: [
       {
-        url: '',
-        width: 800,
-        height: 600,
+        // OG画像（推奨: 1200x630、PNG/JPG）
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || ''}/og.png`,
+        width: 1200,
+        height: 630,
+        alt: '出雲ゆうプラザ 非公式 料金計算ツール',
       },
     ],
     type: 'website',
@@ -46,6 +84,10 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  // ブランド・法務の観点から、非公式である旨をmetaにも明示
+  other: {
+    'note:unofficial': 'This site is an unofficial calculator for Izumo Yuu Plaza.',
   },
 }
 
