@@ -34,7 +34,7 @@ export default function PoolCalculatorPage() {
       </h1>
       <p className="mt-2 text-sm text-gray-600">
         <a
-          href="https://example.com/pool-info"
+          href="https://y-plaza.sakura.ne.jp/payment"
           className="text-blue-600 hover:underline"
           target="_blank"
           rel="noopener noreferrer"
