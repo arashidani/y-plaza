@@ -7,9 +7,9 @@ interface SummaryRowProps {
 
 export function SummaryRow({ label, value }: SummaryRowProps) {
   return (
-    <div className="grid grid-cols-4 items-baseline gap-3 text-sm">
-      <span className="col-span-3">{label}</span>
-      <YenMono value={value} className="w-28 font-medium" />
+    <div className="flex items-baseline justify-between gap-3 text-sm">
+      <span className="flex-1 min-w-0 break-words">{label}</span>
+      <YenMono value={value} className="font-medium flex-shrink-0" />
     </div>
   )
 }
