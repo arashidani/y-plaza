@@ -301,7 +301,7 @@ const LINE_TYPE_LABELS = {
           )}
 
           {line.type === 'membership' && (
-            <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
+            <div className="grid gap-2 sm:grid-cols-3 sm:items-center">
               <div className="sm:col-span-1 max-w-[160px]">
                 <Select<MembershipDuration>
                   value={line.duration}
@@ -314,7 +314,7 @@ const LINE_TYPE_LABELS = {
                   )}
                 />
               </div>
-              <div className="sm:col-span-2 max-w-sm">
+              <div className="sm:col-span-1 max-w-sm">
                 <Select<MembershipCategory>
                   value={line.category}
                   onChange={(v) => onChange({ ...line, category: v })}
@@ -334,17 +334,6 @@ const LINE_TYPE_LABELS = {
                   ]}
                 />
               </div>
-              <label className="inline-flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4"
-                  checked={(line as MembershipLine).disabledDiscount}
-                  onChange={(e) =>
-                    onChange({ ...line, disabledDiscount: e.target.checked })
-                  }
-                />
-                <span>{tCommon('disabledDiscount')}</span>
-              </label>
               <div className="flex items-center gap-2">
                 <span className="text-sm">{tCommon('units')}</span>
                 <NumberInput
