@@ -132,7 +132,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased min-h-screen flex flex-col">
+      <body className="antialiased min-h-screen flex flex-col overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -142,7 +142,7 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <LayoutClient>
               <Header />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1 w-full overflow-x-hidden">{children}</main>
               <Footer />
             </LayoutClient>
           </NextIntlClientProvider>
