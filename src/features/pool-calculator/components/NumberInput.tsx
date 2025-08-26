@@ -20,7 +20,8 @@ export function NumberInput({ value, onChange, min = 1, max, className, isGroup 
   const getOptions = () => {
     // グループの場合でも1から選択可能に（団体料金は20名以上で適用される旨の警告は別途表示）
     const actualMin = min ?? 1
-    const actualMax = max ?? (isGroup ? 50 : 19) // 通常は19まで、グループは50まで
+    // 通常は19まで、グループは50まで
+    const actualMax = max ?? (isGroup ? 50 : 19)
     
     const options = []
     for (let i = actualMin; i <= actualMax; i++) {
