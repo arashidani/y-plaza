@@ -10,7 +10,7 @@ const withMDX = createMDX({
 const nextConfig: NextConfig = {
   output: 'standalone',
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-  
+
   // Docker環境でのホットリロード対応
   ...(process.env.NODE_ENV === 'development' && {
     webpack: (config: import('webpack').Configuration) => {
