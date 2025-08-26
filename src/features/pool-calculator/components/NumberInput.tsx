@@ -1,5 +1,10 @@
-import { useState, useEffect } from 'react'
-import { validateNumberInput } from '../models/validation'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 interface NumberInputProps {
   value: number;
@@ -11,71 +16,41 @@ interface NumberInputProps {
 }
 
 export function NumberInput({ value, onChange, min = 1, max, className, isGroup = false }: NumberInputProps) {
-  const [inputValue, setInputValue] = useState(value.toString())
-  const [error, setError] = useState<string>()
-
-  // 外部からのvalue変更を反映
-  useEffect(() => {
-    setInputValue(value.toString())
-  }, [value])
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value
-    setInputValue(raw)
+  // 選択肢の範囲を決定
+  const getOptions = () => {
+    // グループの場合でも1から選択可能に（団体料金は20名以上で適用される旨の警告は別途表示）
+    const actualMin = min ?? 1
+    // 通常は19まで、グループは50まで
+    const actualMax = max ?? (isGroup ? 50 : 19)
     
-    // 空文字の場合はminを適用
-    if (raw === '') {
-      const fallbackValue = min ?? (isGroup ? 20 : 1)
-      onChange(fallbackValue)
-      setError(undefined)
-      return
+    const options = []
+    for (let i = actualMin; i <= actualMax; i++) {
+      options.push({ value: i.toString(), label: i.toString() })
     }
-
-    const numValue = Number(raw)
     
-    // バリデーション
-    const validation = validateNumberInput(numValue, isGroup)
-    
-    if (validation.success && validation.data !== undefined) {
-      onChange(validation.data)
-      setError(undefined)
-    } else {
-      setError(validation.error)
-      // エラーの場合でも数値として有効であれば値を更新（UIの応答性のため）
-      if (Number.isFinite(numValue)) {
-        onChange(numValue)
-      }
-    }
+    return options
   }
 
-  const handleBlur = () => {
-    // フォーカス離脱時に値を正規化
-    if (inputValue === '' || !Number.isFinite(Number(inputValue))) {
-      const fallbackValue = min ?? (isGroup ? 20 : 1)
-      setInputValue(fallbackValue.toString())
-      onChange(fallbackValue)
-      setError(undefined)
-    }
+  const options = getOptions()
+  
+  // 現在の値がオプションにない場合は追加
+  if (!options.find(opt => opt.value === value.toString())) {
+    options.push({ value: value.toString(), label: value.toString() })
+    options.sort((a, b) => Number(a.value) - Number(b.value))
   }
 
   return (
-    <div className="relative">
-      <input
-        type="number"
-        min={min}
-        max={max}
-        value={inputValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        className={`w-20 rounded border px-2 py-1 text-sm ${
-          error ? 'border-red-500' : ''
-        } ${className ?? ''}`}
-      />
-      {error && (
-        <div className="absolute top-full left-0 mt-1 text-xs text-red-600 whitespace-nowrap z-10">
-          {error}
-        </div>
-      )}
-    </div>
+    <Select value={value.toString()} onValueChange={(v) => onChange(Number(v))}>
+      <SelectTrigger className={`w-20 h-8 ${className ?? ''}`}>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent className="max-h-60">
+        {options.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }

@@ -119,11 +119,22 @@ export default function PoolCalculatorPage() {
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <Section title={t('poolCalculator.breakdown', { defaultValue: '内訳' })}>
           <div className="space-y-2">
-            <SummaryRow label={t('poolCalculator.subtotal.pool', { defaultValue: 'プール入場料 小計' })} value={subtotal.pool} />
-            <SummaryRow label={t('poolCalculator.subtotal.locker', { defaultValue: 'ロッカー 小計' })} value={subtotal.locker} />
-            <SummaryRow label={t('poolCalculator.subtotal.gym', { defaultValue: 'トレーニングジム 小計' })} value={subtotal.gym} />
-            <SummaryRow label={t('poolCalculator.subtotal.membership', { defaultValue: '会員券 小計' })} value={subtotal.membership} />
-            <SummaryRow label={t('poolCalculator.subtotal.coupon', { defaultValue: '回数券 小計' })} value={subtotal.coupon} />
+            {[
+              { key: 'pool', value: subtotal.pool, defaultLabel: 'プール入場料 小計' },
+              { key: 'locker', value: subtotal.locker, defaultLabel: 'ロッカー 小計' },
+              { key: 'gym', value: subtotal.gym, defaultLabel: 'トレーニングジム 小計' },
+              { key: 'membership', value: subtotal.membership, defaultLabel: '会員券 小計' },
+              { key: 'coupon', value: subtotal.coupon, defaultLabel: '回数券 小計' },
+            ].map(
+              (item) =>
+                item.value > 0 && (
+                  <SummaryRow
+                    key={item.key}
+                    label={t(`poolCalculator.subtotal.${item.key}`, { defaultValue: item.defaultLabel })}
+                    value={item.value}
+                  />
+                ),
+            )}
             <div className="h-px bg-gray-200" />
             <div className="flex items-center justify-between text-base">
               <span className="font-semibold">{t('poolCalculator.total', { defaultValue: '合計' })}</span>
