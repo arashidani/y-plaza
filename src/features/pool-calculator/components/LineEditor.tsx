@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { X } from 'lucide-react'
 import type {
   Line,
@@ -16,6 +17,7 @@ import {
   poolEntryUnitPrice,
   isTariffAvailableForCategory,
 } from '../utils/calculations'
+import { GYM_PRICES, MEMBERSHIP_PRICES, COUPON_BOOK } from '../models/pricing'
 import { YenMono } from './YenMono'
 import { NumberInput } from './NumberInput'
 import { Select } from './Select'
@@ -136,8 +138,8 @@ const LINE_TYPE_LABELS = {
                           <span className="text-sm">{tCommon('people')}</span>
                           <NumberInput
                             value={entry.count}
-                            min={line.tariff === 'group' ? 20 : 1}
-                            max={line.tariff === 'group' ? undefined : 19}
+                            min={1}
+                            max={line.tariff === 'group' ? 50 : 19}
                             isGroup={line.tariff === 'group'}
                             onChange={(n) => {
                               const newEntries = [...line.entries]
@@ -147,21 +149,19 @@ const LINE_TYPE_LABELS = {
                           />
                         </div>
 
-                        <label className="inline-flex items-center gap-1 text-sm">
-                          <input
-                            type="checkbox"
-                            className="h-3 w-3"
+                        <label className="inline-flex items-center gap-2 cursor-pointer">
+                          <Checkbox
                             checked={entry.disabledDiscount}
-                            onChange={(e) => {
+                            onCheckedChange={(checked) => {
                               const newEntries = [...line.entries]
                               newEntries[idx] = {
                                 ...entry,
-                                disabledDiscount: e.target.checked,
+                                disabledDiscount: !!checked,
                               }
                               onChange({ ...line, entries: newEntries })
                             }}
                           />
-                          <span className="text-xs">{tCommon('disabledDiscount')}</span>
+                          <span className="text-sm">{tCommon('disabledDiscount')}</span>
                         </label>
                       </div>
 
@@ -171,7 +171,8 @@ const LINE_TYPE_LABELS = {
                           className="text-sm font-medium tabular-nums"
                         />
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                            {tCommon('entryFeeOnly')}
+                          <div>{tCommon('entryFeeOnly')}</div>
+                          <div>単価: <YenMono value={unit} className="text-xs" /></div>
                         </div>
                       </div>
 
@@ -269,6 +270,7 @@ const LINE_TYPE_LABELS = {
                 <NumberInput
                   value={line.count}
                   min={1}
+                  max={50}
                   onChange={(n) => onChange({ ...line, count: n })}
                 />
               </div>
@@ -290,6 +292,7 @@ const LINE_TYPE_LABELS = {
                 <NumberInput
                   value={line.count}
                   min={1}
+                  max={50}
                   onChange={(n) => onChange({ ...line, count: n })}
                 />
               </div>
@@ -338,6 +341,7 @@ const LINE_TYPE_LABELS = {
                 <NumberInput
                   value={line.count}
                   min={1}
+                  max={50}
                   onChange={(n) => onChange({ ...line, count: n })}
                 />
               </div>
@@ -366,6 +370,7 @@ const LINE_TYPE_LABELS = {
                 <NumberInput
                   value={line.books}
                   min={1}
+                  max={50}
                   onChange={(n) => onChange({ ...line, books: n })}
                 />
               </div>
@@ -384,6 +389,34 @@ const LINE_TYPE_LABELS = {
               {tCommon('total')}{line.entries.reduce((s, e) => s + e.count, 0)}{tCommon('peopleUnit')}
               <br />
               （{tCommon('entryFeeOnly')}）
+            </div>
+          )}
+          {line.type === 'gym' && (
+            <div className="mt-1 text-xs text-muted-foreground leading-snug">
+              {tCommon('total')}{line.count}{tCommon('peopleUnit')}
+              <br />
+              単価: <YenMono value={GYM_PRICES[line.who as keyof typeof GYM_PRICES] || 0} className="text-xs" />
+            </div>
+          )}
+          {line.type === 'locker' && (
+            <div className="mt-1 text-xs text-muted-foreground leading-snug">
+              {tCommon('total')}{line.count}個
+              <br />
+              単価: <YenMono value={LOCKER_PER_USE} className="text-xs" />
+            </div>
+          )}
+          {line.type === 'membership' && (
+            <div className="mt-1 text-xs text-muted-foreground leading-snug">
+              {tCommon('total')}{line.count}口
+              <br />
+              単価: <YenMono value={MEMBERSHIP_PRICES[line.duration]?.[line.category] || 0} className="text-xs" />
+            </div>
+          )}
+          {line.type === 'coupon' && (
+            <div className="mt-1 text-xs text-muted-foreground leading-snug">
+              {tCommon('total')}{line.books}冊
+              <br />
+              単価: <YenMono value={COUPON_BOOK[line.category as keyof typeof COUPON_BOOK] || 0} className="text-xs" />
             </div>
           )}
         </div>

@@ -119,11 +119,21 @@ export default function PoolCalculatorPage() {
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <Section title={t('poolCalculator.breakdown', { defaultValue: '内訳' })}>
           <div className="space-y-2">
-            <SummaryRow label={t('poolCalculator.subtotal.pool', { defaultValue: 'プール入場料 小計' })} value={subtotal.pool} />
-            <SummaryRow label={t('poolCalculator.subtotal.locker', { defaultValue: 'ロッカー 小計' })} value={subtotal.locker} />
-            <SummaryRow label={t('poolCalculator.subtotal.gym', { defaultValue: 'トレーニングジム 小計' })} value={subtotal.gym} />
-            <SummaryRow label={t('poolCalculator.subtotal.membership', { defaultValue: '会員券 小計' })} value={subtotal.membership} />
-            <SummaryRow label={t('poolCalculator.subtotal.coupon', { defaultValue: '回数券 小計' })} value={subtotal.coupon} />
+            {subtotal.pool > 0 && (
+              <SummaryRow label={t('poolCalculator.subtotal.pool', { defaultValue: 'プール入場料 小計' })} value={subtotal.pool} />
+            )}
+            {subtotal.locker > 0 && (
+              <SummaryRow label={t('poolCalculator.subtotal.locker', { defaultValue: 'ロッカー 小計' })} value={subtotal.locker} />
+            )}
+            {subtotal.gym > 0 && (
+              <SummaryRow label={t('poolCalculator.subtotal.gym', { defaultValue: 'トレーニングジム 小計' })} value={subtotal.gym} />
+            )}
+            {subtotal.membership > 0 && (
+              <SummaryRow label={t('poolCalculator.subtotal.membership', { defaultValue: '会員券 小計' })} value={subtotal.membership} />
+            )}
+            {subtotal.coupon > 0 && (
+              <SummaryRow label={t('poolCalculator.subtotal.coupon', { defaultValue: '回数券 小計' })} value={subtotal.coupon} />
+            )}
             <div className="h-px bg-gray-200" />
             <div className="flex items-center justify-between text-base">
               <span className="font-semibold">{t('poolCalculator.total', { defaultValue: '合計' })}</span>
