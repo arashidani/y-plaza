@@ -384,41 +384,62 @@ const LINE_TYPE_LABELS = {
         {/* 右：金額（固定幅・右端揃え） */}
         <div className={AMOUNT_COL}>
           <YenMono value={total} className="text-lg font-bold" />
-          {line.type === 'pool' && (
-            <div className="mt-1 text-xs text-muted-foreground leading-snug">
-              {tCommon('total')}{line.entries.reduce((s, e) => s + e.count, 0)}{tCommon('peopleUnit')}
-              <br />
-              （{tCommon('entryFeeOnly')}）
-            </div>
-          )}
-          {line.type === 'gym' && (
-            <div className="mt-1 text-xs text-muted-foreground leading-snug">
-              {tCommon('total')}{line.count}{tCommon('peopleUnit')}
-              <br />
-              単価: <YenMono value={GYM_PRICES[line.who as keyof typeof GYM_PRICES] || 0} className="text-xs" />
-            </div>
-          )}
-          {line.type === 'locker' && (
-            <div className="mt-1 text-xs text-muted-foreground leading-snug">
-              {tCommon('total')}{line.count}個
-              <br />
-              単価: <YenMono value={LOCKER_PER_USE} className="text-xs" />
-            </div>
-          )}
-          {line.type === 'membership' && (
-            <div className="mt-1 text-xs text-muted-foreground leading-snug">
-              {tCommon('total')}{line.count}口
-              <br />
-              単価: <YenMono value={MEMBERSHIP_PRICES[line.duration]?.[line.category] || 0} className="text-xs" />
-            </div>
-          )}
-          {line.type === 'coupon' && (
-            <div className="mt-1 text-xs text-muted-foreground leading-snug">
-              {tCommon('total')}{line.books}冊
-              <br />
-              単価: <YenMono value={COUPON_BOOK[line.category as keyof typeof COUPON_BOOK] || 0} className="text-xs" />
-            </div>
-          )}
+          {(() => {
+            // line.typeに応じて表示する情報を決定
+            const getSummaryInfo = () => {
+              switch (line.type) {
+                case 'pool':
+                  return {
+                    count: line.entries.reduce((s, e) => s + e.count, 0),
+                    unit: tCommon('peopleUnit'),
+                    note: `（${tCommon('entryFeeOnly')}）`,
+                    showUnitPrice: false,
+                  }
+                case 'gym':
+                  return {
+                    count: line.count,
+                    unit: tCommon('peopleUnit'),
+                    unitPrice: GYM_PRICES[line.who as keyof typeof GYM_PRICES] || 0,
+                    showUnitPrice: true,
+                  }
+                case 'locker':
+                  return {
+                    count: line.count,
+                    unit: '個',
+                    unitPrice: LOCKER_PER_USE,
+                    showUnitPrice: true,
+                  }
+                case 'membership':
+                  return {
+                    count: line.count,
+                    unit: '口',
+                    unitPrice: MEMBERSHIP_PRICES[line.duration]?.[line.category] || 0,
+                    showUnitPrice: true,
+                  }
+                case 'coupon':
+                  return {
+                    count: line.books,
+                    unit: '冊',
+                    unitPrice: COUPON_BOOK[line.category as keyof typeof COUPON_BOOK] || 0,
+                    showUnitPrice: true,
+                  }
+                default:
+                  return null
+              }
+            }
+
+            const info = getSummaryInfo()
+            return info ? (
+              <div className="mt-1 text-xs text-muted-foreground leading-snug">
+                {tCommon('total')}{info.count}{info.unit}
+                <br />
+                {info.showUnitPrice && (
+                  <>単価: <YenMono value={info.unitPrice || 0} className="text-xs" /></>
+                )}
+                {info.note}
+              </div>
+            ) : null
+          })()}
         </div>
       </CardContent>
     </Card>
