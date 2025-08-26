@@ -1,6 +1,25 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* 全体のレイアウト安定化 */
+html, body {
+  overflow-x: hidden;
+  width: 100vw;
+  max-width: 100%;
+}
+
+/* SelectContentが親要素に影響しないよう固定 */
+[data-radix-popper-content-wrapper] {
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+[data-radix-select-content] {
+  position: fixed !important;
+  z-index: 9999 !important;
+  max-width: 200px !important;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
