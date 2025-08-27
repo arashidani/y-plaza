@@ -10,6 +10,7 @@ import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
 
@@ -123,9 +124,13 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* リソースヒント - DNS prefetch */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        {/* リソースヒント - 重要なオリジンのプリコネクト */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="//vercel.live" />
+        
+        {/* 重要リソースのプリロード */}
+        <link rel="preload" as="style" href="/favicon.svg" />
         
         {/* SVG を使う */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -156,6 +161,7 @@ export default async function RootLayout({
             </LayoutClient>
           </NextIntlClientProvider>
         </ThemeProvider>
+        <CriticalCSS />
         <Analytics />
       </body>
     </html>
