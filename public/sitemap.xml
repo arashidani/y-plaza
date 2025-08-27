@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Japanese homepage -->
   <url>
     <loc>https://y-plaza.vercel.app/</loc>
     <changefreq>weekly</changefreq>
@@ -9,6 +10,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/" />
   </url>
+  
+  <!-- English homepage -->
   <url>
     <loc>https://y-plaza.vercel.app/en</loc>
     <changefreq>weekly</changefreq>
@@ -18,6 +21,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/" />
   </url>
+  
+  <!-- Portuguese homepage -->
   <url>
     <loc>https://y-plaza.vercel.app/pt</loc>
     <changefreq>weekly</changefreq>
@@ -27,6 +32,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/" />
   </url>
+  
+  <!-- Japanese privacy page -->
   <url>
     <loc>https://y-plaza.vercel.app/privacy</loc>
     <changefreq>monthly</changefreq>
@@ -36,6 +43,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt/privacy" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/privacy" />
   </url>
+  
+  <!-- English privacy page -->
   <url>
     <loc>https://y-plaza.vercel.app/en/privacy</loc>
     <changefreq>monthly</changefreq>
@@ -45,6 +54,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt/privacy" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/privacy" />
   </url>
+  
+  <!-- Portuguese privacy page -->
   <url>
     <loc>https://y-plaza.vercel.app/pt/privacy</loc>
     <changefreq>monthly</changefreq>
@@ -54,6 +65,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt/privacy" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/privacy" />
   </url>
+  
+  <!-- Japanese terms page -->
   <url>
     <loc>https://y-plaza.vercel.app/terms</loc>
     <changefreq>monthly</changefreq>
@@ -63,6 +76,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt/terms" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/terms" />
   </url>
+  
+  <!-- English terms page -->
   <url>
     <loc>https://y-plaza.vercel.app/en/terms</loc>
     <changefreq>monthly</changefreq>
@@ -72,6 +87,8 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://y-plaza.vercel.app/pt/terms" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://y-plaza.vercel.app/terms" />
   </url>
+  
+  <!-- Portuguese terms page -->
   <url>
     <loc>https://y-plaza.vercel.app/pt/terms</loc>
     <changefreq>monthly</changefreq>
