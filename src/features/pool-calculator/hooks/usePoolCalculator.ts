@@ -2,10 +2,11 @@ import { useState, useMemo } from 'react'
 import type { Line, LineType } from '../models/types'
 import { calcLineTotal } from '../utils/calculations'
 import { generateId } from '../utils/id'
+import { getDefaultPoolTariff } from '../utils/timeBasedDefaults'
 
 export function usePoolCalculator() {
   const [lines, setLines] = useState<Line[]>([
-    { id: generateId(), type: 'pool', tariff: 'season_9_6', entries: [{ category: 'adult', count: 1, disabledDiscount: false }] },
+    { id: generateId(), type: 'pool', tariff: getDefaultPoolTariff(), entries: [{ category: 'adult', count: 1, disabledDiscount: false }] },
   ])
   
   const [enabledTypes, setEnabledTypes] = useState<Set<LineType>>(new Set(['pool']))
@@ -29,7 +30,7 @@ export function usePoolCalculator() {
             
             const next: Line =
               type === 'pool'
-                ? { id, type: 'pool', tariff: 'season_9_6', entries: [{ category: 'adult', count: 1, disabledDiscount: false }] }
+                ? { id, type: 'pool', tariff: getDefaultPoolTariff(), entries: [{ category: 'adult', count: 1, disabledDiscount: false }] }
                 : type === 'gym'
                 ? { id, type: 'gym', who: hasPoolOrMember ? 'member_or_pool_user' : 'adult', count: 1 }
                 : type === 'locker'
