@@ -167,6 +167,7 @@ export default async function RootLayout({
         {/* 古いブラウザやWindows用の.ico */}
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="theme-color" content="#0077b6" />
+        <meta name="google-site-verification" content="piDRDWxwbrjaYtRRsoBImfpSCKCvZGgO_VzLeFg6mQM" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
