@@ -5,7 +5,9 @@
     "about": "About",
     "services": "Services",
     "contact": "Contact",
-    "language": "Language"
+    "language": "Language",
+    "languageSelector": "Language selector",
+    "switchTo": "Switch to {language}"
   },
   "footer": {
     "copyright": "© 2025 Unofficial You Plaza. All rights reserved.",
@@ -101,6 +103,13 @@
     "units": "Units",
     "books": "Books",
     "couponBookNote": "1 book = 11 tickets",
-    "peopleUnit": "people"
+    "peopleUnit": "people",
+    "selectServices": "Select service items",
+    "clearAllDescription": "Clear all selected items and reset calculation",
+    "addLockerDescription": "Add locker service required for pool use",
+    "totalAmount": "Total amount {amount} yen",
+    "publicInfoLinkDescription": "Open the official You Plaza Izumo pricing information page in a new tab",
+    "externalLink": "(External link, opens in new tab)",
+    "lockerDetailPageLink": "Go to locker details information page"
   }
 }

@@ -10,18 +10,25 @@ import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  // latin-extを追加して拡張文字に対応
-  subsets: ['latin', 'latin-ext'],
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
+  adjustFontFallback: true,
 })
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
-  subsets: ['latin', 'latin-ext'],
+  subsets: ['latin'],
+  display: 'swap',
+  preload: false,
+  fallback: ['ui-monospace', 'monospace'],
 })
 
 export const metadata: Metadata = {
@@ -62,7 +69,11 @@ export const metadata: Metadata = {
     'Shimane',
   ],
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL,
+    languages: {
+      'ja': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/`,
+      'en': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/en`,
+      'pt': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/pt`,
+    },
   },
   openGraph: {
     title: '出雲ゆうプラザ 非公式 料金計算ツール',
@@ -118,6 +129,37 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* リソースヒント - 重要なオリジンのプリコネクト */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="//vercel.live" />
+        
+        {/* 重要リソースのプリロード */}
+        <link rel="preload" href={`/${geistSans.style.fontFamily}`} as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/flags/jp.svg" as="image" />
+        
+        {/* Above-the-fold CSS インライン化 */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            .pool-calculator-container { 
+              max-width: 80rem; 
+              margin: 0 auto; 
+              padding: 2rem 1rem; 
+            }
+            .pool-calculator-title { 
+              font-size: 1.5rem; 
+              font-weight: 700; 
+              margin-bottom: 0.5rem; 
+            }
+            @media (min-width: 640px) {
+              .pool-calculator-title { font-size: 1.75rem; }
+            }
+            body { 
+              font-family: ${geistSans.style.fontFamily}, ui-sans-serif, system-ui; 
+            }
+          `
+        }} />
+        
         {/* SVG を使う */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* 互換性のためPNGも指定（ブラウザにより優先されることがある） */}
@@ -147,6 +189,7 @@ export default async function RootLayout({
             </LayoutClient>
           </NextIntlClientProvider>
         </ThemeProvider>
+        <CriticalCSS />
         <Analytics />
       </body>
     </html>
