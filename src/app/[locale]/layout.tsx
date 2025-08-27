@@ -33,6 +33,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'),
   title: '出雲ゆうプラザ 非公式 料金計算ツール｜入場料・回数券・団体・イブニングの合計を自動計算',
   description:
     '出雲ゆうプラザの「季節区分（9〜6月 / 7・8月）」「イブニング（17時以降）」「団体（20名以上）」「回数券（11枚綴）」などをまとめて自動計算できる、非公式の料金シミュレーターです。ロッカー代など注記にも対応。プール・ジム利用の目安料金を手早く把握できます。',
@@ -140,7 +141,6 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="//vercel.live" />
         
         {/* 重要リソースのプリロード */}
-        <link rel="preload" href={`/${geistSans.style.fontFamily}`} as="font" type="font/woff2" crossOrigin="" />
         <link rel="preload" href="/flags/jp.svg" as="image" />
         
         {/* Above-the-fold CSS インライン化 */}

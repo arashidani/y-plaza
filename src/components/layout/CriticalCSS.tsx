@@ -27,7 +27,6 @@ export function CriticalCSS() {
     // リソースヒントを追加
     const addResourceHints = () => {
       const hints = [
-        { rel: 'prefetch', href: '/api/calculator' },
         { rel: 'preload', href: '/flags/us.svg', as: 'image' },
         { rel: 'preload', href: '/flags/br.svg', as: 'image' },
       ]
