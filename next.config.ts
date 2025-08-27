@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
   experimental: {
     scrollRestoration: true,
     optimizeServerReact: true,
+    webpackBuildWorker: true,
   },
 
   // パフォーマンス最適化
