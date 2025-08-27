@@ -13,8 +13,7 @@
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "postbuild": "next-sitemap"
+    "build-storybook": "storybook build"
   },
   "browserslist": {
     "production": [
