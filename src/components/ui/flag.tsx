@@ -4,6 +4,8 @@ interface FlagProps {
   countryCode: string
   className?: string
   style?: React.CSSProperties
+  alt?: string
+  role?: string
 }
 
 const flagMap: Record<string, string> = {
@@ -12,8 +14,15 @@ const flagMap: Record<string, string> = {
   BR: '/flags/br.svg',
 }
 
-export function Flag({ countryCode, className, style }: FlagProps) {
+const countryNames: Record<string, string> = {
+  JP: 'Japan',
+  US: 'United States',
+  BR: 'Brazil',
+}
+
+export function Flag({ countryCode, className, style, alt, role }: FlagProps) {
   const flagSrc = flagMap[countryCode.toUpperCase()]
+  const countryName = countryNames[countryCode.toUpperCase()]
   
   if (!flagSrc) {
     return null
@@ -22,12 +31,13 @@ export function Flag({ countryCode, className, style }: FlagProps) {
   return (
     <Image
       src={flagSrc}
-      alt={`${countryCode} flag`}
+      alt={alt || (alt === '' ? '' : `${countryName} flag`)}
       width={16}
       height={12}
       className={className}
       style={style}
       priority
+      {...(alt === '' || role === 'presentation' ? { role: 'presentation', 'aria-hidden': true } : { role: role || 'img' })}
     />
   )
 }

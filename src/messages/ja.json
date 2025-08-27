@@ -5,7 +5,9 @@
     "about": "会社について",
     "services": "サービス",
     "contact": "お問い合わせ",
-    "language": "言語"
+    "language": "言語",
+    "languageSelector": "言語選択",
+    "switchTo": "{language}に切り替え"
   },
   "footer": {
     "copyright": "© 2025 Unofficial You Plaza. All rights reserved.",
@@ -101,6 +103,13 @@
     "units": "口数",
     "books": "冊数",
     "couponBookNote": "1冊=11枚綴り",
-    "peopleUnit": "名"
+    "peopleUnit": "名",
+    "selectServices": "サービス項目を選択",
+    "clearAllDescription": "すべての選択項目をクリアして計算をリセットする",
+    "addLockerDescription": "プール利用に必要なロッカーをサービス項目に追加する",
+    "totalAmount": "合計金額 {amount}円",
+    "publicInfoLinkDescription": "出雲ゆうプラザの公式料金情報ページを新しいタブで開く",
+    "externalLink": "（外部リンク、新しいタブで開きます）",
+    "lockerDetailPageLink": "ロッカーの詳細情報ページに移動"
   }
 }

@@ -54,18 +54,25 @@ export function Header() {
             <Globe className="h-4 w-4 text-muted-foreground hidden sm:inline" />
             <div className="relative">
               <Select value={currentLocale} onValueChange={handleLanguageChange}>
-                <SelectTrigger className="w-20 sm:w-36 relative">
+                <SelectTrigger 
+                  className="w-20 sm:w-36 relative" 
+                  aria-label={t('languageSelector')}
+                  aria-describedby="current-language"
+                >
                   <SelectValue placeholder={t('language')}>
-                    <div className="flex items-center gap-1 sm:gap-2">
+                    <span id="current-language" className="flex items-center gap-1 sm:gap-2">
                       <Flag
                         countryCode={localeFlagCodes[currentLocale]}
                         style={{
                           width: '1rem',
                           height: '0.75rem',
                         }}
+                        alt=""
+                        role="presentation"
                       />
                       <span className="hidden sm:inline">{localeNames[currentLocale]}</span>
-                    </div>
+                      <span className="sr-only">{t('language')}: {localeNames[currentLocale]}</span>
+                    </span>
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent 
@@ -77,17 +84,23 @@ export function Header() {
                   position="popper"
                 >
                   {locales.map((locale) => (
-                    <SelectItem key={locale} value={locale}>
-                      <div className="flex items-center gap-2 whitespace-nowrap">
+                    <SelectItem 
+                      key={locale} 
+                      value={locale}
+                      aria-label={t('switchTo', { language: localeNames[locale] })}
+                    >
+                      <span className="flex items-center gap-2 whitespace-nowrap">
                         <Flag
                           countryCode={localeFlagCodes[locale]}
                           style={{
                             width: '1rem',
                             height: '0.75rem',
                           }}
+                          alt=""
+                          role="presentation"
                         />
                         {localeNames[locale]}
-                      </div>
+                      </span>
                     </SelectItem>
                   ))}
                 </SelectContent>

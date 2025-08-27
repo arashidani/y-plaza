@@ -68,7 +68,11 @@ export const metadata: Metadata = {
     'Shimane',
   ],
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL,
+    languages: {
+      'ja': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/`,
+      'en': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/en`,
+      'pt': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/pt`,
+    },
   },
   openGraph: {
     title: '出雲ゆうプラザ 非公式 料金計算ツール',
