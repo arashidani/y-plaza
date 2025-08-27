@@ -17,11 +17,16 @@ const geistSans = Geist({
   variable: '--font-geist-sans',
   // latin-extを追加して拡張文字に対応
   subsets: ['latin', 'latin-ext'],
+  // フォント読み込み最適化
+  display: 'swap', 
+  preload: true,
 })
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin', 'latin-ext'],
+  display: 'swap',
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -118,6 +123,10 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* リソースヒント - DNS prefetch */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
         {/* SVG を使う */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* 互換性のためPNGも指定（ブラウザにより優先されることがある） */}
