@@ -10,7 +10,7 @@ import {
 import { type Locale } from '@/constants/locales'
 import { locales, localeNames, localeFlagCodes } from '@/lib/i18n'
 import { Globe } from 'lucide-react'
-import ReactCountryFlag from 'react-country-flag'
+import { Flag } from '@/components/ui/flag'
 import { Link, useRouter, usePathname } from '@/i18n/routing'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -57,9 +57,8 @@ export function Header() {
                 <SelectTrigger className="w-20 sm:w-36 relative">
                   <SelectValue placeholder={t('language')}>
                     <div className="flex items-center gap-1 sm:gap-2">
-                      <ReactCountryFlag
+                      <Flag
                         countryCode={localeFlagCodes[currentLocale]}
-                        svg
                         style={{
                           width: '1rem',
                           height: '0.75rem',
@@ -80,9 +79,8 @@ export function Header() {
                   {locales.map((locale) => (
                     <SelectItem key={locale} value={locale}>
                       <div className="flex items-center gap-2 whitespace-nowrap">
-                        <ReactCountryFlag
+                        <Flag
                           countryCode={localeFlagCodes[locale]}
-                          svg
                           style={{
                             width: '1rem',
                             height: '0.75rem',

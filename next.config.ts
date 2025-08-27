@@ -19,6 +19,44 @@ const nextConfig: NextConfig = {
   // 実験的機能
   experimental: {
     scrollRestoration: true,
+    optimizeServerReact: true,
+  },
+
+  // パフォーマンス最適化
+  poweredByHeader: false,
+  compress: true,
+  
+  // 静的ファイルのキャッシュ設定
+  async headers() {
+    return [
+      {
+        source: '/flags/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*\\.svg',
+        headers: [
+          {
+            key: 'Cache-Control', 
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*\\.(ico|png|jpg|jpeg|gif|webp)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ]
   },
 
   // Docker環境でのホットリロード対応
