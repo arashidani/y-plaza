@@ -1,3 +1,7 @@
+# *
 User-agent: *
 Allow: /
-Sitemap: https://y-plaza.vercel.app/sitemap.xml
+Disallow: /api/
+
+# Host
+Host: https://y-plaza.vercel.app
