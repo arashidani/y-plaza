@@ -16,18 +16,19 @@ import { Analytics } from '@vercel/analytics/next'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  // latin-extを追加して拡張文字に対応
-  subsets: ['latin', 'latin-ext'],
-  // フォント読み込み最適化
-  display: 'swap', 
+  subsets: ['latin'],
+  display: 'swap',
   preload: true,
+  fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
+  adjustFontFallback: true,
 })
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
-  subsets: ['latin', 'latin-ext'],
+  subsets: ['latin'],
   display: 'swap',
-  preload: true,
+  preload: false,
+  fallback: ['ui-monospace', 'monospace'],
 })
 
 export const metadata: Metadata = {
@@ -134,7 +135,30 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="//vercel.live" />
         
         {/* 重要リソースのプリロード */}
-        <link rel="preload" as="style" href="/favicon.svg" />
+        <link rel="preload" href={`/${geistSans.style.fontFamily}`} as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/flags/jp.svg" as="image" />
+        
+        {/* Above-the-fold CSS インライン化 */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            .pool-calculator-container { 
+              max-width: 80rem; 
+              margin: 0 auto; 
+              padding: 2rem 1rem; 
+            }
+            .pool-calculator-title { 
+              font-size: 1.5rem; 
+              font-weight: 700; 
+              margin-bottom: 0.5rem; 
+            }
+            @media (min-width: 640px) {
+              .pool-calculator-title { font-size: 1.75rem; }
+            }
+            body { 
+              font-family: ${geistSans.style.fontFamily}, ui-sans-serif, system-ui; 
+            }
+          `
+        }} />
         
         {/* SVG を使う */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

@@ -36,7 +36,10 @@ export function Flag({ countryCode, className, style, alt, role }: FlagProps) {
       height={12}
       className={className}
       style={style}
-      priority
+      // デフォルト言語のみプリオリティ上げる
+      priority={countryCode === 'JP'}
+      loading={countryCode === 'JP' ? 'eager' : 'lazy'}
+      sizes="16px"
       {...(alt === '' || role === 'presentation' ? { role: 'presentation', 'aria-hidden': true } : { role: role || 'img' })}
     />
   )

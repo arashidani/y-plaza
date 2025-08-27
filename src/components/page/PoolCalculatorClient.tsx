@@ -28,8 +28,8 @@ export function PoolCalculatorClient() {
   } = usePoolCalculator()
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="text-2xl font-bold">
+    <main className="pool-calculator-container">
+      <h1 className="pool-calculator-title">
         {t('poolCalculator.title', { defaultValue: 'プール料金 計算ツール' })}
       </h1>
       <p className="mt-2 text-sm text-gray-700">
@@ -132,7 +132,7 @@ export function PoolCalculatorClient() {
         )}
       </div>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
+      <div className="mt-8 grid gap-4 md:grid-cols-2" data-lazy-load>
         <Section title={t('poolCalculator.breakdown', { defaultValue: '内訳' })}>
           <div className="space-y-2">
             {[
