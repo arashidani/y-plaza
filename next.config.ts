@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 
+  // コンパイラ最適化
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
   // 実験的機能
   experimental: {
     scrollRestoration: true,
