@@ -110,6 +110,7 @@
     "totalAmount": "Valor total {amount} yen",
     "publicInfoLinkDescription": "Abrir a página oficial de informações de preços do You Plaza Izumo em uma nova aba",
     "externalLink": "(Link externo, abre em nova aba)",
-    "lockerDetailPageLink": "Ir para a página de detalhes do armário"
+    "lockerDetailPageLink": "Ir para a página de detalhes do armário",
+    "unitPrice": "Preço unitário"
   }
 }

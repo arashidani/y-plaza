@@ -110,6 +110,7 @@
     "totalAmount": "合計金額 {amount}円",
     "publicInfoLinkDescription": "出雲ゆうプラザの公式料金情報ページを新しいタブで開く",
     "externalLink": "（外部リンク、新しいタブで開きます）",
-    "lockerDetailPageLink": "ロッカーの詳細情報ページに移動"
+    "lockerDetailPageLink": "ロッカーの詳細情報ページに移動",
+    "unitPrice": "単価"
   }
 }

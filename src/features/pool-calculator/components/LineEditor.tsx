@@ -172,7 +172,7 @@ const LINE_TYPE_LABELS = {
                         />
                         <div className="text-xs text-gray-500 dark:text-gray-400">
                           <div>{tCommon('entryFeeOnly')}</div>
-                          <div>単価: <YenMono value={unit} className="text-xs" /></div>
+                          <div>{tCommon('unitPrice')}: <YenMono value={unit} className="text-xs" /></div>
                         </div>
                       </div>
 
@@ -434,7 +434,7 @@ const LINE_TYPE_LABELS = {
                 {tCommon('total')}{info.count}{info.unit}
                 <br />
                 {info.showUnitPrice && (
-                  <>単価: <YenMono value={info.unitPrice || 0} className="text-xs" /></>
+                  <>{tCommon('unitPrice')}: <YenMono value={info.unitPrice || 0} className="text-xs" /></>
                 )}
                 {info.note}
               </div>
