@@ -21,7 +21,7 @@ const geistSans = Geist({
   display: 'swap',
   preload: true,
   fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
-  adjustFontFallback: true,
+  adjustFontFallback: true
 })
 
 const geistMono = Geist_Mono({
@@ -29,7 +29,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
   display: 'swap',
   preload: false,
-  fallback: ['ui-monospace', 'monospace'],
+  fallback: ['ui-monospace', 'monospace']
 })
 
 export const metadata: Metadata = {
@@ -68,14 +68,14 @@ export const metadata: Metadata = {
     'ginásio',
     'calculadora',
     'Izumo',
-    'Shimane',
+    'Shimane'
   ],
   alternates: {
     languages: {
-      'ja': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/`,
-      'en': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/en`,
-      'pt': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/pt`,
-    },
+      ja: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/`,
+      en: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/en`,
+      pt: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/pt`
+    }
   },
   openGraph: {
     title: '出雲ゆうプラザ 非公式 料金計算ツール',
@@ -89,32 +89,32 @@ export const metadata: Metadata = {
         url: `${process.env.NEXT_PUBLIC_SITE_URL || ''}/og.png`,
         width: 1200,
         height: 630,
-        alt: '出雲ゆうプラザ 非公式 料金計算ツール',
-      },
+        alt: '出雲ゆうプラザ 非公式 料金計算ツール'
+      }
     ],
     type: 'website',
-    locale: 'ja_JP',
+    locale: 'ja_JP'
   },
   robots: {
     index: true,
-    follow: true,
+    follow: true
   },
   // ブランド・法務の観点から、非公式である旨をmetaにも明示
   other: {
-    'note:unofficial': 'This site is an unofficial calculator for Izumo Yuu Plaza.',
+    'note:unofficial': 'This site is an unofficial calculator for Izumo Yuu Plaza.'
   },
   // Google Site Verification
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION,
-  },
+    google: process.env.GOOGLE_SITE_VERIFICATION
+  }
 }
 
 export default async function RootLayout({
   children,
-  params,
+  params
 }: Readonly<{
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
 }>) {
   const { locale } = await params
 
@@ -139,13 +139,14 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="//vercel.live" />
-        
+
         {/* 重要リソースのプリロード */}
         <link rel="preload" href="/flags/jp.svg" as="image" />
-        
+
         {/* Above-the-fold CSS インライン化 */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
             .pool-calculator-container { 
               max-width: 80rem; 
               margin: 0 auto; 
@@ -163,19 +164,14 @@ export default async function RootLayout({
               font-family: ${geistSans.style.fontFamily}, ui-sans-serif, system-ui; 
             }
           `
-        }} />
-        
-        {/* SVG を使う */}
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        {/* 互換性のためPNGも指定（ブラウザにより優先されることがある） */}
-        <link rel="icon" href="/favicon.png" sizes="32x32" />
-        {/* 古いブラウザやWindows用の.ico */}
-        <link rel="shortcut icon" href="/favicon.ico" />
+          }}
+        />
+
         <meta name="theme-color" content="#0077b6" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(webAppJsonLd()),
+            __html: JSON.stringify(webAppJsonLd())
           }}
         />
       </head>
