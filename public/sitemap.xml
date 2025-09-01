@@ -3,6 +3,7 @@
   <!-- Japanese homepage -->
   <url>
     <loc>https://y-plaza.vercel.app/</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/" />
@@ -14,6 +15,7 @@
   <!-- English homepage -->
   <url>
     <loc>https://y-plaza.vercel.app/en</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/" />
@@ -25,6 +27,7 @@
   <!-- Portuguese homepage -->
   <url>
     <loc>https://y-plaza.vercel.app/pt</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/" />
@@ -36,6 +39,7 @@
   <!-- Japanese privacy page -->
   <url>
     <loc>https://y-plaza.vercel.app/privacy</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/privacy" />
@@ -47,6 +51,7 @@
   <!-- English privacy page -->
   <url>
     <loc>https://y-plaza.vercel.app/en/privacy</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/privacy" />
@@ -58,6 +63,7 @@
   <!-- Portuguese privacy page -->
   <url>
     <loc>https://y-plaza.vercel.app/pt/privacy</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/privacy" />
@@ -69,6 +75,7 @@
   <!-- Japanese terms page -->
   <url>
     <loc>https://y-plaza.vercel.app/terms</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/terms" />
@@ -80,6 +87,7 @@
   <!-- English terms page -->
   <url>
     <loc>https://y-plaza.vercel.app/en/terms</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/terms" />
@@ -91,6 +99,7 @@
   <!-- Portuguese terms page -->
   <url>
     <loc>https://y-plaza.vercel.app/pt/terms</loc>
+    <lastmod>2025-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://y-plaza.vercel.app/terms" />
