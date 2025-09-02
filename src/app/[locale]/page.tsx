@@ -4,6 +4,8 @@ import { PoolCalculatorClient } from '@/components/page/PoolCalculatorClient'
 import { setRequestLocale } from 'next-intl/server'
 import { SUPPORTED_LOCALES } from '@/constants/locales'
 
+export const revalidate = 60
+
 interface PageProps {
   params: Promise<{ locale: string }>
 }
