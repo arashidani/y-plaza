@@ -31,21 +31,21 @@ export function Header() {
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="font-bold text-primary hover:text-primary/80 transition-colors flex-shrink-0 text-center leading-tight">
-          {t('title').length > 25 ? (
-            <div className="text-base sm:text-xl">
-              {t('title').split(' ').length > 1 ? (
-                <>
-                  {t('title').split(' ').slice(0, Math.ceil(t('title').split(' ').length / 2)).join(' ')}
-                  <br />
-                  {t('title').split(' ').slice(Math.ceil(t('title').split(' ').length / 2)).join(' ')}
-                </>
-              ) : (
-                <div className="text-lg sm:text-xl">{t('title')}</div>
-              )}
-            </div>
-          ) : (
-            <div className="text-xl sm:text-2xl">{t('title')}</div>
-          )}
+          <div className="text-base sm:text-xl">
+            {t('title').split(' ').length > 1 ? (
+              <>
+                {t('title').split(' ').slice(0, Math.ceil(t('title').split(' ').length / 2)).join(' ')}
+                <br />
+                {t('title').split(' ').slice(Math.ceil(t('title').split(' ').length / 2)).join(' ')}
+              </>
+            ) : (
+              <>
+                {t('title').slice(0, Math.ceil(t('title').length / 2))}
+                <br />
+                {t('title').slice(Math.ceil(t('title').length / 2))}
+              </>
+            )}
+          </div>
         </Link>
         
         <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">

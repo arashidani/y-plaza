@@ -5,3 +5,6 @@ Disallow: /api/
 
 # Host
 Host: https://y-plaza.vercel.app
+
+# Sitemap
+Sitemap: https://y-plaza.vercel.app/sitemap.xml
