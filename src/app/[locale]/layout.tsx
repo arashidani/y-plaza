@@ -142,31 +142,6 @@ export default async function RootLayout({
 
         {/* 重要リソースのプリロード */}
         <link rel="preload" href="/flags/jp.svg" as="image" />
-
-        {/* Above-the-fold CSS インライン化 */}
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            .pool-calculator-container { 
-              max-width: 80rem; 
-              margin: 0 auto; 
-              padding: 2rem 1rem; 
-            }
-            .pool-calculator-title { 
-              font-size: 1.5rem; 
-              font-weight: 700; 
-              margin-bottom: 0.5rem; 
-            }
-            @media (min-width: 640px) {
-              .pool-calculator-title { font-size: 1.75rem; }
-            }
-            body { 
-              font-family: ${geistSans.style.fontFamily}, ui-sans-serif, system-ui; 
-            }
-          `
-          }}
-        />
-
         <meta name="theme-color" content="#0077b6" />
         <script
           type="application/ld+json"

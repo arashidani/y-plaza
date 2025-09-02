@@ -21,7 +21,9 @@ html, body {
 }
 
 
-@theme inline {
+@variant dark (.dark &);
+
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
