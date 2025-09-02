@@ -20,7 +20,6 @@ html, body {
   max-width: 200px !important;
 }
 
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);

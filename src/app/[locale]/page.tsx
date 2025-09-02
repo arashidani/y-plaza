@@ -2,6 +2,9 @@ import React from 'react'
 import { Metadata } from 'next'
 import { PoolCalculatorClient } from '@/components/page/PoolCalculatorClient'
 import { setRequestLocale } from 'next-intl/server'
+import { SUPPORTED_LOCALES } from '@/constants/locales'
+
+export const revalidate = 60
 
 interface PageProps {
   params: Promise<{ locale: string }>
@@ -23,6 +26,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
     },
   }
+}
+
+export async function generateStaticParams() {
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }))
 }
 
 export default async function PoolCalculatorPage({ params }: PageProps) {
