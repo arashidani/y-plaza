@@ -140,44 +140,8 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="//vercel.live" />
 
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            body { 
-              font-family: ${geistSans.style.fontFamily}, ui-sans-serif, system-ui;
-              margin: 0;
-              background: white;
-            }
-            
-            header { 
-              border-bottom: 1px solid #e5e7eb;
-              background: rgba(255,255,255,0.95);
-            }
-            
-            .pool-calculator-container { 
-              max-width: 80rem; 
-              margin: 0 auto; 
-              padding: 2rem 1rem; 
-            }
-            .pool-calculator-title { 
-              font-size: 1.5rem; 
-              font-weight: 700; 
-              margin-bottom: 0.5rem; 
-              line-height: 1.2;
-            }
-            
-            .flex { display: flex; }
-            .flex-col { flex-direction: column; }
-            .min-h-screen { min-height: 100vh; }
-            .flex-1 { flex: 1; }
-            
-            @media (min-width: 640px) {
-              .pool-calculator-title { font-size: 1.75rem; }
-            }
-          `
-          }}
-        />
-
+        {/* 重要リソースのプリロード */}
+        <link rel="preload" href="/flags/jp.svg" as="image" />
         <meta name="theme-color" content="#0077b6" />
         <script
           type="application/ld+json"
