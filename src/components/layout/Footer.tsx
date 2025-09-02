@@ -1,10 +1,8 @@
-'use client'
-
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
-export function Footer() {
-  const t = useTranslations('footer')
+export async function Footer() {
+  const t = await getTranslations('footer')
 
   return (
     <footer className="border-t bg-background">

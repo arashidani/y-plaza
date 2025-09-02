@@ -160,9 +160,9 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <LayoutClient>
               <Header />
-              <main className="flex-1 w-full overflow-x-hidden">{children}</main>
-              <Footer />
+              <main className="flex-1 w-full overflow-x-hidden px-4 py-6">{children}</main>
             </LayoutClient>
+            <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
         <CriticalCSS />
