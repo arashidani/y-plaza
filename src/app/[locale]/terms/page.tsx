@@ -1,4 +1,4 @@
-import { SUPPORTED_LOCALES } from '@/constants/locales'
+import { generateLocaleParams } from '@/lib/static-params'
 import { setRequestLocale } from 'next-intl/server'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
@@ -11,7 +11,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((locale) => ({ locale }))
+  return generateLocaleParams()
 }
 
 export default async function TermsPage({ params }: PageProps) {
