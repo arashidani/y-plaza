@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
-import { MinimalFooter } from '@/components/layout/MinimalFooter'
+import { Footer } from '@/components/layout/Footer'
 import { StreamingWrapper } from '@/components/streaming/StreamingWrapper'
 import { getCachedJsonLd } from '@/lib/cached-jsonld'
 import { setRequestLocale } from 'next-intl/server'
@@ -167,13 +167,13 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <StreamingWrapper fallback={<div className="h-16 bg-gray-100 animate-pulse"></div>}>
-            <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider messages={messages}>
+            <StreamingWrapper fallback={<div className="h-16 bg-gray-100 animate-pulse"></div>}>
               <Header />
               <main className="flex-1 w-full overflow-x-hidden px-4 py-6">{children}</main>
-            </NextIntlClientProvider>
-          </StreamingWrapper>
-          <MinimalFooter locale={validatedLocale} />
+            </StreamingWrapper>
+            <Footer />
+          </NextIntlClientProvider>
         </ThemeProvider>
         <CriticalCSS />
         <LazyAnalytics />
