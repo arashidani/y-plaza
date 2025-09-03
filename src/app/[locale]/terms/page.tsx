@@ -4,6 +4,8 @@ import { readFile } from 'fs/promises'
 import { join } from 'path'
 import ReactMarkdown from 'react-markdown'
 
+export const dynamic = 'force-static'
+
 interface PageProps {
   params: Promise<{ locale: string }>
 }
