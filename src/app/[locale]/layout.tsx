@@ -6,6 +6,7 @@ import { getCachedJsonLd } from '@/lib/cached-jsonld'
 import { setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { getCachedMessages, validateLocale } from '@/lib/i18n-cache'
+import { generateLocaleParams } from '@/lib/static-params'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
@@ -37,11 +38,7 @@ export const dynamic = 'force-static'
 export const revalidate = 3600
 // 静的パラメータの生成
 export async function generateStaticParams() {
-  return [
-    { locale: 'ja' },
-    { locale: 'en' },
-    { locale: 'pt' }
-  ]
+  return generateLocaleParams()
 }
 
 export const metadata: Metadata = {
@@ -148,12 +145,10 @@ export default async function RootLayout({
       <head>
         {/* 重要リソースの優先プリロード */}
         <link rel="preload" href="/flags/jp.svg" as="image" type="image/svg+xml" />
-        
+
         {/* DNS プリフェッチ（低優先度） */}
         <link rel="dns-prefetch" href="//vercel.live" />
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        
+
         <meta name="theme-color" content="#0077b6" />
         <script
           type="application/ld+json"
