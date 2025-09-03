@@ -15,6 +15,7 @@ export const getCachedFile = cache(async (filePath: string): Promise<string> => 
 
 // Markdown ファイル専用キャッシュ
 export const getCachedMarkdown = cache(async (locale: string, type: 'privacy' | 'terms'): Promise<string> => {
-  const filePath = `src/content/${type}-policy-${locale}.md`
+  const fileName = type === 'privacy' ? `privacy-policy-${locale}.md` : `terms-of-service-${locale}.md`
+  const filePath = `src/content/${fileName}`
   return getCachedFile(filePath)
 })
