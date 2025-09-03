@@ -23,11 +23,24 @@ const nextConfig: NextConfig = {
     webpackBuildWorker: true,
   },
 
+  // サーバー外部パッケージ
+  serverExternalPackages: ['react-markdown', 'remark-gfm'],
+
+  // Turbopack設定
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+
   // パフォーマンス最適化
   poweredByHeader: false,
   compress: true,
   
-  // 静的ファイルのキャッシュ設定
+  // 強化されたキャッシュ設定
   async headers() {
     return [
       {
@@ -37,23 +50,35 @@ const nextConfig: NextConfig = {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
           },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'public, max-age=63072000',
+          },
         ],
       },
       {
-        source: '/:path*\\.svg',
+        source: '/:path*\\.(svg|ico|png|jpg|jpeg|gif|webp|woff|woff2)',
         headers: [
           {
             key: 'Cache-Control', 
             value: 'public, max-age=31536000, immutable',
           },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'public, max-age=63072000',
+          },
         ],
       },
       {
-        source: '/:path*\\.(ico|png|jpg|jpeg|gif|webp)',
+        source: '/(.*)',
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
           },
         ],
       },
@@ -66,7 +91,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Cache-Control',
-            value: 'public, max-age=3600, s-maxage=3600',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=172800',
           },
         ],
       },
@@ -79,7 +104,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Cache-Control',
-            value: 'public, max-age=3600, s-maxage=3600',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=172800',
           },
         ],
       },

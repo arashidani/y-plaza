@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
-import { StaticFooter } from '@/components/layout/StaticFooter'
+import { Footer } from '@/components/layout/Footer'
+import { StreamingWrapper } from '@/components/streaming/StreamingWrapper'
 import { getCachedJsonLd } from '@/lib/cached-jsonld'
 import { setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
@@ -32,10 +33,12 @@ const geistMono = Geist_Mono({
   fallback: ['ui-monospace', 'monospace']
 })
 
+// Node.js Runtime (generateStaticParams使用のため)
+export const runtime = 'nodejs'
 // 静的生成を強制してTTFBを改善
 export const dynamic = 'force-static'
-// 1時間キャッシュでパフォーマンス向上
-export const revalidate = 3600
+// 24時間キャッシュでパフォーマンス向上
+export const revalidate = 86400
 // 静的パラメータの生成
 export async function generateStaticParams() {
   return generateLocaleParams()
@@ -165,9 +168,11 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <Header />
-            <main className="flex-1 w-full overflow-x-hidden px-4 py-6">{children}</main>
-            <StaticFooter locale={validatedLocale} />
+            <StreamingWrapper fallback={<div className="h-16 bg-gray-100 animate-pulse"></div>}>
+              <Header />
+              <main className="flex-1 w-full overflow-x-hidden px-4 py-6">{children}</main>
+            </StreamingWrapper>
+            <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
         <CriticalCSS />
