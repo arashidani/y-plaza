@@ -9,9 +9,7 @@ export function setCacheHeaders(response: NextResponse, maxAge: number = 86400) 
   // CDN キャッシュ最適化
   response.headers.set('CDN-Cache-Control', `public, max-age=${maxAge * 7}`)
   
-  // ETag 設定
-  const etag = `"${Date.now().toString(36)}"`
-  response.headers.set('ETag', etag)
+  // Next.js が自動生成する適切な ETag を使用
   
   return response
 }
