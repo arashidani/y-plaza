@@ -1,36 +1,45 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { LayoutClient } from '@/components/layout/LayoutClient'
 import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { webAppJsonLd } from '@/lib/jsonLd'
+import { StaticFooter } from '@/components/layout/StaticFooter'
+import { getCachedJsonLd } from '@/lib/cached-jsonld'
 import { setRequestLocale } from 'next-intl/server'
-import { NextIntlClientProvider, hasLocale } from 'next-intl'
-import { getMessages } from 'next-intl/server'
-import { notFound } from 'next/navigation'
-import { routing } from '@/i18n/routing'
+import { NextIntlClientProvider } from 'next-intl'
+import { getCachedMessages, validateLocale } from '@/lib/i18n-cache'
+import { generateLocaleParams } from '@/lib/static-params'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
-import { Analytics } from '@vercel/analytics/next'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+import { LazyAnalytics } from '@/components/analytics/LazyAnalytics'
 
+// フォント最適化: 必要最小限のサブセットのみ読み込み
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
-  display: 'swap',
+  // モバイル最適化: blockからoptionalに変更
+  display: 'optional',
   preload: true,
   fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
   adjustFontFallback: true
 })
 
+// モノスペースフォントは遅延読み込み
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
-  display: 'swap',
+  display: 'optional',
   preload: false,
   fallback: ['ui-monospace', 'monospace']
 })
+
+// 静的生成を強制してTTFBを改善
+export const dynamic = 'force-static'
+// 1時間キャッシュでパフォーマンス向上
+export const revalidate = 3600
+// 静的パラメータの生成
+export async function generateStaticParams() {
+  return generateLocaleParams()
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'),
@@ -118,35 +127,33 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params
 
-  if (!hasLocale(routing.locales, locale)) {
-    notFound()
-  }
+  // ロケール検証とキャッシュ
+  const validatedLocale = validateLocale(locale)
 
   // SSG対応
-  setRequestLocale(locale)
+  setRequestLocale(validatedLocale)
 
-  // 言語ファイルの読み込み
-  const messages = await getMessages()
+  // キャッシュされた言語ファイルの読み込み
+  const messages = await getCachedMessages(validatedLocale)
 
   return (
     <html
-      lang={locale}
+      lang={validatedLocale}
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
       <head>
-        {/* リソースヒント - 重要なオリジンのプリコネクト */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* 重要リソースの優先プリロード */}
+        <link rel="preload" href="/flags/jp.svg" as="image" type="image/svg+xml" />
+
+        {/* DNS プリフェッチ（低優先度） */}
         <link rel="dns-prefetch" href="//vercel.live" />
 
-        {/* 重要リソースのプリロード */}
-        <link rel="preload" href="/flags/jp.svg" as="image" />
         <meta name="theme-color" content="#0077b6" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(webAppJsonLd())
+            __html: JSON.stringify(getCachedJsonLd())
           }}
         />
       </head>
@@ -158,16 +165,13 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <LayoutClient>
-              <Header />
-              <main className="flex-1 w-full overflow-x-hidden px-4 py-6">{children}</main>
-            </LayoutClient>
-            <Footer />
+            <Header />
+            <main className="flex-1 w-full overflow-x-hidden px-4 py-6">{children}</main>
+            <StaticFooter locale={validatedLocale} />
           </NextIntlClientProvider>
         </ThemeProvider>
         <CriticalCSS />
-        <Analytics />
-        <SpeedInsights />
+        <LazyAnalytics />
       </body>
     </html>
   )
