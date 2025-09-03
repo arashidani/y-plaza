@@ -4,7 +4,11 @@ import { PoolCalculatorClient } from '@/components/page/PoolCalculatorClient'
 import { setRequestLocale } from 'next-intl/server'
 import { generateLocaleParams } from '@/lib/static-params'
 
+// Node.js Runtime (generateStaticParams使用のため)
+export const runtime = 'nodejs'
 export const dynamic = 'force-static'
+// 24時間キャッシュ
+export const revalidate = 86400
 
 interface PageProps {
   params: Promise<{ locale: string }>

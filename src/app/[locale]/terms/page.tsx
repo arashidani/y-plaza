@@ -1,10 +1,13 @@
 import { generateLocaleParams } from '@/lib/static-params'
 import { setRequestLocale } from 'next-intl/server'
-import { readFile } from 'fs/promises'
-import { join } from 'path'
+import { getCachedMarkdown } from '@/lib/file-cache'
 import ReactMarkdown from 'react-markdown'
 
+// Node.js Runtime (ファイルシステム使用のため)
+export const runtime = 'nodejs'
 export const dynamic = 'force-static'
+// 24時間キャッシュ
+export const revalidate = 86400
 
 interface PageProps {
   params: Promise<{ locale: string }>
@@ -18,8 +21,7 @@ export default async function TermsPage({ params }: PageProps) {
   const { locale } = await params
   setRequestLocale(locale)
   
-  const contentPath = join(process.cwd(), 'src', 'content', `terms-of-service-${locale}.md`)
-  const content = await readFile(contentPath, 'utf8')
+  const content = await getCachedMarkdown(locale, 'terms')
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
