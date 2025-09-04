@@ -12,28 +12,33 @@ export function calcPrice(input: CalcInput): CalcResult {
   const base = getBasePrice(date, slot, category)
   if (base == null) return { status: 'not_for_sale' }
 
-  // 障害者割引
-  if (coupon === 'disability') {
-    if (base === 0) return { status: 'ok', price: 0 }
-    return { status: 'ok', price: floorTo10(Math.floor(base / 2)) }
+  // 割引適用
+  switch (coupon) {
+    case 'disability': {
+      // 障害者割引
+      if (base === 0) return { status: 'ok', price: 0 }
+      return { status: 'ok', price: floorTo10(Math.floor(base / 2)) }
+    }
+    case 'riloClub': {
+      const v = applyRiloClub(base, slot, category)
+      if (v != null) return { status: 'ok', price: v }
+      break
+    }
+    case 'joymate': {
+      const v = joymatePrice(date, slot, category)
+      if (v != null) return { status: 'ok', price: v }
+      break
+    }
+    case 'saninActive': {
+      const v = applySaninActive(date, slot, category, base)
+      if (v != null) return { status: 'ok', price: v }
+      break
+    }
+    case 'none':
+    default:
+      break
   }
 
-  // その他割引
-  if (coupon === 'riloClub') {
-    const v = applyRiloClub(base, slot, category)
-    if (v != null) return { status: 'ok', price: v }
-  }
-
-  if (coupon === 'joymate') {
-    const v = joymatePrice(date, slot, category)
-    if (v != null) return { status: 'ok', price: v }
-  }
-
-  if (coupon === 'saninActive') {
-    const v = applySaninActive(date, slot, category, base)
-    if (v != null) return { status: 'ok', price: v }
-  }
-
-  // 割引なし
+  // 割引なし or 割引適用不可
   return { status: 'ok', price: base }
 }
