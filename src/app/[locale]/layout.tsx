@@ -181,7 +181,7 @@ export default async function RootLayout({
               fallback={<div className="h-16 animate-pulse bg-gray-100"></div>}
             >
               <Header />
-              <main className="w-full flex-1 overflow-x-hidden py-6">
+              <main className="w-full flex-1 overflow-x-hidden py-6 px-4 md:px-6">
                 {children}
               </main>
             </StreamingWrapper>

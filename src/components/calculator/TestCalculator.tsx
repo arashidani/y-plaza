@@ -114,20 +114,14 @@ export function TestCalculator() {
               <strong>{t('note.lockerTitle')}</strong>{' '}
               {t('note.lockerDetail', { price: '100' })}
             </li>
-            <li>
-              {t('note.discount')}
-            </li>
-            <li>
-              {t('note.coupon')}
-            </li>
+            <li>{t('note.discount')}</li>
+            <li>{t('note.coupon')}</li>
             <li>{t('note.family')}</li>
           </ul>
         </Section>
       </div>
 
-      <footer className="mt-8 text-xs text-gray-500">
-        {t('footer')}
-      </footer>
+      <footer className="mt-8 text-xs text-gray-500">{t('footer')}</footer>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
 import { routing } from '@/i18n/routing'
+import { getMinimalMessages } from '@/lib/minimal-i18n'
 
 // メッセージをキャッシュする関数
 export const getCachedMessages = cache(async (locale: string) => {
@@ -24,10 +25,12 @@ export const getCachedMessages = cache(async (locale: string) => {
         return fallbackMessages
       } catch (fallbackError) {
         console.error('Failed to load fallback messages', fallbackError)
-        notFound()
+        // それでも失敗した場合は最小メッセージへフォールバック
+        return getMinimalMessages(validLocale)
       }
     }
-    notFound()
+    // デフォルト言語での読み込み失敗時も最小メッセージへフォールバック
+    return getMinimalMessages(validLocale)
   }
 })
 
