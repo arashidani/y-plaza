@@ -9,7 +9,9 @@ export function isDuplicatePoolCombo(
   category: Category,
   coupon: Coupon
 ): boolean {
-  return items.some((i) => i.id !== currentId && i.category === category && i.coupon === coupon)
+  return items.some(
+    (i) => i.id !== currentId && i.category === category && i.coupon === coupon
+  )
 }
 
 /**
@@ -22,7 +24,9 @@ export function findAlternativeCouponForCategory(
   allCoupons: Coupon[]
 ): Coupon | null {
   const used = new Set(
-    items.filter((i) => i.id !== currentId && i.category === category).map((i) => i.coupon)
+    items
+      .filter((i) => i.id !== currentId && i.category === category)
+      .map((i) => i.coupon)
   )
   const alt = allCoupons.find((c) => !used.has(c))
   return alt ?? null
@@ -39,7 +43,9 @@ export function availableCouponsForItem(
   const current = items.find((i) => i.id === id)
   if (!current) return allCoupons
   const used = new Set(
-    items.filter((i) => i.id !== id && i.category === current.category).map((i) => i.coupon)
+    items
+      .filter((i) => i.id !== id && i.category === current.category)
+      .map((i) => i.coupon)
   )
   return allCoupons.filter((c) => !used.has(c))
 }

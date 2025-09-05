@@ -13,7 +13,10 @@ interface PoolCalculatorCardProps {
   onCalculationChange?: (total: number) => void
 }
 
-export function PoolCalculatorCard({ onRemove, onCalculationChange }: PoolCalculatorCardProps) {
+export function PoolCalculatorCard({
+  onRemove,
+  onCalculationChange
+}: PoolCalculatorCardProps) {
   const { state, actions, total, message } = usePoolCalculator()
 
   const onCalcRef = useRef(onCalculationChange)
@@ -45,7 +48,9 @@ export function PoolCalculatorCard({ onRemove, onCalculationChange }: PoolCalcul
 
         {message && (
           <div className="mt-4 p-4 bg-muted rounded-md">
-            <pre className="text-sm font-medium whitespace-pre-wrap">{message}</pre>
+            <pre className="text-sm font-medium whitespace-pre-wrap">
+              {message}
+            </pre>
           </div>
         )}
       </CardContent>

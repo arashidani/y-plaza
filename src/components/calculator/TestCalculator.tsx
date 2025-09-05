@@ -20,17 +20,22 @@ const INITIAL_TOTALS: Record<ServiceType, number> = {
 }
 
 export function TestCalculator() {
-  const [selectedServices, setSelectedServices] = useState<ServiceType[]>(['pool'])
+  const [selectedServices, setSelectedServices] = useState<ServiceType[]>([
+    'pool'
+  ])
 
   // 表示順序（共通定義）
   const serviceOrder: ServiceType[] = SERVICE_ORDER
 
   // 各サービスの計算結果を管理
-  const [serviceTotals, setServiceTotals] = useState<Record<ServiceType, number>>(INITIAL_TOTALS)
+  const [serviceTotals, setServiceTotals] =
+    useState<Record<ServiceType, number>>(INITIAL_TOTALS)
 
   const handleServiceToggle = useCallback((service: ServiceType) => {
     setSelectedServices((prev) =>
-      prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
+      prev.includes(service)
+        ? prev.filter((s) => s !== service)
+        : [...prev, service]
     )
   }, [])
 
@@ -47,14 +52,20 @@ export function TestCalculator() {
   }, [])
 
   // サービスごとの計算結果を更新
-  const handleServiceCalculationChange = useCallback((serviceType: ServiceType, total: number) => {
-    setServiceTotals((prev) => ({ ...prev, [serviceType]: total }))
-  }, [])
+  const handleServiceCalculationChange = useCallback(
+    (serviceType: ServiceType, total: number) => {
+      setServiceTotals((prev) => ({ ...prev, [serviceType]: total }))
+    },
+    []
+  )
 
   // ロッカー追加のハンドラ（インライン関数を避ける）
-  const addLocker = useCallback(() => handleServiceToggle('locker'), [handleServiceToggle])
+  const addLocker = useCallback(
+    () => handleServiceToggle('locker'),
+    [handleServiceToggle]
+  )
 
-  // 実際の計算結果を使用（DRY: SERVICE_ORDER から一括生成）
+  // 実際の計算結果を使用して内訳と合計を算出
   const { subtotal, total } = SERVICE_ORDER.reduce(
     (acc, key) => {
       const v = selectedServices.includes(key) ? serviceTotals[key] : 0
@@ -76,9 +87,10 @@ export function TestCalculator() {
       />
 
       {/* ロッカー必須案内 */}
-      {selectedServices.includes('pool') && !selectedServices.includes('locker') && (
-        <LockerNotice onAddLocker={addLocker} />
-      )}
+      {selectedServices.includes('pool') &&
+        !selectedServices.includes('locker') && (
+          <LockerNotice onAddLocker={addLocker} />
+        )}
 
       {/* 選択されたサービスごとのカード */}
       <ServiceOrderList

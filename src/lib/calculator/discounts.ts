@@ -1,14 +1,22 @@
 import { Category, TimeSlot, Season } from './types'
 
 // リロクラブ: adult/senior の Day に 300円引き
-export function applyRiloClub(base: number, slot: TimeSlot, category: Category): number | null {
+export function applyRiloClub(
+  base: number,
+  slot: TimeSlot,
+  category: Category
+): number | null {
   if (slot !== 'day') return null
   if (category !== 'adult' && category !== 'senior') return null
   return Math.max(0, base - 300)
 }
 
 // ジョイメイト
-export function joymatePrice(season: Season, slot: TimeSlot, category: Category): number | null {
+export function joymatePrice(
+  season: Season,
+  slot: TimeSlot,
+  category: Category
+): number | null {
   if (slot !== 'day') return null
 
   if (season === 'summer') {

@@ -23,9 +23,14 @@ export function SummaryPanel({ subtotal, total }: SummaryPanelProps) {
     <Section title="内訳">
       <div className="space-y-2">
         {items.map(
-          (item) => item.value > 0 && (
-            <SummaryRow key={item.key} label={item.label} value={item.value} />
-          )
+          (item) =>
+            item.value > 0 && (
+              <SummaryRow
+                key={item.key}
+                label={item.label}
+                value={item.value}
+              />
+            )
         )}
         <div className="h-px bg-gray-200" />
         <div
@@ -34,7 +39,11 @@ export function SummaryPanel({ subtotal, total }: SummaryPanelProps) {
           aria-live="polite"
         >
           <span className="font-semibold">合計</span>
-          <YenMono value={total} className="text-lg font-bold" aria-label={`合計金額 ${total}円`} />
+          <YenMono
+            value={total}
+            className="text-lg font-bold"
+            aria-label={`合計金額 ${total}円`}
+          />
         </div>
       </div>
     </Section>

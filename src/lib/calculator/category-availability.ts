@@ -1,11 +1,24 @@
 import type { Category, ServiceType, Coupon } from './types'
-import { membershipPrices, type MembershipCategory, type MembershipPeriod } from './price-tables'
+import {
+  membershipPrices,
+  type MembershipCategory,
+  type MembershipPeriod
+} from './price-tables'
 
 // サービス毎に選択可能な区分一覧（汎用セレクト用）
-export function allowedCategoriesForService(serviceType: ServiceType): Category[] {
+export function allowedCategoriesForService(
+  serviceType: ServiceType
+): Category[] {
   switch (serviceType) {
     case 'pool':
-      return ['adult', 'companionAdult', 'senior', 'student', 'preschooler', 'under2']
+      return [
+        'adult',
+        'companionAdult',
+        'senior',
+        'student',
+        'preschooler',
+        'under2'
+      ]
     case 'gym':
       // 一般のセレクトでは "会員・プール利用者" を除外（専用エディタで扱う）
       return ['adult', 'student']
@@ -29,7 +42,9 @@ export function availableCategoriesExcludingUsed(
   items: Array<{ id: string; category: Category }>,
   currentItemId: string
 ): Category[] {
-  const used = items.filter((i) => i.id !== currentItemId).map((i) => i.category)
+  const used = items
+    .filter((i) => i.id !== currentItemId)
+    .map((i) => i.category)
   const current = items.find((i) => i.id === currentItemId)?.category
   const available = allowed.filter((c) => !used.includes(c))
   if (current && !available.includes(current)) available.push(current)
@@ -58,7 +73,9 @@ export function defaultCategory(allowed: Category[]): Category {
   return allowed[0] || 'adult'
 }
 
-export function membershipCategoriesForPeriod(period: MembershipPeriod): MembershipCategory[] {
+export function membershipCategoriesForPeriod(
+  period: MembershipPeriod
+): MembershipCategory[] {
   const available = membershipPrices[period]
   return Object.keys(available) as MembershipCategory[]
 }

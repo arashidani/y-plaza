@@ -13,8 +13,18 @@ import {
 } from '@/components/ui/select'
 import type { Category, Coupon, TimeSlot, Season } from '@/lib/calculator/types'
 import type { PoolItem } from '../types'
-import { getCategoryLabel, getCouponLabel, seasonLabels, timeSlotLabels, couponLabels, ALL_COUPONS } from '@/lib/calculator/labels'
-import { allowedCategoriesForService, canAddPool } from '@/lib/calculator/category-availability'
+import {
+  getCategoryLabel,
+  getCouponLabel,
+  seasonLabels,
+  timeSlotLabels,
+  couponLabels,
+  ALL_COUPONS
+} from '@/lib/calculator/labels'
+import {
+  allowedCategoriesForService,
+  canAddPool
+} from '@/lib/calculator/category-availability'
 import { availableCouponsForItem } from '@/lib/calculator/pool-helpers'
 
 interface PoolEditorState {
@@ -28,7 +38,11 @@ interface PoolEditorActions {
   setSlot: (s: TimeSlot) => void
   addItem: () => void
   removeItem: (id: string) => void
-  updateItem: (id: string, field: keyof PoolItem, value: Category | number | Coupon) => void
+  updateItem: (
+    id: string,
+    field: keyof PoolItem,
+    value: Category | number | Coupon
+  ) => void
 }
 
 interface PoolEditorProps {
@@ -38,12 +52,20 @@ interface PoolEditorProps {
 
 export function PoolEditor({ state, actions }: PoolEditorProps) {
   const { season, slot, items } = state
-  const { setSeason: onChangeSeason, setSlot: onChangeSlot, addItem: onAddItem, removeItem: onRemoveItem, updateItem: onUpdateItem } = actions
+  const {
+    setSeason: onChangeSeason,
+    setSlot: onChangeSlot,
+    addItem: onAddItem,
+    removeItem: onRemoveItem,
+    updateItem: onUpdateItem
+  } = actions
 
   const allowed = allowedCategoriesForService('pool')
   const canAddItem = canAddPool(items, ALL_COUPONS.length)
   const getAvailableCategoriesForItem = (): Category[] => allowed
-  const getAvailableCouponsForItem = (id: string): Array<keyof typeof couponLabels> =>
+  const getAvailableCouponsForItem = (
+    id: string
+  ): Array<keyof typeof couponLabels> =>
     availableCouponsForItem(
       items as Array<{ id: string; category: Category; coupon: Coupon }>,
       id,
@@ -54,7 +76,10 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-2">営業期間</label>
-          <Select value={season} onValueChange={(v: Season) => onChangeSeason(v)}>
+          <Select
+            value={season}
+            onValueChange={(v: Season) => onChangeSeason(v)}
+          >
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -87,20 +112,31 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
 
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium">利用者</label>
-        <Button onClick={onAddItem} variant="outline" size="sm" className="text-xs" disabled={!canAddItem}>
+        <Button
+          onClick={onAddItem}
+          variant="outline"
+          size="sm"
+          className="text-xs"
+          disabled={!canAddItem}
+        >
           + 追加
         </Button>
       </div>
 
       {items.map((item) => (
-        <Card key={item.id} className="p-4 bg-gray-50 dark:bg-gray-800 relative">
+        <Card
+          key={item.id}
+          className="p-4 bg-gray-50 dark:bg-gray-800 relative"
+        >
           {/* モバイル */}
           <div className="block md:hidden space-y-3">
             <div>
               <label className="block text-xs text-gray-600 mb-1">区分</label>
               <Select
                 value={item.category}
-                onValueChange={(v: Category) => onUpdateItem(item.id, 'category', v)}
+                onValueChange={(v: Category) =>
+                  onUpdateItem(item.id, 'category', v)
+                }
               >
                 <SelectTrigger className="h-8">
                   <SelectValue />
@@ -117,12 +153,20 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
 
             <div>
               <label className="block text-xs text-gray-600 mb-1">人数</label>
-              <NumberInput value={item.quantity} onChange={(v) => onUpdateItem(item.id, 'quantity', v)} />
+              <NumberInput
+                value={item.quantity}
+                onChange={(v) => onUpdateItem(item.id, 'quantity', v)}
+              />
             </div>
 
             <div>
               <label className="block text-xs text-gray-600 mb-1">割引</label>
-              <Select value={item.coupon} onValueChange={(v: Coupon) => onUpdateItem(item.id, 'coupon', v)}>
+              <Select
+                value={item.coupon}
+                onValueChange={(v: Coupon) =>
+                  onUpdateItem(item.id, 'coupon', v)
+                }
+              >
                 <SelectTrigger className="h-8">
                   <SelectValue />
                 </SelectTrigger>
@@ -143,7 +187,9 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
               <label className="block text-xs text-gray-600 mb-1">区分</label>
               <Select
                 value={item.category}
-                onValueChange={(v: Category) => onUpdateItem(item.id, 'category', v)}
+                onValueChange={(v: Category) =>
+                  onUpdateItem(item.id, 'category', v)
+                }
               >
                 <SelectTrigger className="h-8">
                   <SelectValue />
@@ -160,12 +206,20 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
 
             <div>
               <label className="block text-xs text-gray-600 mb-1">人数</label>
-              <NumberInput value={item.quantity} onChange={(v) => onUpdateItem(item.id, 'quantity', v)} />
+              <NumberInput
+                value={item.quantity}
+                onChange={(v) => onUpdateItem(item.id, 'quantity', v)}
+              />
             </div>
 
             <div>
               <label className="block text-xs text-gray-600 mb-1">割引</label>
-              <Select value={item.coupon} onValueChange={(v: Coupon) => onUpdateItem(item.id, 'coupon', v)}>
+              <Select
+                value={item.coupon}
+                onValueChange={(v: Coupon) =>
+                  onUpdateItem(item.id, 'coupon', v)
+                }
+              >
                 <SelectTrigger className="h-8">
                   <SelectValue />
                 </SelectTrigger>

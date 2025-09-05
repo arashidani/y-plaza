@@ -8,4 +8,3 @@ export const SERVICE_ORDER: ServiceType[] = [
   'membership',
   'ticketBook'
 ]
-

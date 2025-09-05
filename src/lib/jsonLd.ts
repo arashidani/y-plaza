@@ -16,7 +16,7 @@ export function webAppJsonLd() {
     url: process.env.NEXT_PUBLIC_SITE_URL,
     author: {
       '@type': 'Person',
-      name: 'You-Plaza Calculator Developer',
+      name: 'You-Plaza Calculator Developer'
     },
     inLanguage: ['ja', 'en', 'pt'],
     keywords:
@@ -25,7 +25,7 @@ export function webAppJsonLd() {
       '@type': 'SportsActivityLocation',
       name: '出雲ゆうプラザ',
       address: '島根県出雲市西新町1丁目2547-2',
-      url: 'https://y-plaza.sakura.ne.jp/',
-    },
+      url: 'https://y-plaza.sakura.ne.jp/'
+    }
   }
 }

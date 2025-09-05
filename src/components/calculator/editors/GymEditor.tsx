@@ -27,7 +27,11 @@ interface GymEditorState {
 interface GymEditorActions {
   addItem: () => void
   removeItem: (id: string) => void
-  updateItem: (id: string, field: keyof GymItem, value: Category | number) => void
+  updateItem: (
+    id: string,
+    field: keyof GymItem,
+    value: Category | number
+  ) => void
 }
 
 interface GymEditorProps {
@@ -47,19 +51,30 @@ export function GymEditor({ state, actions }: GymEditorProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium">利用者</label>
-        <Button onClick={addItem} variant="outline" size="sm" className="text-xs" disabled={!canAddItem}>
+        <Button
+          onClick={addItem}
+          variant="outline"
+          size="sm"
+          className="text-xs"
+          disabled={!canAddItem}
+        >
           + 追加
         </Button>
       </div>
 
       {items.map((item) => (
-        <Card key={item.id} className="p-4 bg-gray-50 dark:bg-gray-800 relative">
+        <Card
+          key={item.id}
+          className="p-4 bg-gray-50 dark:bg-gray-800 relative"
+        >
           <div className="flex items-center gap-2">
             <div className="flex-1">
               <label className="block text-xs text-gray-600 mb-1">区分</label>
               <Select
                 value={item.category}
-                onValueChange={(v: Category) => updateItem(item.id, 'category', v)}
+                onValueChange={(v: Category) =>
+                  updateItem(item.id, 'category', v)
+                }
               >
                 <SelectTrigger className="h-8">
                   <SelectValue />
@@ -76,7 +91,10 @@ export function GymEditor({ state, actions }: GymEditorProps) {
 
             <div>
               <label className="block text-xs text-gray-600 mb-1">人数</label>
-              <NumberInput value={item.quantity} onChange={(v) => updateItem(item.id, 'quantity', v)} />
+              <NumberInput
+                value={item.quantity}
+                onChange={(v) => updateItem(item.id, 'quantity', v)}
+              />
             </div>
           </div>
 

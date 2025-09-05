@@ -7,8 +7,14 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import type { MembershipCategory, MembershipPeriod } from '@/lib/calculator/price-tables'
-import { membershipPeriodLabels, membershipCategoryLabels } from '@/lib/calculator/labels'
+import type {
+  MembershipCategory,
+  MembershipPeriod
+} from '@/lib/calculator/price-tables'
+import {
+  membershipPeriodLabels,
+  membershipCategoryLabels
+} from '@/lib/calculator/labels'
 import { membershipCategoriesForPeriod } from '@/lib/calculator/category-availability'
 
 interface MembershipSelectorState {
@@ -26,7 +32,10 @@ interface MembershipSelectorProps {
   actions: MembershipSelectorActions
 }
 
-export function MembershipSelector({ state, actions }: MembershipSelectorProps) {
+export function MembershipSelector({
+  state,
+  actions
+}: MembershipSelectorProps) {
   const { period, category } = state
   const { setPeriod, setCategory } = actions
   const availableCategories = membershipCategoriesForPeriod(period)
@@ -35,7 +44,10 @@ export function MembershipSelector({ state, actions }: MembershipSelectorProps) 
     <>
       <div>
         <label className="block text-sm font-medium mb-2">期間</label>
-        <Select value={period} onValueChange={(v: MembershipPeriod) => setPeriod(v)}>
+        <Select
+          value={period}
+          onValueChange={(v: MembershipPeriod) => setPeriod(v)}
+        >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
@@ -51,7 +63,10 @@ export function MembershipSelector({ state, actions }: MembershipSelectorProps) 
 
       <div>
         <label className="block text-sm font-medium mb-2">区分</label>
-        <Select value={category} onValueChange={(v: string) => setCategory(v as MembershipCategory)}>
+        <Select
+          value={category}
+          onValueChange={(v: string) => setCategory(v as MembershipCategory)}
+        >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>

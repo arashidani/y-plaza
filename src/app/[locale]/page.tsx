@@ -14,21 +14,24 @@ interface PageProps {
   params: Promise<{ locale: string }>
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params
+}: PageProps): Promise<Metadata> {
   const { locale } = await params
-  const baseURL = process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'
+  const baseURL =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'
   const currentURL = locale === 'ja' ? baseURL : `${baseURL}/${locale}`
 
   return {
     alternates: {
       canonical: currentURL,
       languages: {
-        'ja': baseURL,
-        'en': `${baseURL}/en`,
-        'pt': `${baseURL}/pt`,
-        'x-default': baseURL,
-      },
-    },
+        ja: baseURL,
+        en: `${baseURL}/en`,
+        pt: `${baseURL}/pt`,
+        'x-default': baseURL
+      }
+    }
   }
 }
 

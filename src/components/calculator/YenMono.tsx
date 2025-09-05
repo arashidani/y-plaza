@@ -6,7 +6,11 @@ interface YenMonoProps {
   'aria-label'?: string
 }
 
-export function YenMono({ value, className, 'aria-label': ariaLabel }: YenMonoProps) {
+export function YenMono({
+  value,
+  className,
+  'aria-label': ariaLabel
+}: YenMonoProps) {
   const parts = new Intl.NumberFormat('ja-JP', {
     style: 'currency',
     currency: 'JPY'

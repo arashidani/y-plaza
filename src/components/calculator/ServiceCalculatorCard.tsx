@@ -4,8 +4,16 @@ import { useState, useEffect, useRef } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
-import { MembershipPeriod, MembershipCategory } from '@/lib/calculator/price-tables'
-import { calculateGym, calculateLocker, calculateTicketBook, calculateMembership } from '@/lib/calculator/service-calculators'
+import {
+  MembershipPeriod,
+  MembershipCategory
+} from '@/lib/calculator/price-tables'
+import {
+  calculateGym,
+  calculateLocker,
+  calculateTicketBook,
+  calculateMembership
+} from '@/lib/calculator/service-calculators'
 import { Category, ServiceType } from '@/lib/calculator/types'
 import type { GymItem } from './types'
 import { getServiceTypeLabel, getCategoryLabel } from '@/lib/calculator/labels'
@@ -19,7 +27,10 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { allowedCategoriesForService, gymEditorCategories } from '@/lib/calculator/category-availability'
+import {
+  allowedCategoriesForService,
+  gymEditorCategories
+} from '@/lib/calculator/category-availability'
 import { uniqueId } from '@/lib/calculator/utils'
 import { PoolCalculatorCard } from './PoolCalculatorCard'
 
@@ -36,8 +47,10 @@ export function ServiceCalculatorCard({
 }: ServiceCalculatorCardProps) {
   // 共通状態
   const [category, setCategory] = useState<Category>('adult')
-  const [membershipPeriod, setMembershipPeriod] = useState<MembershipPeriod>('1year')
-  const [membershipCategory, setMembershipCategory] = useState<MembershipCategory>('adult')
+  const [membershipPeriod, setMembershipPeriod] =
+    useState<MembershipPeriod>('1year')
+  const [membershipCategory, setMembershipCategory] =
+    useState<MembershipCategory>('adult')
   const [lockerQuantity, setLockerQuantity] = useState<number>(1)
   const [result, setResult] = useState<string>('')
 
@@ -64,21 +77,31 @@ export function ServiceCalculatorCard({
     }
   }
 
-  const updateGymItem = (id: string, field: keyof GymItem, value: Category | number) => {
+  const updateGymItem = (
+    id: string,
+    field: keyof GymItem,
+    value: Category | number
+  ) => {
     if (field === 'category') {
       // 既に選択されている区分への変更を防ぐ
-      const isAlreadyUsed = gymItems.some((item) => item.id !== id && item.category === value)
+      const isAlreadyUsed = gymItems.some(
+        (item) => item.id !== id && item.category === value
+      )
       if (isAlreadyUsed) {
         return
       }
     }
 
-    setGymItems(gymItems.map((item) => (item.id === id ? { ...item, [field]: value } : item)))
+    setGymItems(
+      gymItems.map((item) =>
+        item.id === id ? { ...item, [field]: value } : item
+      )
+    )
   }
 
   // プールは別カードへ分離したため、このコンポーネントでは扱わない
 
-  // onCalculationChangeを安定化されたref経由で呼び出す（先に定義）
+  // onCalculationChangeを安定化されたref経由で呼び出す
   const onCalculationChangeRef = useRef(onCalculationChange)
   onCalculationChangeRef.current = onCalculationChange
 
@@ -110,7 +133,10 @@ export function ServiceCalculatorCard({
         break
       }
       case 'membership': {
-        const { total: t, message: m } = calculateMembership(membershipPeriod, membershipCategory)
+        const { total: t, message: m } = calculateMembership(
+          membershipPeriod,
+          membershipCategory
+        )
         total = t
         message = m
         break
@@ -128,12 +154,15 @@ export function ServiceCalculatorCard({
     membershipPeriod,
     membershipCategory,
     lockerQuantity,
-    gymItems,
+    gymItems
     // プールは別カードで計算
   ])
 
   return serviceType === 'pool' ? (
-    <PoolCalculatorCard onRemove={onRemove} onCalculationChange={onCalculationChange} />
+    <PoolCalculatorCard
+      onRemove={onRemove}
+      onCalculationChange={onCalculationChange}
+    />
   ) : (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
@@ -157,12 +186,23 @@ export function ServiceCalculatorCard({
             case 'membership':
               return (
                 <MembershipSelector
-                  state={{ period: membershipPeriod, category: membershipCategory }}
-                  actions={{ setPeriod: setMembershipPeriod, setCategory: setMembershipCategory }}
+                  state={{
+                    period: membershipPeriod,
+                    category: membershipCategory
+                  }}
+                  actions={{
+                    setPeriod: setMembershipPeriod,
+                    setCategory: setMembershipCategory
+                  }}
                 />
               )
             case 'locker':
-              return <LockerQuantityInput value={lockerQuantity} onChange={setLockerQuantity} />
+              return (
+                <LockerQuantityInput
+                  value={lockerQuantity}
+                  onChange={setLockerQuantity}
+                />
+              )
             case 'gym':
               return (
                 <GymEditor
@@ -180,7 +220,10 @@ export function ServiceCalculatorCard({
               return (
                 <div className="flex items-center gap-3">
                   <label className="text-sm font-medium">区分</label>
-                  <Select value={category} onValueChange={(v: Category) => setCategory(v)}>
+                  <Select
+                    value={category}
+                    onValueChange={(v: Category) => setCategory(v)}
+                  >
                     <SelectTrigger className="w-48">
                       <SelectValue />
                     </SelectTrigger>
@@ -203,7 +246,9 @@ export function ServiceCalculatorCard({
 
         {result && (
           <div className="mt-4 p-4 bg-muted rounded-md">
-            <pre className="text-sm font-medium whitespace-pre-wrap">{result}</pre>
+            <pre className="text-sm font-medium whitespace-pre-wrap">
+              {result}
+            </pre>
           </div>
         )}
       </CardContent>

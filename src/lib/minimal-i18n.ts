@@ -40,6 +40,8 @@ const MINIMAL_MESSAGES: Record<string, MinimalMessages> = {
 }
 
 export const getMinimalMessages = cache((locale: string): MinimalMessages => {
-  const validLocale = (SUPPORTED_LOCALES as readonly string[]).includes(locale) ? locale : DEFAULT_LOCALE
+  const validLocale = (SUPPORTED_LOCALES as readonly string[]).includes(locale)
+    ? locale
+    : DEFAULT_LOCALE
   return MINIMAL_MESSAGES[validLocale] || MINIMAL_MESSAGES[DEFAULT_LOCALE]
 })

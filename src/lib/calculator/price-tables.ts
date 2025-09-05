@@ -52,7 +52,12 @@ export const ticketBookPrices: Partial<Record<Category, number>> = {
 
 // 会員制料金
 export type MembershipPeriod = '30days' | 'halfYear' | '1year'
-export type MembershipCategory = 'adult' | 'senior' | 'student' | 'family' | 'corporate'
+export type MembershipCategory =
+  | 'adult'
+  | 'senior'
+  | 'student'
+  | 'family'
+  | 'corporate'
 
 export const membershipPrices: Record<
   MembershipPeriod,
@@ -77,7 +82,11 @@ export const membershipPrices: Record<
 }
 
 // 基本の料金を取得（日中 or イブニング、通常 or 夏季）
-export function getBasePrice(season: Season, slot: TimeSlot, category: Category): number | null {
+export function getBasePrice(
+  season: Season,
+  slot: TimeSlot,
+  category: Category
+): number | null {
   if (slot === 'day') {
     const tbl = season === 'summer' ? baseDaySummer : baseDayNormal
     return tbl[category] ?? null

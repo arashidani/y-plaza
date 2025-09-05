@@ -30,11 +30,17 @@ export function calculatePool(
   const details: string[] = []
 
   items.forEach((item) => {
-    const result = calcPrice({ season, slot, category: item.category, coupon: item.coupon })
+    const result = calcPrice({
+      season,
+      slot,
+      category: item.category,
+      coupon: item.coupon
+    })
     if (result.status === 'ok') {
       const itemTotal = result.price * item.quantity
       total += itemTotal
-      const tag = item.coupon !== 'none' ? ` (${couponLabels[item.coupon]})` : ''
+      const tag =
+        item.coupon !== 'none' ? ` (${couponLabels[item.coupon]})` : ''
       details.push(
         `${getCategoryLabel(item.category)} ${item.quantity}名${tag}: ${formatYen(itemTotal)}`
       )
@@ -51,13 +57,17 @@ export function calculatePool(
  * @param items 対象者の配列（区分・人数）
  * @returns 合計金額と、行ごとの明細文字列配列
  */
-export function calculateGym(items: Array<{ category: Category; quantity: number }>) {
+export function calculateGym(
+  items: Array<{ category: Category; quantity: number }>
+) {
   let total = 0
   const details: string[] = []
 
   items.forEach((item) => {
     if (item.category === 'poolUser') {
-      details.push(`${getGymCategoryLabel(item.category)} ${item.quantity}名: 0円`)
+      details.push(
+        `${getGymCategoryLabel(item.category)} ${item.quantity}名: 0円`
+      )
     } else {
       const unitPrice = gymPrices[item.category] || 0
       const itemTotal = unitPrice * item.quantity
@@ -100,7 +110,10 @@ export function calculateTicketBook(category: Category) {
  * @param category 会員区分
  * @returns 合計金額と表示用メッセージ（販売なしの場合はその旨の文言）
  */
-export function calculateMembership(period: MembershipPeriod, category: MembershipCategory) {
+export function calculateMembership(
+  period: MembershipPeriod,
+  category: MembershipCategory
+) {
   const price = membershipPrices[period][category]
   if (price !== undefined) {
     return { total: price, message: `料金: ${formatYen(price)}` }

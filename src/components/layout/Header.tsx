@@ -62,14 +62,20 @@ export function Header() {
           <div className="flex items-center space-x-1 sm:space-x-2">
             <Globe className="h-4 w-4 text-muted-foreground hidden sm:inline" />
             <div className="relative">
-              <Select value={currentLocale} onValueChange={handleLanguageChange}>
+              <Select
+                value={currentLocale}
+                onValueChange={handleLanguageChange}
+              >
                 <SelectTrigger
                   className="w-20 sm:w-36 relative"
                   aria-label={t('languageSelector')}
                   aria-describedby="current-language"
                 >
                   <SelectValue placeholder={t('language')}>
-                    <span id="current-language" className="flex items-center gap-1 sm:gap-2">
+                    <span
+                      id="current-language"
+                      className="flex items-center gap-1 sm:gap-2"
+                    >
                       <Flag
                         countryCode={localeFlagCodes[currentLocale]}
                         style={{
@@ -79,7 +85,9 @@ export function Header() {
                         alt=""
                         role="presentation"
                       />
-                      <span className="hidden sm:inline">{localeNames[currentLocale]}</span>
+                      <span className="hidden sm:inline">
+                        {localeNames[currentLocale]}
+                      </span>
                       <span className="sr-only">
                         {t('language')}: {localeNames[currentLocale]}
                       </span>
@@ -98,7 +106,9 @@ export function Header() {
                     <SelectItem
                       key={locale}
                       value={locale}
-                      aria-label={t('switchTo', { language: localeNames[locale] })}
+                      aria-label={t('switchTo', {
+                        language: localeNames[locale]
+                      })}
                     >
                       <span className="flex items-center gap-2 whitespace-nowrap">
                         <Flag

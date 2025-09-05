@@ -11,10 +11,17 @@ interface ServiceSelectorProps {
   onClearAll: () => void
 }
 
-export function ServiceSelector({ order, selected, onToggle, onClearAll }: ServiceSelectorProps) {
+export function ServiceSelector({
+  order,
+  selected,
+  onToggle,
+  onClearAll
+}: ServiceSelectorProps) {
   return (
     <div>
-      <h2 className="text-xl font-semibold text-primary mb-4">利用サービス選択</h2>
+      <h2 className="text-xl font-semibold text-primary mb-4">
+        利用サービス選択
+      </h2>
       <div className="flex flex-wrap gap-4 items-center">
         {order.map((service) => (
           <div key={service} className="flex items-center space-x-2">
@@ -24,7 +31,10 @@ export function ServiceSelector({ order, selected, onToggle, onClearAll }: Servi
               checked={selected.includes(service)}
               onCheckedChange={() => onToggle(service)}
             />
-            <label htmlFor={service} className="text-sm font-medium cursor-pointer">
+            <label
+              htmlFor={service}
+              className="text-sm font-medium cursor-pointer"
+            >
               {getServiceTypeLabel(service)}
             </label>
           </div>

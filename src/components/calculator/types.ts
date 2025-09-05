@@ -12,4 +12,3 @@ export type PoolItem = {
   quantity: number
   coupon: Coupon
 }
-

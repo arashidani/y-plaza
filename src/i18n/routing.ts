@@ -8,14 +8,9 @@ export const routing = defineRouting({
   locales: SUPPORTED_LOCALES,
   defaultLocale: DEFAULT_LOCALE,
   // 必要に応じてロケールプレフィックスを使用
-  localePrefix: 'as-needed',
+  localePrefix: 'as-needed'
 })
 
 // ナビゲーション用のユーティリティを作成
-export const {
-  Link,
-  redirect,
-  usePathname,
-  useRouter,
-  getPathname
-} = createNavigation(routing)
+export const { Link, redirect, usePathname, useRouter, getPathname } =
+  createNavigation(routing)

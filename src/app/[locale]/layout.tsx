@@ -45,8 +45,11 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'),
-  title: '出雲ゆうプラザ 非公式 料金計算ツール｜入場料・回数券・団体・イブニングの合計を自動計算',
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'
+  ),
+  title:
+    '出雲ゆうプラザ 非公式 料金計算ツール｜入場料・回数券・団体・イブニングの合計を自動計算',
   description:
     '出雲ゆうプラザの「季節区分（9〜6月 / 7・8月）」「イブニング（17時以降）」「団体（20名以上）」「回数券（11枚綴）」などをまとめて自動計算できる、非公式の料金シミュレーターです。ロッカー代など注記にも対応。プール・ジム利用の目安料金を手早く把握できます。',
   keywords: [
@@ -113,7 +116,8 @@ export const metadata: Metadata = {
   },
   // ブランド・法務の観点から、非公式である旨をmetaにも明示
   other: {
-    'note:unofficial': 'This site is an unofficial calculator for Izumo Yuu Plaza.'
+    'note:unofficial':
+      'This site is an unofficial calculator for Izumo Yuu Plaza.'
   },
   // Google Site Verification
   verification: {
@@ -147,7 +151,12 @@ export default async function RootLayout({
     >
       <head>
         {/* 重要リソースの優先プリロード */}
-        <link rel="preload" href="/flags/jp.svg" as="image" type="image/svg+xml" />
+        <link
+          rel="preload"
+          href="/flags/jp.svg"
+          as="image"
+          type="image/svg+xml"
+        />
 
         {/* DNS プリフェッチ（低優先度） */}
         <link rel="dns-prefetch" href="//vercel.live" />
@@ -168,9 +177,13 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <StreamingWrapper fallback={<div className="h-16 bg-gray-100 animate-pulse"></div>}>
+            <StreamingWrapper
+              fallback={<div className="h-16 bg-gray-100 animate-pulse"></div>}
+            >
               <Header />
-              <main className="flex-1 w-full overflow-x-hidden py-6">{children}</main>
+              <main className="flex-1 w-full overflow-x-hidden py-6">
+                {children}
+              </main>
             </StreamingWrapper>
             <Footer />
           </NextIntlClientProvider>

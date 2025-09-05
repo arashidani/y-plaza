@@ -7,7 +7,10 @@ interface LockerQuantityInputProps {
   onChange: (v: number) => void
 }
 
-export function LockerQuantityInput({ value, onChange }: LockerQuantityInputProps) {
+export function LockerQuantityInput({
+  value,
+  onChange
+}: LockerQuantityInputProps) {
   return (
     <div className="flex items-center gap-3">
       <label className="text-sm font-medium">個数</label>
@@ -15,4 +18,3 @@ export function LockerQuantityInput({ value, onChange }: LockerQuantityInputProp
     </div>
   )
 }
-

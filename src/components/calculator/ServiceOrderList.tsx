@@ -55,4 +55,3 @@ function ServiceOrderListBase({
 }
 
 export const ServiceOrderList = memo(ServiceOrderListBase)
-

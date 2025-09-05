@@ -6,7 +6,9 @@ import { routing } from '@/i18n/routing'
 // メッセージをキャッシュする関数
 export const getCachedMessages = cache(async (locale: string) => {
   // サポートされている言語かチェック
-  const validLocale = hasLocale(routing.locales, locale) ? locale : routing.defaultLocale
+  const validLocale = hasLocale(routing.locales, locale)
+    ? locale
+    : routing.defaultLocale
 
   try {
     const messages = (await import(`@/messages/${validLocale}.json`)).default
@@ -16,7 +18,9 @@ export const getCachedMessages = cache(async (locale: string) => {
     // フォールバックとしてデフォルト言語を試行
     if (validLocale !== routing.defaultLocale) {
       try {
-        const fallbackMessages = (await import(`@/messages/${routing.defaultLocale}.json`)).default
+        const fallbackMessages = (
+          await import(`@/messages/${routing.defaultLocale}.json`)
+        ).default
         return fallbackMessages
       } catch (fallbackError) {
         console.error('Failed to load fallback messages', fallbackError)

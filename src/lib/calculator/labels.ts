@@ -109,6 +109,8 @@ export function getMembershipPeriodLabel(period: MembershipPeriod): string {
 }
 
 // 会員制の区分ラベル取得ヘルパー関数
-export function getMembershipCategoryLabel(category: MembershipCategory): string {
+export function getMembershipCategoryLabel(
+  category: MembershipCategory
+): string {
   return membershipCategoryLabels[category]
 }

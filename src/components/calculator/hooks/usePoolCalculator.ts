@@ -27,7 +27,11 @@ export interface UsePoolCalculatorActions {
   setSlot: (s: TimeSlot) => void
   addItem: () => void
   removeItem: (id: string) => void
-  updateItem: (id: string, field: keyof PoolItem, value: Category | number | Coupon) => void
+  updateItem: (
+    id: string,
+    field: keyof PoolItem,
+    value: Category | number | Coupon
+  ) => void
 }
 
 export interface UsePoolCalculatorResult {
@@ -53,12 +57,19 @@ export function usePoolCalculator(): UsePoolCalculatorResult {
     if (!next) return
     setItems((prev) => [
       ...prev,
-      { id: uniqueId('pool'), category: next.category, quantity: 1, coupon: next.coupon }
+      {
+        id: uniqueId('pool'),
+        category: next.category,
+        quantity: 1,
+        coupon: next.coupon
+      }
     ])
   }, [items])
 
   const removeItem = useCallback((id: string) => {
-    setItems((prev) => (prev.length > 1 ? prev.filter((i) => i.id !== id) : prev))
+    setItems((prev) =>
+      prev.length > 1 ? prev.filter((i) => i.id !== id) : prev
+    )
   }, [])
 
   const updateItem = useCallback(
@@ -67,11 +78,17 @@ export function usePoolCalculator(): UsePoolCalculatorResult {
         const current = prev.find((i) => i.id === id)
         if (!current) return prev
 
-        const nextCategory = field === 'category' ? (value as Category) : current.category
+        const nextCategory =
+          field === 'category' ? (value as Category) : current.category
         let nextCoupon = field === 'coupon' ? (value as Coupon) : current.coupon
 
         if (isDuplicatePoolCombo(prev, id, nextCategory, nextCoupon)) {
-          const alternative = findAlternativeCouponForCategory(prev, id, nextCategory, ALL_COUPONS)
+          const alternative = findAlternativeCouponForCategory(
+            prev,
+            id,
+            nextCategory,
+            ALL_COUPONS
+          )
           if (!alternative) return prev
           nextCoupon = alternative
         }
@@ -93,7 +110,11 @@ export function usePoolCalculator(): UsePoolCalculatorResult {
 
   const { total, details, message } = useMemo(() => {
     const { total: t, details: d } = calculatePool(items, season, slot)
-    return { total: t, details: d, message: `${d.join('\n')}\n合計: ${t.toLocaleString()}円` }
+    return {
+      total: t,
+      details: d,
+      message: `${d.join('\n')}\n合計: ${t.toLocaleString()}円`
+    }
   }, [items, season, slot])
 
   return {

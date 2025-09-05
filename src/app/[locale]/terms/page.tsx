@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export default async function TermsPage({ params }: PageProps) {
   const { locale } = await params
   setRequestLocale(locale)
-  
+
   const content = await getCachedMarkdown(locale, 'terms')
 
   return (

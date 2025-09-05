@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export default async function PrivacyPage({ params }: PageProps) {
   const { locale } = await params
   setRequestLocale(locale)
-  
+
   const content = await getCachedMarkdown(locale, 'privacy')
 
   return (
