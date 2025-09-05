@@ -50,7 +50,6 @@ export function calculatePool(
   slot: TimeSlot
 ) {
   let total = 0
-  const details: string[] = []
   const itemsStructured: PoolDetailItem[] = []
 
   items.forEach((item) => {
@@ -83,7 +82,7 @@ export function calculatePool(
     }
   })
 
-  return { total, details, items: itemsStructured }
+  return { total, items: itemsStructured }
 }
 
 /**
@@ -95,7 +94,6 @@ export function calculateGym(
   items: Array<{ category: Category; quantity: number }>
 ) {
   let total = 0
-  const details: string[] = []
   const itemsStructured: GymDetailItem[] = []
 
   items.forEach((item) => {
@@ -113,7 +111,7 @@ export function calculateGym(
     })
   })
 
-  return { total, details, items: itemsStructured }
+  return { total, items: itemsStructured }
 }
 
 /**
