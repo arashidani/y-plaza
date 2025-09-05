@@ -1,6 +1,6 @@
 'use client'
 
-import { Calculator } from '@/components/calculator/TestCalculator'
+import { Calculator } from '@/components/calculator/Calculator'
 import { useTranslations } from 'next-intl'
 
 export function PoolCalculatorClient() {
