@@ -5,18 +5,10 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
 import { MembershipPeriod, MembershipCategory } from '@/lib/calculator/price-tables'
-import {
-  calculatePool,
-  calculateGym,
-  calculateLocker,
-  calculateTicketBook,
-  calculateMembership
-} from '@/lib/calculator/service-calculators'
-import { Category, TimeSlot, Coupon, ServiceType } from '@/lib/calculator/types'
-import type { GymItem, PoolItem } from './types'
-import { couponLabels, getServiceTypeLabel, getCategoryLabel } from '@/lib/calculator/labels'
-import type { Season } from '@/lib/calculator/types'
-import { PoolEditor } from './editors/PoolEditor'
+import { calculateGym, calculateLocker, calculateTicketBook, calculateMembership } from '@/lib/calculator/service-calculators'
+import { Category, ServiceType } from '@/lib/calculator/types'
+import type { GymItem } from './types'
+import { getServiceTypeLabel, getCategoryLabel } from '@/lib/calculator/labels'
 import { GymEditor } from './editors/GymEditor'
 import { LockerQuantityInput } from './editors/LockerQuantityInput'
 import { MembershipSelector } from './editors/MembershipSelector'
@@ -27,13 +19,9 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import {
-  allowedCategoriesForService,
-  gymEditorCategories,
-  canAddPool,
-  findFirstAvailablePoolCombo
-} from '@/lib/calculator/category-availability'
+import { allowedCategoriesForService, gymEditorCategories } from '@/lib/calculator/category-availability'
 import { uniqueId } from '@/lib/calculator/utils'
+import { PoolCalculatorCard } from './PoolCalculatorCard'
 
 interface ServiceCalculatorCardProps {
   serviceType: ServiceType
@@ -47,10 +35,7 @@ export function ServiceCalculatorCard({
   onCalculationChange
 }: ServiceCalculatorCardProps) {
   // 共通状態
-  const [season, setSeason] = useState<Season>('normal')
-  const [slot, setSlot] = useState<TimeSlot>('day')
   const [category, setCategory] = useState<Category>('adult')
-  const [coupon] = useState<Coupon>('none')
   const [membershipPeriod, setMembershipPeriod] = useState<MembershipPeriod>('1year')
   const [membershipCategory, setMembershipCategory] = useState<MembershipCategory>('adult')
   const [lockerQuantity, setLockerQuantity] = useState<number>(1)
@@ -58,11 +43,9 @@ export function ServiceCalculatorCard({
 
   // ジム・プール用の状態(初期値は1件ずつ)
   const [gymItems, setGymItems] = useState<GymItem[]>([
-    { id: 'gym-initial', category: 'adult', quantity: 1 }
+    { id: uniqueId('gym'), category: 'adult', quantity: 1 }
   ])
-  const [poolItems, setPoolItems] = useState<PoolItem[]>([
-    { id: 'pool-initial', category: 'adult', quantity: 1, coupon: 'none' }
-  ])
+  // プールは PoolCalculatorCard に委譲
 
   // ジム項目の管理
   const addGymItem = () => {
@@ -93,69 +76,11 @@ export function ServiceCalculatorCard({
     setGymItems(gymItems.map((item) => (item.id === id ? { ...item, [field]: value } : item)))
   }
 
-  // プール項目の管理
-  const addPoolItem = () => {
-    if (!canAddPoolItem()) return
-    const categories = allowedCategoriesForService('pool')
-    const coupons = Object.keys(couponLabels) as Coupon[]
-    const next = findFirstAvailablePoolCombo(poolItems, categories, coupons)
-    if (!next) return
-    const newId = uniqueId('pool')
-    setPoolItems([
-      ...poolItems,
-      { id: newId, category: next.category, quantity: 1, coupon: next.coupon }
-    ])
-  }
+  // プールは別カードへ分離したため、このコンポーネントでは扱わない
 
-  const removePoolItem = (id: string) => {
-    if (poolItems.length > 1) {
-      setPoolItems(poolItems.filter((item) => item.id !== id))
-    }
-  }
-
-  /**
-   * プールの行を更新する（区分・人数・割引）。
-   * - (category, coupon) の組み合わせは一意制約をかける。
-   * - 変更後に重複が生じる場合は、空いている別クーポンへ自動的にスライドさせる。
-   */
-  const updatePoolItem = (id: string, field: keyof PoolItem, value: Category | number | Coupon) => {
-    setPoolItems((prev) => {
-      // 対象行を取得（見つからなければ無変更）
-      const current = prev.find((i) => i.id === id)
-      if (!current) return prev
-
-      // 次の候補値（未指定の方は現値を採用）
-      const nextCategory = field === 'category' ? (value as Category) : current.category
-      let nextCoupon = field === 'coupon' ? (value as Coupon) : current.coupon
-
-      // (category, coupon) の重複チェック関数（同一IDは除外）
-      const isDup = (cat: Category, cpn: Coupon) =>
-        prev.some((i) => i.id !== id && i.category === cat && i.coupon === cpn)
-
-      // 衝突した場合は、同じcategoryで未使用のクーポンに自動調整
-      if (isDup(nextCategory, nextCoupon)) {
-        const allCoupons = Object.keys(couponLabels) as Coupon[]
-        const alternative = allCoupons.find((cpn) => !isDup(nextCategory, cpn))
-        if (!alternative) return prev
-        nextCoupon = alternative
-      }
-
-      // 対象行のみ更新（quantity 変更時は数量のみ差し替え）
-      return prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              category: nextCategory,
-              coupon: nextCoupon,
-              ...(field === 'quantity' ? { quantity: value as number } : {})
-            }
-          : item
-      )
-    })
-  }
-
-  // プール項目の追加可能かチェック
-  const canAddPoolItem = () => canAddPool(poolItems, Object.keys(couponLabels).length, 30)
+  // onCalculationChangeを安定化されたref経由で呼び出す（先に定義）
+  const onCalculationChangeRef = useRef(onCalculationChange)
+  onCalculationChangeRef.current = onCalculationChange
 
   // 計算と結果文字列生成を一箇所に集約
   useEffect(() => {
@@ -163,12 +88,9 @@ export function ServiceCalculatorCard({
     let message = ''
 
     switch (serviceType) {
-      case 'pool': {
-        const { total: t, details } = calculatePool(poolItems, season, slot)
-        total = t
-        message = `${details.join('\n')}\n合計: ${total.toLocaleString()}円`
-        break
-      }
+      case 'pool':
+        // プールは PoolCalculatorCard 側で計算と通知を実施
+        return
       case 'gym': {
         const { total: t, details } = calculateGym(gymItems)
         total = t
@@ -202,22 +124,17 @@ export function ServiceCalculatorCard({
     if (onCalculationChangeRef.current) onCalculationChangeRef.current(total)
   }, [
     serviceType,
-    season,
-    slot,
     category,
-    coupon,
     membershipPeriod,
     membershipCategory,
     lockerQuantity,
     gymItems,
-    poolItems
+    // プールは別カードで計算
   ])
 
-  // onCalculationChangeを安定化されたref経由で呼び出す
-  const onCalculationChangeRef = useRef(onCalculationChange)
-  onCalculationChangeRef.current = onCalculationChange
-
-  return (
+  return serviceType === 'pool' ? (
+    <PoolCalculatorCard onRemove={onRemove} onCalculationChange={onCalculationChange} />
+  ) : (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <CardTitle className="text-lg font-semibold text-primary">
@@ -237,19 +154,6 @@ export function ServiceCalculatorCard({
       <CardContent className="space-y-4">
         {(() => {
           switch (serviceType) {
-            case 'pool':
-              return (
-                <PoolEditor
-                  state={{ season, slot, items: poolItems }}
-                  actions={{
-                    setSeason,
-                    setSlot,
-                    addItem: addPoolItem,
-                    removeItem: removePoolItem,
-                    updateItem: updatePoolItem
-                  }}
-                />
-              )
             case 'membership':
               return (
                 <MembershipSelector
@@ -270,7 +174,7 @@ export function ServiceCalculatorCard({
                   }}
                 />
               )
-            default: {
+            case 'ticketBook': {
               const allowed = allowedCategoriesForService(serviceType)
               if (allowed.length === 0) return null
               return (
@@ -290,6 +194,9 @@ export function ServiceCalculatorCard({
                   </Select>
                 </div>
               )
+            }
+            default: {
+              return null
             }
           }
         })()}

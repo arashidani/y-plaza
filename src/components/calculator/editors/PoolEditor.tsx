@@ -13,8 +13,9 @@ import {
 } from '@/components/ui/select'
 import type { Category, Coupon, TimeSlot, Season } from '@/lib/calculator/types'
 import type { PoolItem } from '../types'
-import { getCategoryLabel, getCouponLabel, seasonLabels, timeSlotLabels, couponLabels } from '@/lib/calculator/labels'
+import { getCategoryLabel, getCouponLabel, seasonLabels, timeSlotLabels, couponLabels, ALL_COUPONS } from '@/lib/calculator/labels'
 import { allowedCategoriesForService, canAddPool } from '@/lib/calculator/category-availability'
+import { availableCouponsForItem } from '@/lib/calculator/pool-helpers'
 
 interface PoolEditorState {
   season: Season
@@ -40,15 +41,14 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
   const { setSeason: onChangeSeason, setSlot: onChangeSlot, addItem: onAddItem, removeItem: onRemoveItem, updateItem: onUpdateItem } = actions
 
   const allowed = allowedCategoriesForService('pool')
-  const canAddItem = canAddPool(items, Object.keys(couponLabels).length, 30)
+  const canAddItem = canAddPool(items, ALL_COUPONS.length)
   const getAvailableCategoriesForItem = (): Category[] => allowed
-  const getAvailableCouponsForItem = (id: string): Array<keyof typeof couponLabels> => {
-    const current = items.find((i) => i.id === id)
-    if (!current) return Object.keys(couponLabels) as Array<keyof typeof couponLabels>
-    return (Object.keys(couponLabels) as Array<keyof typeof couponLabels>).filter(
-      (cpn) => !items.some((i) => i.id !== id && i.category === current.category && i.coupon === cpn)
-    )
-  }
+  const getAvailableCouponsForItem = (id: string): Array<keyof typeof couponLabels> =>
+    availableCouponsForItem(
+      items as Array<{ id: string; category: Category; coupon: Coupon }>,
+      id,
+      ALL_COUPONS
+    ) as Array<keyof typeof couponLabels>
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

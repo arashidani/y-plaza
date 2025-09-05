@@ -10,6 +10,15 @@ import { LockerNotice } from './LockerNotice'
 import { EmptyStateCard } from './EmptyStateCard'
 import { SummaryPanel } from './SummaryPanel'
 
+// 初期値をモジュール定数として定義
+const INITIAL_TOTALS: Record<ServiceType, number> = {
+  pool: 0,
+  gym: 0,
+  locker: 0,
+  membership: 0,
+  ticketBook: 0
+}
+
 export function TestCalculator() {
   const [selectedServices, setSelectedServices] = useState<ServiceType[]>(['pool'])
 
@@ -17,53 +26,44 @@ export function TestCalculator() {
   const serviceOrder: ServiceType[] = SERVICE_ORDER
 
   // 各サービスの計算結果を管理
-  const [serviceTotals, setServiceTotals] = useState<Record<ServiceType, number>>({
-    pool: 0,
-    gym: 0,
-    locker: 0,
-    membership: 0,
-    ticketBook: 0
-  })
+  const [serviceTotals, setServiceTotals] = useState<Record<ServiceType, number>>(INITIAL_TOTALS)
 
-  const handleServiceToggle = (service: ServiceType) => {
+  const handleServiceToggle = useCallback((service: ServiceType) => {
     setSelectedServices((prev) =>
       prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
     )
-  }
+  }, [])
 
-  const handleRemoveService = (service: ServiceType) => {
+  const handleRemoveService = useCallback((service: ServiceType) => {
     setSelectedServices((prev) => prev.filter((s) => s !== service))
     // サービスを削除する際は計算結果もリセット
     setServiceTotals((prev) => ({ ...prev, [service]: 0 }))
-  }
+  }, [])
 
-  const handleClearAll = () => {
+  const handleClearAll = useCallback(() => {
     setSelectedServices([])
     // 全クリア時は全ての計算結果をリセット
-    setServiceTotals({
-      pool: 0,
-      gym: 0,
-      locker: 0,
-      membership: 0,
-      ticketBook: 0
-    })
-  }
+    setServiceTotals(INITIAL_TOTALS)
+  }, [])
 
   // サービスごとの計算結果を更新
   const handleServiceCalculationChange = useCallback((serviceType: ServiceType, total: number) => {
     setServiceTotals((prev) => ({ ...prev, [serviceType]: total }))
   }, [])
 
-  // 実際の計算結果を使用
-  const subtotal = {
-    pool: selectedServices.includes('pool') ? serviceTotals.pool : 0,
-    gym: selectedServices.includes('gym') ? serviceTotals.gym : 0,
-    locker: selectedServices.includes('locker') ? serviceTotals.locker : 0,
-    membership: selectedServices.includes('membership') ? serviceTotals.membership : 0,
-    ticketBook: selectedServices.includes('ticketBook') ? serviceTotals.ticketBook : 0
-  }
+  // ロッカー追加のハンドラ（インライン関数を避ける）
+  const addLocker = useCallback(() => handleServiceToggle('locker'), [handleServiceToggle])
 
-  const total = Object.values(subtotal).reduce((sum, value) => sum + value, 0)
+  // 実際の計算結果を使用（DRY: SERVICE_ORDER から一括生成）
+  const { subtotal, total } = SERVICE_ORDER.reduce(
+    (acc, key) => {
+      const v = selectedServices.includes(key) ? serviceTotals[key] : 0
+      acc.subtotal[key] = v
+      acc.total += v
+      return acc
+    },
+    { subtotal: {} as Record<ServiceType, number>, total: 0 }
+  )
 
   return (
     <div className="space-y-6">
@@ -77,7 +77,7 @@ export function TestCalculator() {
 
       {/* ロッカー必須案内 */}
       {selectedServices.includes('pool') && !selectedServices.includes('locker') && (
-        <LockerNotice onAddLocker={() => handleServiceToggle('locker')} />
+        <LockerNotice onAddLocker={addLocker} />
       )}
 
       {/* 選択されたサービスごとのカード */}

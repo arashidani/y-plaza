@@ -55,6 +55,9 @@ export const couponLabels = {
   disability: '障害者割引'
 } as const
 
+// 全クーポン一覧
+export const ALL_COUPONS = Object.keys(couponLabels) as Coupon[]
+
 // 会員制期間のラベル
 export const membershipPeriodLabels: Record<MembershipPeriod, string> = {
   '30days': '30日',
