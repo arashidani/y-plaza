@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
-import { getServiceTypeLabel } from '@/lib/calculator/labels'
 import { PoolEditor } from './editors/PoolEditor'
 import { usePoolCalculator } from './hooks/usePoolCalculator'
+import { useTranslations } from 'next-intl'
 
 interface PoolCalculatorCardProps {
   onRemove: () => void
@@ -18,6 +18,7 @@ export function PoolCalculatorCard({
   onCalculationChange
 }: PoolCalculatorCardProps) {
   const { state, actions, total, message } = usePoolCalculator()
+  const t = useTranslations('poolCalculator')
 
   const onCalcRef = useRef(onCalculationChange)
   onCalcRef.current = onCalculationChange
@@ -30,14 +31,14 @@ export function PoolCalculatorCard({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <CardTitle className="text-primary text-lg font-semibold">
-          {getServiceTypeLabel('pool')}
+          {t('type.pool')}
         </CardTitle>
         <Button
           onClick={onRemove}
           variant="ghost"
           size="icon"
           className="h-8 w-8"
-          aria-label="カードを削除"
+          aria-label={t('deleteCard')}
         >
           <X className="h-4 w-4" />
         </Button>

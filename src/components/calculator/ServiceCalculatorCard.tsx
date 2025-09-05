@@ -16,7 +16,7 @@ import {
 } from '@/lib/calculator/service-calculators'
 import { Category, ServiceType } from '@/lib/calculator/types'
 import type { GymItem } from './types'
-import { getServiceTypeLabel, getCategoryLabel } from '@/lib/calculator/labels'
+import { useCalculatorLabels } from './hooks/useCalculatorLabels'
 import { GymEditor } from './editors/GymEditor'
 import { LockerQuantityInput } from './editors/LockerQuantityInput'
 import { MembershipSelector } from './editors/MembershipSelector'
@@ -33,6 +33,8 @@ import {
 } from '@/lib/calculator/category-availability'
 import { uniqueId } from '@/lib/calculator/utils'
 import { PoolCalculatorCard } from './PoolCalculatorCard'
+import { useTranslations } from 'next-intl'
+import { formatCurrencyWithI18n } from '@/lib/calculator/utils'
 
 interface ServiceCalculatorCardProps {
   serviceType: ServiceType
@@ -53,6 +55,9 @@ export function ServiceCalculatorCard({
     useState<MembershipCategory>('adult')
   const [lockerQuantity, setLockerQuantity] = useState<number>(1)
   const [result, setResult] = useState<string>('')
+  const tCalc = useTranslations('poolCalculator')
+  const tCommon = useTranslations('common')
+  const { getGymCategoryLabel, getCategoryLabel } = useCalculatorLabels()
 
   // ジム・プール用の状態(初期値は1件ずつ)
   const [gymItems, setGymItems] = useState<GymItem[]>([
@@ -115,34 +120,39 @@ export function ServiceCalculatorCard({
         // プールは PoolCalculatorCard 側で計算と通知を実施
         return
       case 'gym': {
-        const { total: t, details } = calculateGym(gymItems)
+        const { total: t, items } = calculateGym(gymItems)
         total = t
-        message = `${details.join('\n')}\n合計: ${total.toLocaleString()}円`
+        const lines = items.map(
+          (it) =>
+            `${getGymCategoryLabel(it.category)} ${tCalc('peopleCount', { count: it.quantity })}: ${formatCurrencyWithI18n(it.lineTotal, (key) => tCommon(key))}`
+        )
+        message = `${lines.join('\n')}\n${tCalc('total')}: ${formatCurrencyWithI18n(total, (key) => tCommon(key))}`
         break
       }
       case 'locker': {
-        const { total: t, message: m } = calculateLocker(lockerQuantity)
+        const { total: t } = calculateLocker(lockerQuantity)
         total = t
-        message = m
+        message = `${tCalc('price')}: ${formatCurrencyWithI18n(total, (key) => tCommon(key))}`
         break
       }
       case 'ticketBook': {
-        const { total: t, message: m } = calculateTicketBook(category)
-        total = t
-        message = m
+        const res = calculateTicketBook(category)
+        total = res.total
+        message = res.available
+          ? `${tCalc('price')}: ${formatCurrencyWithI18n(total, (key) => tCommon(key))}`
+          : tCalc('notForSale')
         break
       }
       case 'membership': {
-        const { total: t, message: m } = calculateMembership(
-          membershipPeriod,
-          membershipCategory
-        )
-        total = t
-        message = m
+        const res = calculateMembership(membershipPeriod, membershipCategory)
+        total = res.total
+        message = res.available
+          ? `${tCalc('price')}: ${formatCurrencyWithI18n(total, (key) => tCommon(key))}`
+          : tCalc('notForSale')
         break
       }
       default: {
-        message = '未実装のサービスです'
+        message = ''
       }
     }
 
@@ -154,7 +164,10 @@ export function ServiceCalculatorCard({
     membershipPeriod,
     membershipCategory,
     lockerQuantity,
-    gymItems
+    gymItems,
+    tCalc,
+    tCommon,
+    getGymCategoryLabel
     // プールは別カードで計算
   ])
 
@@ -167,14 +180,16 @@ export function ServiceCalculatorCard({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <CardTitle className="text-primary text-lg font-semibold">
-          {getServiceTypeLabel(serviceType)}
+          {tCalc(
+            `type.${serviceType === 'ticketBook' ? 'coupon' : serviceType}`
+          )}
         </CardTitle>
         <Button
           onClick={onRemove}
           variant="ghost"
           size="icon"
           className="h-8 w-8"
-          aria-label="カードを削除"
+          aria-label={tCalc('deleteCard')}
         >
           <X className="h-4 w-4" />
         </Button>
@@ -219,7 +234,9 @@ export function ServiceCalculatorCard({
               if (allowed.length === 0) return null
               return (
                 <div className="flex items-center gap-3">
-                  <label className="text-sm font-medium">区分</label>
+                  <label className="text-sm font-medium">
+                    {tCalc('categoryLabel')}
+                  </label>
                   <Select
                     value={category}
                     onValueChange={(v: Category) => setCategory(v)}

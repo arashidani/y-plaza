@@ -7,15 +7,10 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import type {
-  MembershipCategory,
-  MembershipPeriod
-} from '@/lib/calculator/price-tables'
-import {
-  membershipPeriodLabels,
-  membershipCategoryLabels
-} from '@/lib/calculator/labels'
+import type { MembershipCategory, MembershipPeriod } from '@/lib/calculator/price-tables'
 import { membershipCategoriesForPeriod } from '@/lib/calculator/category-availability'
+import { useCalculatorLabels } from '../hooks/useCalculatorLabels'
+import { useTranslations } from 'next-intl'
 
 interface MembershipSelectorState {
   period: MembershipPeriod
@@ -39,11 +34,13 @@ export function MembershipSelector({
   const { period, category } = state
   const { setPeriod, setCategory } = actions
   const availableCategories = membershipCategoriesForPeriod(period)
+  const { getMembershipPeriodLabel, getMembershipCategoryLabel } = useCalculatorLabels()
+  const t = useTranslations('poolCalculator')
 
   return (
     <>
       <div>
-        <label className="mb-2 block text-sm font-medium">期間</label>
+        <label className="mb-2 block text-sm font-medium">{t('periodLabel')}</label>
         <Select
           value={period}
           onValueChange={(v: MembershipPeriod) => setPeriod(v)}
@@ -52,9 +49,9 @@ export function MembershipSelector({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {Object.entries(membershipPeriodLabels).map(([key, label]) => (
+            {(['30days', 'halfYear', '1year'] as MembershipPeriod[]).map((key) => (
               <SelectItem key={key} value={key}>
-                {label}
+                {getMembershipPeriodLabel(key)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -62,7 +59,7 @@ export function MembershipSelector({
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-medium">区分</label>
+        <label className="mb-2 block text-sm font-medium">{t('categoryLabel')}</label>
         <Select
           value={category}
           onValueChange={(v: string) => setCategory(v as MembershipCategory)}
@@ -73,7 +70,7 @@ export function MembershipSelector({
           <SelectContent>
             {availableCategories.map((k) => (
               <SelectItem key={k} value={k}>
-                {membershipCategoryLabels[k]}
+                {getMembershipCategoryLabel(k)}
               </SelectItem>
             ))}
           </SelectContent>

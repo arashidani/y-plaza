@@ -5,7 +5,7 @@ import { SummaryRow } from './SummaryRow'
 import { YenMono } from './YenMono'
 import { ServiceType } from '@/lib/calculator/types'
 import { SERVICE_ORDER } from '@/lib/calculator/constants'
-import { getServiceTypeLabel } from '@/lib/calculator/labels'
+import { useTranslations } from 'next-intl'
 
 interface SummaryPanelProps {
   subtotal: Record<ServiceType, number>
@@ -13,14 +13,15 @@ interface SummaryPanelProps {
 }
 
 export function SummaryPanel({ subtotal, total }: SummaryPanelProps) {
+  const t = useTranslations('poolCalculator')
   const items = SERVICE_ORDER.map((key) => ({
     key,
     value: subtotal[key],
-    label: `${getServiceTypeLabel(key)} 小計`
+    label: t(`subtotal.${key === 'ticketBook' ? 'coupon' : key}`)
   }))
 
   return (
-    <Section title="内訳">
+    <Section title={t('breakdown')}>
       <div className="space-y-2">
         {items.map(
           (item) =>
@@ -33,17 +34,9 @@ export function SummaryPanel({ subtotal, total }: SummaryPanelProps) {
             )
         )}
         <div className="h-px bg-gray-200" />
-        <div
-          className="flex items-center justify-between text-base"
-          role="status"
-          aria-live="polite"
-        >
-          <span className="font-semibold">合計</span>
-          <YenMono
-            value={total}
-            className="text-lg font-bold"
-            aria-label={`合計金額 ${total}円`}
-          />
+        <div className="flex items-center justify-between text-base" role="status" aria-live="polite">
+          <span className="font-semibold">{t('total')}</span>
+          <YenMono value={total} className="text-lg font-bold" aria-label={t('totalAmount', { amount: total })} />
         </div>
       </div>
     </Section>

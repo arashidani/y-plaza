@@ -9,6 +9,7 @@ import { ServiceSelector } from './ServiceSelector'
 import { LockerNotice } from './LockerNotice'
 import { EmptyStateCard } from './EmptyStateCard'
 import { SummaryPanel } from './SummaryPanel'
+import { useTranslations } from 'next-intl'
 
 // 初期値をモジュール定数として定義
 const INITIAL_TOTALS: Record<ServiceType, number> = {
@@ -20,6 +21,7 @@ const INITIAL_TOTALS: Record<ServiceType, number> = {
 }
 
 export function TestCalculator() {
+  const t = useTranslations('poolCalculator')
   const [selectedServices, setSelectedServices] = useState<ServiceType[]>([
     'pool'
   ])
@@ -106,26 +108,25 @@ export function TestCalculator() {
         {/* 内訳セクション */}
         <SummaryPanel subtotal={subtotal} total={total} />
 
-        <Section title="メモと注意事項">
+        <Section title={t('notes')}>
           <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
             <li>
-              <strong>ロッカーについて：</strong>{' '}
-              1回100円。2人程度での共有は可能ですが、着替えスペースの関係上、3人以上での共有はできません。
+              <strong>{t('note.lockerTitle')}</strong>{' '}
+              {t('note.lockerDetail', { price: '100' })}
             </li>
             <li>
-              障害者割引は本人分の入場料金・会員券が半額（10円未満切り捨て）。備品関係は通常料金。
+              {t('note.discount')}
             </li>
             <li>
-              回数券は
-              1冊=11枚綴りの購入金額のみを計上します。（何回分消費するかの減算管理は含みません）
+              {t('note.coupon')}
             </li>
-            <li>会員の家族等の特殊区分は未対応です。</li>
+            <li>{t('note.family')}</li>
           </ul>
         </Section>
       </div>
 
       <footer className="mt-8 text-xs text-gray-500">
-        *非公式の参考試算用ツールです。最新の料金・条件は必ず施設の公式情報をご確認ください。
+        {t('footer')}
       </footer>
     </div>
   )

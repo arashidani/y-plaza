@@ -8,9 +8,12 @@ export function uniqueId(prefix = 'id'): string {
 }
 
 /**
- * 円表記の簡易フォーマッタ（3桁区切り + 円）。
- * 画面内の文言用途向け。数値表示はYenMonoを使うこと。
+ * i18n対応の通貨フォーマッタ。
+ * コンポーネント内で翻訳関数が利用可能な場合に使用。
  */
-export function formatYen(value: number): string {
-  return `${value.toLocaleString('ja-JP')}円`
+export function formatCurrencyWithI18n(
+  value: number,
+  t: (key: string) => string
+): string {
+  return `${value.toLocaleString('ja-JP')} ${t('monetary.unit')}`
 }

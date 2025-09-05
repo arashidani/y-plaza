@@ -11,10 +11,10 @@ import {
 } from '@/lib/calculator/category-availability'
 import { ALL_COUPONS } from '@/lib/calculator/labels'
 import { uniqueId } from '@/lib/calculator/utils'
-import {
-  findAlternativeCouponForCategory,
-  isDuplicatePoolCombo
-} from '@/lib/calculator/pool-helpers'
+import { findAlternativeCouponForCategory, isDuplicatePoolCombo } from '@/lib/calculator/pool-helpers'
+import { useTranslations } from 'next-intl'
+import { formatCurrencyWithI18n } from '@/lib/calculator/utils'
+import { useCalculatorLabels } from './useCalculatorLabels'
 
 export interface UsePoolCalculatorState {
   season: Season
@@ -108,14 +108,21 @@ export function usePoolCalculator(): UsePoolCalculatorResult {
     []
   )
 
+  const tCalc = useTranslations('poolCalculator')
+  const tCommon = useTranslations('common')
+  const { getCategoryLabel, getCouponLabel } = useCalculatorLabels()
   const { total, details, message } = useMemo(() => {
-    const { total: t, details: d } = calculatePool(items, season, slot)
-    return {
-      total: t,
-      details: d,
-      message: `${d.join('\n')}\n合計: ${t.toLocaleString()}円`
-    }
-  }, [items, season, slot])
+    const { total: t, items: structured } = calculatePool(items, season, slot)
+    const lines = structured.map((it) => {
+      if (it.status === 'not_for_sale') {
+        return `${getCategoryLabel(it.category)}: ${tCalc('notForSale')}`
+      }
+      const tag = it.coupon !== 'none' ? ` (${getCouponLabel(it.coupon)})` : ''
+      return `${getCategoryLabel(it.category)} ${tCalc('peopleCount', { count: it.quantity })}${tag}: ${formatCurrencyWithI18n(it.lineTotal, (key) => tCommon(key))}`
+    })
+    const msg = `${lines.join('\n')}\n${tCalc('total')}: ${formatCurrencyWithI18n(t, (key) => tCommon(key))}`
+    return { total: t, details: lines, message: msg }
+  }, [items, season, slot, tCalc, tCommon, getCategoryLabel, getCouponLabel])
 
   return {
     state: { season, slot, items },

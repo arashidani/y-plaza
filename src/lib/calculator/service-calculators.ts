@@ -7,12 +7,35 @@ import {
   MembershipPeriod,
   MembershipCategory
 } from './price-tables'
-import { formatYen } from './utils'
-import { couponLabels, getCategoryLabel, getGymCategoryLabel } from './labels'
 
 /**
  * サービス毎の計算処理をまとめた関数群
  */
+
+// 詳細行（i18n対応のための構造化データ）
+export type PoolDetailItem =
+  | {
+      service: 'pool'
+      status: 'ok'
+      category: Category
+      quantity: number
+      coupon: Coupon | 'none'
+      unitPrice: number
+      lineTotal: number
+    }
+  | {
+      service: 'pool'
+      status: 'not_for_sale'
+      category: Category
+    }
+
+export type GymDetailItem = {
+  service: 'gym'
+  category: Category
+  quantity: number
+  unitPrice: number
+  lineTotal: number
+}
 
 /**
  * プール利用の合計金額と明細を計算します。
@@ -28,6 +51,7 @@ export function calculatePool(
 ) {
   let total = 0
   const details: string[] = []
+  const itemsStructured: PoolDetailItem[] = []
 
   items.forEach((item) => {
     const result = calcPrice({
@@ -39,17 +63,27 @@ export function calculatePool(
     if (result.status === 'ok') {
       const itemTotal = result.price * item.quantity
       total += itemTotal
-      const tag =
-        item.coupon !== 'none' ? ` (${couponLabels[item.coupon]})` : ''
-      details.push(
-        `${getCategoryLabel(item.category)} ${item.quantity}名${tag}: ${formatYen(itemTotal)}`
-      )
+      // details は i18n のためUI側で生成するため未使用
+      itemsStructured.push({
+        service: 'pool',
+        status: 'ok',
+        category: item.category,
+        quantity: item.quantity,
+        coupon: item.coupon,
+        unitPrice: result.price,
+        lineTotal: itemTotal
+      })
     } else {
-      details.push(`${getCategoryLabel(item.category)}: 販売なし`)
+      // details は i18n のためUI側で生成するため未使用
+      itemsStructured.push({
+        service: 'pool',
+        status: 'not_for_sale',
+        category: item.category
+      })
     }
   })
 
-  return { total, details }
+  return { total, details, items: itemsStructured }
 }
 
 /**
@@ -62,23 +96,24 @@ export function calculateGym(
 ) {
   let total = 0
   const details: string[] = []
+  const itemsStructured: GymDetailItem[] = []
 
   items.forEach((item) => {
-    if (item.category === 'poolUser') {
-      details.push(
-        `${getGymCategoryLabel(item.category)} ${item.quantity}名: 0円`
-      )
-    } else {
-      const unitPrice = gymPrices[item.category] || 0
-      const itemTotal = unitPrice * item.quantity
-      total += itemTotal
-      details.push(
-        `${getGymCategoryLabel(item.category)} ${item.quantity}名: ${formatYen(itemTotal)}`
-      )
-    }
+    const unitPrice =
+      item.category === 'poolUser' ? 0 : gymPrices[item.category] || 0
+    const itemTotal = unitPrice * item.quantity
+    total += itemTotal
+    // details は i18n のためUI側で生成するため未使用
+    itemsStructured.push({
+      service: 'gym',
+      category: item.category,
+      quantity: item.quantity,
+      unitPrice,
+      lineTotal: itemTotal
+    })
   })
 
-  return { total, details }
+  return { total, details, items: itemsStructured }
 }
 
 /**
@@ -88,7 +123,7 @@ export function calculateGym(
  */
 export function calculateLocker(quantity: number) {
   const total = 100 * quantity
-  return { total, message: `料金: ${formatYen(total)}` }
+  return { total }
 }
 
 /**
@@ -99,9 +134,9 @@ export function calculateLocker(quantity: number) {
 export function calculateTicketBook(category: Category) {
   const price = ticketBookPrices[category]
   if (price !== undefined) {
-    return { total: price, message: `料金: ${formatYen(price)}` }
+    return { total: price, available: true as const }
   }
-  return { total: 0, message: 'この組み合わせでは販売されていません' }
+  return { total: 0, available: false as const }
 }
 
 /**
@@ -116,7 +151,7 @@ export function calculateMembership(
 ) {
   const price = membershipPrices[period][category]
   if (price !== undefined) {
-    return { total: price, message: `料金: ${formatYen(price)}` }
+    return { total: price, available: true as const }
   }
-  return { total: 0, message: 'この組み合わせでは販売されていません' }
+  return { total: 0, available: false as const }
 }
