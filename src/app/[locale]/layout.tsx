@@ -12,6 +12,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
 import { LazyAnalytics } from '@/components/analytics/LazyAnalytics'
+import { GoogleAdSenseScript } from '@/components/ads/GoogleAdSenseScript'
 
 // フォント最適化: 必要最小限のサブセットのみ読み込み
 const geistSans = Geist({
@@ -159,6 +160,11 @@ export default async function RootLayout({
 
         <meta name="theme-color" content="#0077b6" />
         <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4642959350028307"
+          crossOrigin="anonymous"
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(getCachedJsonLd())
@@ -186,6 +192,7 @@ export default async function RootLayout({
         </ThemeProvider>
         <CriticalCSS />
         <LazyAnalytics />
+        <GoogleAdSenseScript />
       </body>
     </html>
   )
