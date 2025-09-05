@@ -12,7 +12,6 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
 import { LazyAnalytics } from '@/components/analytics/LazyAnalytics'
-import { GoogleAdSenseScript } from '@/components/ads/GoogleAdSenseScript'
 
 // フォント最適化: 必要最小限のサブセットのみ読み込み
 const geistSans = Geist({
@@ -159,6 +158,12 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="//vercel.live" />
 
         <meta name="theme-color" content="#0077b6" />
+        {process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT ? (
+          <meta
+            name="google-adsense-account"
+            content={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT}
+          />
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -187,7 +192,6 @@ export default async function RootLayout({
         </ThemeProvider>
         <CriticalCSS />
         <LazyAnalytics />
-        <GoogleAdSenseScript />
       </body>
     </html>
   )
