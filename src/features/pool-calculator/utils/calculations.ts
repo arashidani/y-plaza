@@ -42,8 +42,14 @@ export function calcLineTotal(line: Line): number {
       return totalPoolCost
     }
     case 'gym': {
-      const unit =
-        line.who === 'member_or_pool_user' ? GYM_PRICES.member_or_pool_user : line.who === 'adult' ? GYM_PRICES.adult : GYM_PRICES.student
+      let unit: number
+      if (line.who === 'member_or_pool_user') {
+        unit = GYM_PRICES.member_or_pool_user
+      } else if (line.who === 'adult') {
+        unit = GYM_PRICES.adult
+      } else {
+        unit = GYM_PRICES.student
+      }
       return unit * line.count
     }
     case 'locker': {
