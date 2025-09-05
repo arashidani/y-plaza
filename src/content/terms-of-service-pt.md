@@ -38,4 +38,4 @@ Podemos emendar estes termos conforme necessário. Os termos emendados entrarão
 
 ---
 
-Promulgada: 24 de agosto de 2025
+Promulgada: 5 de setembro de 2025

@@ -17,7 +17,7 @@ export function CriticalCSS() {
             }
           })
         })
-        
+
         // 下部セクションを監視
         const sections = document.querySelectorAll('[data-lazy-load]')
         sections.forEach((section) => observer.observe(section))
@@ -28,9 +28,9 @@ export function CriticalCSS() {
     const addResourceHints = () => {
       const hints = [
         { rel: 'preload', href: '/flags/us.svg', as: 'image' },
-        { rel: 'preload', href: '/flags/br.svg', as: 'image' },
+        { rel: 'preload', href: '/flags/br.svg', as: 'image' }
       ]
-      
+
       hints.forEach(({ rel, href, as }) => {
         const link = document.createElement('link')
         link.rel = rel

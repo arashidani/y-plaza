@@ -38,4 +38,4 @@ We may amend these terms as necessary. The amended terms shall take effect from 
 
 ---
 
-Enacted: August 24, 2025
+Enacted: September 5, 2025

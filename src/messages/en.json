@@ -25,15 +25,23 @@
     "confirm": "Confirm",
     "back": "Back",
     "next": "Next",
-    "previous": "Previous"
+    "previous": "Previous",
+    "monetary": {
+      "unit": "yen"
+    }
   },
   "meta": {
     "title": "Y Plaza - Comprehensive Platform",
     "description": "Y Plaza is a comprehensive platform that supports your business.",
     "keywords": "platform, business, services"
   },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "The page you are looking for was not found.",
+    "backToHome": "Back to Home"
+  },
   "poolCalculator": {
-    "title": "Pool Fee Calculator",
+    "title": "You Plaza Izumo Fee Calculator",
     "publicInfoLink": "Public Info",
     "publicInfoNote": "This is a trial calculation tool based on public information. Please check the latest facility information for the final amount.",
     "type": {
@@ -57,7 +65,11 @@
       "coupon": "Coupon Book Subtotal"
     },
     "total": "Total",
+    "price": "Price",
+    "notForSale": "Not available for this combination",
+    "deleteCard": "Delete card",
     "notes": "Notes",
+    "categoryLabel": "Category",
     "note": {
       "lockerTitle": "About Locker:",
       "lockerDetail": "A changing room locker ({price} yen/each) is required when using the pool. It can be shared by about 2 people, but due to the changing space, it cannot be shared by 3 or more.",
@@ -104,13 +116,57 @@
     "books": "Books",
     "couponBookNote": "1 book = 11 tickets",
     "peopleUnit": "people",
+    "peopleCount": "{count, plural, one {# person} other {# people}}",
     "selectServices": "Select service items",
     "clearAllDescription": "Clear all selected items and reset calculation",
     "addLockerDescription": "Add locker service required for pool use",
     "totalAmount": "Total amount {amount} yen",
+    "periodLabel": "Period",
     "publicInfoLinkDescription": "Open the official You Plaza Izumo pricing information page in a new tab",
     "externalLink": "(External link, opens in new tab)",
     "lockerDetailPageLink": "Go to locker details information page",
-    "unitPrice": "Unit price"
+    "unitPrice": "Unit price",
+    "seasonLabel": "Season",
+    "timeSlotLabel": "Time slot",
+    "discountLabel": "Discount",
+    "labels": {
+      "category": {
+        "adult": "Adult",
+        "companionAdult": "Companion adult",
+        "senior": "Senior (65+)",
+        "student": "Elementary/Junior High/High School Student",
+        "preschooler": "Preschool (3+)",
+        "under2": "Under 2",
+        "poolUser": "Member or pool user",
+        "membership": "Member"
+      },
+      "coupon": {
+        "none": "None",
+        "riloClub": "Relo Club",
+        "joymate": "Joymate Shimane",
+        "saninActive": "San-in Active Club",
+        "disability": "Disability discount"
+      },
+      "timeSlot": {
+        "day": "Daytime fee (open–5pm)",
+        "evening": "Evening fee (after 5pm)"
+      },
+      "season": {
+        "normal": "Regular (Sep–Jun)",
+        "summer": "Summer (Jul–Aug)"
+      },
+      "membershipPeriod": {
+        "30days": "30 days",
+        "halfYear": "Half year",
+        "1year": "1 year"
+      },
+      "membershipCategory": {
+        "adult": "Adult",
+        "senior": "Senior",
+        "student": "Student",
+        "family": "Family",
+        "corporate": "Corporate"
+      }
+    }
   }
 }

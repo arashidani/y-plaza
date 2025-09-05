@@ -5,9 +5,18 @@ interface StreamingWrapperProps {
   fallback?: React.ReactNode
 }
 
-export function StreamingWrapper({ children, fallback }: StreamingWrapperProps) {
+export function StreamingWrapper({
+  children,
+  fallback
+}: StreamingWrapperProps) {
   return (
-    <Suspense fallback={fallback || <div className="animate-pulse bg-gray-200 h-4 rounded"></div>}>
+    <Suspense
+      fallback={
+        fallback || (
+          <div className="h-4 animate-pulse rounded bg-gray-200"></div>
+        )
+      }
+    >
       {children}
     </Suspense>
   )

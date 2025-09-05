@@ -5,7 +5,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from '@/components/ui/select'
 import { type Locale } from '@/constants/locales'
 import { locales, localeNames, localeFlagCodes } from '@/lib/i18n'
@@ -28,15 +28,24 @@ export function Header() {
   }
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="font-bold text-primary hover:text-primary/80 transition-colors flex-shrink-0 text-center leading-tight">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-b backdrop-blur">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
+        <Link
+          href="/"
+          className="text-primary hover:text-primary/80 flex-shrink-0 text-center leading-tight font-bold transition-colors"
+        >
           <div className="text-base sm:text-xl">
             {t('title').split(' ').length > 1 ? (
               <>
-                {t('title').split(' ').slice(0, Math.ceil(t('title').split(' ').length / 2)).join(' ')}
+                {t('title')
+                  .split(' ')
+                  .slice(0, Math.ceil(t('title').split(' ').length / 2))
+                  .join(' ')}
                 <br />
-                {t('title').split(' ').slice(Math.ceil(t('title').split(' ').length / 2)).join(' ')}
+                {t('title')
+                  .split(' ')
+                  .slice(Math.ceil(t('title').split(' ').length / 2))
+                  .join(' ')}
               </>
             ) : (
               <>
@@ -47,54 +56,66 @@ export function Header() {
             )}
           </div>
         </Link>
-        
-        <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+
+        <div className="flex flex-shrink-0 items-center space-x-2 sm:space-x-4">
           <ThemeToggle />
           <div className="flex items-center space-x-1 sm:space-x-2">
-            <Globe className="h-4 w-4 text-muted-foreground hidden sm:inline" />
+            <Globe className="text-muted-foreground hidden h-4 w-4 sm:inline" />
             <div className="relative">
-              <Select value={currentLocale} onValueChange={handleLanguageChange}>
-                <SelectTrigger 
-                  className="w-20 sm:w-36 relative" 
+              <Select
+                value={currentLocale}
+                onValueChange={handleLanguageChange}
+              >
+                <SelectTrigger
+                  className="relative w-20 sm:w-36"
                   aria-label={t('languageSelector')}
                   aria-describedby="current-language"
                 >
                   <SelectValue placeholder={t('language')}>
-                    <span id="current-language" className="flex items-center gap-1 sm:gap-2">
+                    <span
+                      id="current-language"
+                      className="flex items-center gap-1 sm:gap-2"
+                    >
                       <Flag
                         countryCode={localeFlagCodes[currentLocale]}
                         style={{
                           width: '1rem',
-                          height: '0.75rem',
+                          height: '0.75rem'
                         }}
                         alt=""
                         role="presentation"
                       />
-                      <span className="hidden sm:inline">{localeNames[currentLocale]}</span>
-                      <span className="sr-only">{t('language')}: {localeNames[currentLocale]}</span>
+                      <span className="hidden sm:inline">
+                        {localeNames[currentLocale]}
+                      </span>
+                      <span className="sr-only">
+                        {t('language')}: {localeNames[currentLocale]}
+                      </span>
                     </span>
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent 
-                  side="bottom" 
-                  align="end" 
-                  className="z-[9999] min-w-[120px] w-auto"
+                <SelectContent
+                  side="bottom"
+                  align="end"
+                  className="z-[9999] w-auto min-w-[120px]"
                   sideOffset={4}
                   avoidCollisions={true}
                   position="popper"
                 >
                   {locales.map((locale) => (
-                    <SelectItem 
-                      key={locale} 
+                    <SelectItem
+                      key={locale}
                       value={locale}
-                      aria-label={t('switchTo', { language: localeNames[locale] })}
+                      aria-label={t('switchTo', {
+                        language: localeNames[locale]
+                      })}
                     >
                       <span className="flex items-center gap-2 whitespace-nowrap">
                         <Flag
                           countryCode={localeFlagCodes[locale]}
                           style={{
                             width: '1rem',
-                            height: '0.75rem',
+                            height: '0.75rem'
                           }}
                           alt=""
                           role="presentation"
