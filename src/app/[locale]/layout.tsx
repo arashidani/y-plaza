@@ -170,7 +170,7 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <StreamingWrapper fallback={<div className="h-16 bg-gray-100 animate-pulse"></div>}>
               <Header />
-              <main className="flex-1 w-full overflow-x-hidden px-4 py-6">{children}</main>
+              <main className="flex-1 w-full overflow-x-hidden py-6">{children}</main>
             </StreamingWrapper>
             <Footer />
           </NextIntlClientProvider>
