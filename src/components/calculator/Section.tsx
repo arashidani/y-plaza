@@ -1,9 +1,11 @@
-import React from 'react'
+'use client'
+
+import type { ReactNode } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface SectionProps {
-  title: string;
-  children: React.ReactNode;
+  title: string
+  children: ReactNode
 }
 
 export function Section({ title, children }: SectionProps) {
@@ -12,9 +14,7 @@ export function Section({ title, children }: SectionProps) {
       <CardHeader>
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        {children}
-      </CardContent>
+      <CardContent>{children}</CardContent>
     </Card>
   )
 }
