@@ -160,11 +160,6 @@ export default async function RootLayout({
 
         <meta name="theme-color" content="#0077b6" />
         <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4642959350028307"
-          crossOrigin="anonymous"
-        />
-        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(getCachedJsonLd())

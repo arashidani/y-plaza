@@ -26,7 +26,6 @@ export function AdBanner({
   const adClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
     if (!adClient || !adSlot) return
     try {
       ;(window.adsbygoogle = window.adsbygoogle || []).push({})
