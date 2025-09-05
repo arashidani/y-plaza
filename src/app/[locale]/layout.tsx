@@ -12,6 +12,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
 import { LazyAnalytics } from '@/components/analytics/LazyAnalytics'
+import { GoogleAdSenseScript } from '@/components/ads/GoogleAdSenseScript'
 
 // フォント最適化: 必要最小限のサブセットのみ読み込み
 const geistSans = Geist({
@@ -186,6 +187,7 @@ export default async function RootLayout({
         </ThemeProvider>
         <CriticalCSS />
         <LazyAnalytics />
+        <GoogleAdSenseScript />
       </body>
     </html>
   )
