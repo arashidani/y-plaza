@@ -18,11 +18,14 @@ export type TimeSlot = 'day' | 'evening'
 // 割引タイプ
 export type Coupon = 'none' | 'riloClub' | 'joymate' | 'saninActive' | 'disability'
 
+// 営業期間（プールの季節区分）
+export type Season = 'summer' | 'normal'
+
 // 計算結果
 export type CalcResult = { status: 'ok'; price: number } | { status: 'not_for_sale' }
 
 export interface CalcInput {
-  date: Date
+  season: Season
   slot: TimeSlot
   category: Category
   coupon?: Coupon
