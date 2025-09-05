@@ -78,7 +78,7 @@ export function GymEditor({ state, actions }: GymEditorProps) {
                 value={item.category}
                 onValueChange={(v: Category) => updateItem(item.id, 'category', v)}
               >
-                <SelectTrigger className="h-8 w-full">
+                <SelectTrigger className="h-8 w-full" aria-label={t('categoryLabel')}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -108,7 +108,7 @@ export function GymEditor({ state, actions }: GymEditorProps) {
                 value={item.category}
                 onValueChange={(v: Category) => updateItem(item.id, 'category', v)}
               >
-                <SelectTrigger className="h-8">
+                <SelectTrigger className="h-8" aria-label={t('categoryLabel')}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
