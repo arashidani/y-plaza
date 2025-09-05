@@ -2,8 +2,8 @@ import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const cookieStore = cookies()
-  const consent = (await cookieStore).get('consent')
+  const cookieStore = await cookies()
+  const consent = cookieStore.get('consent')
 
   if (consent?.value !== 'true') {
     return NextResponse.json(
