@@ -15,6 +15,7 @@ import { Link, useRouter, usePathname } from '@/i18n/routing'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { MobileMenu } from '@/components/layout/MobileMenu'
 
 export function Header() {
   const router = useRouter()
@@ -22,6 +23,7 @@ export function Header() {
   const params = useParams()
   const currentLocale = params.locale as Locale
   const t = useTranslations('header')
+  const tFooter = useTranslations('footer')
 
   const handleLanguageChange = (value: Locale) => {
     router.push(pathname, { locale: value })
@@ -29,33 +31,52 @@ export function Header() {
 
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-b backdrop-blur">
-      <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <Link
-          href="/"
-          className="text-primary hover:text-primary/80 flex-shrink-0 text-center leading-tight font-bold transition-colors"
-        >
-          <div className="text-base sm:text-xl">
-            {t('title').split(' ').length > 1 ? (
-              <>
-                {t('title')
-                  .split(' ')
-                  .slice(0, Math.ceil(t('title').split(' ').length / 2))
-                  .join(' ')}
-                <br />
-                {t('title')
-                  .split(' ')
-                  .slice(Math.ceil(t('title').split(' ').length / 2))
-                  .join(' ')}
-              </>
-            ) : (
-              <>
-                {t('title').slice(0, Math.ceil(t('title').length / 2))}
-                <br />
-                {t('title').slice(Math.ceil(t('title').length / 2))}
-              </>
-            )}
-          </div>
-        </Link>
+      <div className="container mx-auto flex items-center justify-between gap-4 px-4 py-4">
+        <div className="flex items-center gap-3">
+          <MobileMenu />
+          <Link
+            href="/"
+            className="text-primary hover:text-primary/80 flex-shrink-0 text-center leading-tight font-bold transition-colors"
+          >
+            <div className="text-base sm:text-xl">
+              {t('title').split(' ').length > 1 ? (
+                <>
+                  {t('title')
+                    .split(' ')
+                    .slice(0, Math.ceil(t('title').split(' ').length / 2))
+                    .join(' ')}
+                  <br />
+                  {t('title')
+                    .split(' ')
+                    .slice(Math.ceil(t('title').split(' ').length / 2))
+                    .join(' ')}
+                </>
+              ) : (
+                <>
+                  {t('title').slice(0, Math.ceil(t('title').length / 2))}
+                  <br />
+                  {t('title').slice(Math.ceil(t('title').length / 2))}
+                </>
+              )}
+            </div>
+          </Link>
+        </div>
+
+        {/* Desktop nav */}
+        <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
+          <Link
+            href="/privacy"
+            className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+          >
+            {tFooter('privacy')}
+          </Link>
+          <Link
+            href="/terms"
+            className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+          >
+            {tFooter('terms')}
+          </Link>
+        </nav>
 
         <div className="flex flex-shrink-0 items-center space-x-2 sm:space-x-4">
           <ThemeToggle />
