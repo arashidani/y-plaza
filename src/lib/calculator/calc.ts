@@ -6,10 +6,10 @@ import { applyRiloClub, joymatePrice, applySaninActive } from './discounts'
 const floorTo10 = (yen: number) => Math.floor(yen / 10) * 10
 
 export function calcPrice(input: CalcInput): CalcResult {
-  const { date, slot, category, coupon = 'none' } = input
+  const { season, slot, category, coupon = 'none' } = input
 
   // 基本料金取得（販売なしは null）
-  const base = getBasePrice(date, slot, category)
+  const base = getBasePrice(season, slot, category)
   if (base == null) return { status: 'not_for_sale' }
 
   // 割引適用
@@ -25,12 +25,12 @@ export function calcPrice(input: CalcInput): CalcResult {
       break
     }
     case 'joymate': {
-      const v = joymatePrice(date, slot, category)
+      const v = joymatePrice(season, slot, category)
       if (v != null) return { status: 'ok', price: v }
       break
     }
     case 'saninActive': {
-      const v = applySaninActive(date, slot, category, base)
+      const v = applySaninActive(season, slot, category, base)
       if (v != null) return { status: 'ok', price: v }
       break
     }
