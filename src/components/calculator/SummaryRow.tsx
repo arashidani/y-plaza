@@ -1,8 +1,10 @@
+'use client'
+
 import { YenMono } from './YenMono'
 
 interface SummaryRowProps {
-  label: string;
-  value: number;
+  label: string
+  value: number
 }
 
 export function SummaryRow({ label, value }: SummaryRowProps) {
