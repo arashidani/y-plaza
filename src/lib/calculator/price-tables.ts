@@ -1,12 +1,4 @@
-import { Category, TimeSlot } from './types'
-
-// 夏季営業(7月,8月)かどうか
-export const isSummer = (d: Date) => {
-  // 1-12
-  const m = d.getMonth() + 1
-  return m === 7 || m === 8
-}
-
+import { Category, TimeSlot, Season } from './types'
 
 // 基本料金（プール）
 const baseDayNormal: Record<Category, number | undefined> = {
@@ -84,9 +76,10 @@ export const membershipPrices: Record<
   }
 }
 
-export function getBasePrice(date: Date, slot: TimeSlot, category: Category): number | null {
+// 基本の料金を取得（日中 or イブニング、通常 or 夏季）
+export function getBasePrice(season: Season, slot: TimeSlot, category: Category): number | null {
   if (slot === 'day') {
-    const tbl = isSummer(date) ? baseDaySummer : baseDayNormal
+    const tbl = season === 'summer' ? baseDaySummer : baseDayNormal
     return tbl[category] ?? null
   }
   // evening
