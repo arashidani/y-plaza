@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'
   ),
   title:
     '出雲ゆうプラザ 非公式 料金計算ツール｜入場料・回数券・団体・イブニングの合計を自動計算',
@@ -87,9 +87,9 @@ export const metadata: Metadata = {
   ],
   alternates: {
     languages: {
-      ja: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/`,
-      en: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/en`,
-      pt: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'}/pt`
+      ja: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'}/`,
+      en: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'}/en`,
+      pt: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'}/pt`
     }
   },
   openGraph: {
@@ -118,10 +118,6 @@ export const metadata: Metadata = {
   other: {
     'note:unofficial':
       'This site is an unofficial calculator for Izumo Yuu Plaza.'
-  },
-  // Google Site Verification
-  verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION
   }
 }
 
@@ -181,7 +177,7 @@ export default async function RootLayout({
               fallback={<div className="h-16 animate-pulse bg-gray-100"></div>}
             >
               <Header />
-              <main className="w-full flex-1 overflow-x-hidden py-6 px-4 md:px-6">
+              <main className="w-full flex-1 overflow-x-hidden px-4 py-6 md:px-6">
                 {children}
               </main>
             </StreamingWrapper>

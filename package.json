@@ -13,7 +13,10 @@
     "start": "next start",
     "lint": "eslint --fix",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "check:sitemap": "curl -sS ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}/sitemap.xml | head -n 50",
+    "check:robots": "curl -sS ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}/robots.txt",
+    "check:all": "pnpm -s check:sitemap && echo \n---\n && pnpm -s check:robots"
   },
   "browserslist": {
     "production": [

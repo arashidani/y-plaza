@@ -40,6 +40,23 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   
+  // 旧ドメインから新ドメインへ恒久リダイレクト（保険）
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'y-plaza.vercel.app',
+          },
+        ],
+        destination: 'https://azarashi.work/:path*',
+        permanent: true,
+      },
+    ]
+  },
+  
   // 強化されたキャッシュ設定
   async headers() {
     return [
