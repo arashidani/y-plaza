@@ -39,3 +39,9 @@ We may amend these terms as necessary. The amended terms shall take effect from 
 ---
 
 Enacted: September 5, 2025
+
+## Article 9 (Cookies)
+
+1. This site may use cookies for purposes such as service improvement and usage measurement.
+2. For details on cookies, purposes of use, and how to opt out, please refer to the Privacy Policy.
+3. Users can disable cookies via their browser settings; however, some features of this site may not function properly if cookies are disabled.
