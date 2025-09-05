@@ -6,56 +6,68 @@ import { useTranslations } from 'next-intl'
 import { Menu, X } from 'lucide-react'
 
 export function MobileMenu() {
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [isRendered, setIsRendered] = useState(false)
   const pathname = usePathname()
   const tHeader = useTranslations('header')
   const tFooter = useTranslations('footer')
 
-  const close = useCallback(() => setOpen(false), [])
+  const close = useCallback(() => setIsOpen(false), [])
+  const openMenu = useCallback(() => {
+    setIsRendered(true)
+    // Next frame to allow transition from closed -> open
+    requestAnimationFrame(() => setIsOpen(true))
+  }, [])
 
   // Close on route change
   useEffect(() => {
     close()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname, close])
 
   // Escape to close
   useEffect(() => {
-    if (!open) return
+    if (!isRendered) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') setIsOpen(false)
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [open])
+  }, [isRendered])
 
-  // Prevent body scroll when open
+  // Prevent body scroll when open (class-based, compensate scrollbar width)
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden'
+    if (isRendered) {
+      const scrollbar = window.innerWidth - document.documentElement.clientWidth
+      document.documentElement.style.setProperty(
+        '--removed-scrollbar-width',
+        `${Math.max(0, scrollbar)}px`
+      )
+      document.body.classList.add('is-menu-open')
     } else {
-      document.body.style.overflow = ''
+      document.body.classList.remove('is-menu-open')
+      document.documentElement.style.removeProperty('--removed-scrollbar-width')
     }
     return () => {
-      document.body.style.overflow = ''
+      document.body.classList.remove('is-menu-open')
+      document.documentElement.style.removeProperty('--removed-scrollbar-width')
     }
-  }, [open])
+  }, [isRendered])
 
   return (
     <>
       <button
         type="button"
         aria-label="Open menu"
-        aria-expanded={open}
+        aria-expanded={isOpen}
         aria-controls="mobile-menu-panel"
         className="sm:hidden inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-        onClick={() => setOpen(true)}
+        onClick={openMenu}
       >
         <Menu className="h-5 w-5" />
       </button>
 
       {/* Overlay */}
-      {open && (
+      {isRendered && (
         <div
           className="fixed inset-0 z-[10000]"
           role="dialog"
@@ -63,7 +75,8 @@ export function MobileMenu() {
           aria-labelledby="mobile-menu-title"
         >
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            data-state={isOpen ? 'open' : 'closed'}
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 data-[state=closed]:opacity-0"
             onClick={close}
             aria-hidden="true"
           />
@@ -71,11 +84,19 @@ export function MobileMenu() {
           {/* Panel */}
           <div
             id="mobile-menu-panel"
-            className="fixed inset-y-0 left-0 z-[10001] h-dvh max-h-dvh w-[85%] max-w-xs translate-x-0 text-foreground shadow-2xl outline-none transition-transform duration-300 ease-out will-change-transform border-r data-[state=closed]:-translate-x-full flex flex-col"
-            style={{
-              backgroundColor: 'var(--color-background, white)',
-              color: 'var(--color-foreground, #111827)'
+            data-state={isOpen ? 'open' : 'closed'}
+            onTransitionEnd={() => {
+              if (!isOpen) setIsRendered(false)
             }}
+            className={[
+              'fixed inset-y-0 left-0 z-[10001]',
+              'h-dvh max-h-dvh w-[85%] max-w-xs',
+              'bg-background text-foreground shadow-2xl outline-none border-r',
+              'flex flex-col will-change-transform',
+              'transition-transform duration-300 ease-out',
+              'data-[state=open]:translate-x-0',
+              'data-[state=closed]:-translate-x-full'
+            ].join(' ')}
           >
             <div className="flex items-center justify-between border-b px-4 py-3">
               <h2 id="mobile-menu-title" className="text-base font-semibold">
@@ -93,7 +114,6 @@ export function MobileMenu() {
 
             <nav
               className="flex min-h-0 flex-1 flex-col gap-1 px-2 py-3 bg-background overflow-y-auto pt-[env(safe-area-inset-top)] pb-8 [padding-bottom:env(safe-area-inset-bottom)]"
-              style={{ backgroundColor: 'var(--color-background, white)' }}
             >
               <Link
                 href="/"

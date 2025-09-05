@@ -140,3 +140,12 @@ html, body {
     @apply bg-background text-foreground font-sans;
   }
 }
+
+/* Avoid layout shift when locking body scroll */
+html {
+  scrollbar-gutter: stable both-edges;
+}
+body.is-menu-open {
+  overflow: hidden;
+  padding-right: var(--removed-scrollbar-width, 0px);
+}

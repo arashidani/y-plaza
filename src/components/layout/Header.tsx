@@ -63,7 +63,7 @@ export function Header() {
         </div>
 
         {/* Desktop nav */}
-        <nav aria-label="Primary" className="hidden md:flex items-center gap-6">
+        <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
           <Link
             href="/privacy"
             className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
