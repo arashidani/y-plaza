@@ -12,7 +12,13 @@
   "footer": {
     "copyright": "© 2025 Unofficial You Plaza. Todos os direitos reservados.",
     "privacy": "Política de Privacidade",
-    "terms": "Termos de Serviço"
+    "terms": "Termos de Serviço",
+    "cookie": {
+      "message": "Usamos cookies para melhorar os serviços e para medição. Veja a <link>Política de Privacidade</link> para detalhes.",
+      "accept": "Aceitar",
+      "deny": "Recusar",
+      "reset": "Redefinir configurações de cookie"
+    }
   },
   "common": {
     "loading": "Carregando...",

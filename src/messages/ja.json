@@ -12,7 +12,13 @@
   "footer": {
     "copyright": "© 2025 Unofficial You Plaza. All rights reserved.",
     "privacy": "プライバシーポリシー",
-    "terms": "利用規約"
+    "terms": "利用規約",
+    "cookie": {
+      "message": "本サイトはサービス向上や測定のためにCookieを使用します。詳細は<link>プライバシーポリシー</link>をご確認ください。",
+      "accept": "同意する",
+      "deny": "拒否する",
+      "reset": "Cookie設定をリセット"
+    }
   },
   "common": {
     "loading": "読み込み中...",
