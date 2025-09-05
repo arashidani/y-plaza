@@ -17,3 +17,9 @@ export function formatCurrencyWithI18n(
 ): string {
   return `${value.toLocaleString('ja-JP')} ${t('monetary.unit')}`
 }
+
+// 翻訳キーの正規化（ticketBook → coupon）
+import type { ServiceType } from './types'
+
+export const getServiceTranslationKey = (service: ServiceType): string =>
+  service === 'ticketBook' ? 'coupon' : service

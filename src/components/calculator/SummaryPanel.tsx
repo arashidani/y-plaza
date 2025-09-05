@@ -6,6 +6,7 @@ import { YenMono } from './YenMono'
 import { ServiceType } from '@/lib/calculator/types'
 import { SERVICE_ORDER } from '@/lib/calculator/constants'
 import { useTranslations } from 'next-intl'
+import { getServiceTranslationKey } from '@/lib/calculator/utils'
 
 interface SummaryPanelProps {
   subtotal: Record<ServiceType, number>
@@ -17,7 +18,7 @@ export function SummaryPanel({ subtotal, total }: SummaryPanelProps) {
   const items = SERVICE_ORDER.map((key) => ({
     key,
     value: subtotal[key],
-    label: t(`subtotal.${key === 'ticketBook' ? 'coupon' : key}`)
+    label: t(`subtotal.${getServiceTranslationKey(key)}`)
   }))
 
   return (

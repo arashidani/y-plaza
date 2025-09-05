@@ -3,6 +3,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { ServiceType } from '@/lib/calculator/types'
 import { useTranslations } from 'next-intl'
+import { getServiceTranslationKey } from '@/lib/calculator/utils'
 
 interface ServiceSelectorProps {
   order: ServiceType[]
@@ -31,7 +32,7 @@ export function ServiceSelector({
               onCheckedChange={() => onToggle(service)}
             />
             <label htmlFor={service} className="cursor-pointer text-sm font-medium">
-              {t(`type.${service === 'ticketBook' ? 'coupon' : service}`)}
+              {t(`type.${getServiceTranslationKey(service)}`)}
             </label>
           </div>
         ))}

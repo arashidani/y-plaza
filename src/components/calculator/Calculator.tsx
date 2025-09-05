@@ -67,16 +67,15 @@ export function Calculator() {
     [handleServiceToggle]
   )
 
-  // 実際の計算結果を使用して内訳と合計を算出
-  const { subtotal, total } = SERVICE_ORDER.reduce(
-    (acc, key) => {
-      const v = selectedServices.includes(key) ? serviceTotals[key] : 0
-      acc.subtotal[key] = v
-      acc.total += v
-      return acc
-    },
-    { subtotal: {} as Record<ServiceType, number>, total: 0 }
-  )
+  // 実際の計算結果を使用して内訳と合計を算出（宣言的に）
+  const subtotal = Object.fromEntries(
+    SERVICE_ORDER.map((key) => [
+      key,
+      selectedServices.includes(key) ? serviceTotals[key] : 0
+    ])
+  ) as Record<ServiceType, number>
+
+  const total = Object.values(subtotal).reduce((sum, value) => sum + value, 0)
 
   return (
     <div className="space-y-6">
