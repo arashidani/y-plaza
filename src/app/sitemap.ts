@@ -4,7 +4,7 @@ import { SUPPORTED_LOCALES } from '@/constants/locales'
 // Generate a single root sitemap.xml including localized URLs
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://www.azarashi.work'
   ).replace(/\/$/, '')
 
   // Known content pages per locale

@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://www.azarashi.work'
   ),
   title:
     '出雲ゆうプラザ 非公式 料金計算ツール｜入場料・回数券・団体・イブニングの合計を自動計算',
@@ -87,9 +87,9 @@ export const metadata: Metadata = {
   ],
   alternates: {
     languages: {
-      ja: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'}/`,
-      en: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'}/en`,
-      pt: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'}/pt`
+      ja: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.azarashi.work'}/`,
+      en: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.azarashi.work'}/en`,
+      pt: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.azarashi.work'}/pt`
     }
   },
   openGraph: {

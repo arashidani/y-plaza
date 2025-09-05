@@ -51,7 +51,7 @@ const nextConfig: NextConfig = {
             value: 'y-plaza.vercel.app',
           },
         ],
-        destination: 'https://azarashi.work/:path*',
+        destination: 'https://www.azarashi.work/:path*',
         permanent: true,
       },
     ]
