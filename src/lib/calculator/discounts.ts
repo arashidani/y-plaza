@@ -1,5 +1,4 @@
-import { Category, TimeSlot } from './types'
-import { isSummer } from './price-tables'
+import { Category, TimeSlot, Season } from './types'
 
 // リロクラブ: adult/senior の Day に 300円引き
 export function applyRiloClub(base: number, slot: TimeSlot, category: Category): number | null {
@@ -9,10 +8,10 @@ export function applyRiloClub(base: number, slot: TimeSlot, category: Category):
 }
 
 // ジョイメイト
-export function joymatePrice(date: Date, slot: TimeSlot, category: Category): number | null {
+export function joymatePrice(season: Season, slot: TimeSlot, category: Category): number | null {
   if (slot !== 'day') return null
 
-  if (isSummer(date)) {
+  if (season === 'summer') {
     // 夏季 Day
     const summerMap: Partial<Record<Category, number>> = {
       adult: 920,
@@ -38,14 +37,13 @@ export function joymatePrice(date: Date, slot: TimeSlot, category: Category): nu
 
 // 山陰アクティブクラブ: 6–9月、Day、student/preschooler のみ 200円引き
 export function applySaninActive(
-  date: Date,
+  season: Season,
   slot: TimeSlot,
   category: Category,
   base: number
 ): number | null {
-  const m = date.getMonth() + 1
-  const inRange = m >= 6 && m <= 9
-  if (!inRange) return null
+  // 6–9月相当は、季節フラグで 'summer' のときのみ適用とする
+  if (season !== 'summer') return null
   if (slot !== 'day') return null
   if (category !== 'student' && category !== 'preschooler') return null
   return Math.max(0, base - 200)
