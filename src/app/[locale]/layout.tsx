@@ -118,10 +118,6 @@ export const metadata: Metadata = {
   other: {
     'note:unofficial':
       'This site is an unofficial calculator for Izumo Yuu Plaza.'
-  },
-  // Google Site Verification
-  verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION
   }
 }
 
@@ -181,7 +177,7 @@ export default async function RootLayout({
               fallback={<div className="h-16 animate-pulse bg-gray-100"></div>}
             >
               <Header />
-              <main className="w-full flex-1 overflow-x-hidden py-6 px-4 md:px-6">
+              <main className="w-full flex-1 overflow-x-hidden px-4 py-6 md:px-6">
                 {children}
               </main>
             </StreamingWrapper>
