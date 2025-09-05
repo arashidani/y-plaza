@@ -25,12 +25,20 @@
     "confirm": "確認",
     "back": "戻る",
     "next": "次へ",
-    "previous": "前へ"
+    "previous": "前へ",
+    "monetary": {
+      "unit": "円"
+    }
   },
   "meta": {
     "title": "Y Plaza - 総合プラットフォーム",
     "description": "Y Plazaは、あなたのビジネスをサポートする総合プラットフォームです。",
     "keywords": "プラットフォーム, ビジネス, サービス"
+  },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "お探しのページが見つかりませんでした。",
+    "backToHome": "ホームに戻る"
   },
   "poolCalculator": {
     "title": "プール料金 計算ツール",
@@ -57,7 +65,11 @@
       "coupon": "回数券 小計"
     },
     "total": "合計",
+    "price": "料金",
+    "notForSale": "この組み合わせでは販売されていません",
+    "deleteCard": "カードを削除",
     "notes": "メモと注意事項",
+    "categoryLabel": "区分",
     "note": {
       "lockerTitle": "ロッカーについて：",
       "lockerDetail": "プール利用時は更衣室ロッカー（￥{price}/箇所）が必要です。2人程度での共有は可能ですが、着替えスペースの関係上、3人以上での共有はできません。",
@@ -104,13 +116,57 @@
     "books": "冊数",
     "couponBookNote": "1冊=11枚綴り",
     "peopleUnit": "名",
+    "peopleCount": "{count}名",
     "selectServices": "サービス項目を選択",
     "clearAllDescription": "すべての選択項目をクリアして計算をリセットする",
     "addLockerDescription": "プール利用に必要なロッカーをサービス項目に追加する",
     "totalAmount": "合計金額 {amount}円",
+    "periodLabel": "期間",
     "publicInfoLinkDescription": "出雲ゆうプラザの公式料金情報ページを新しいタブで開く",
     "externalLink": "（外部リンク、新しいタブで開きます）",
     "lockerDetailPageLink": "ロッカーの詳細情報ページに移動",
-    "unitPrice": "単価"
+    "unitPrice": "単価",
+    "seasonLabel": "営業期間",
+    "timeSlotLabel": "時間帯",
+    "discountLabel": "割引",
+    "labels": {
+      "category": {
+        "adult": "大人",
+        "companionAdult": "同伴者大人",
+        "senior": "シルバー(65歳以上)",
+        "student": "小・中・高生",
+        "preschooler": "3歳以上(就学前)",
+        "under2": "2歳以下",
+        "poolUser": "会員・プール利用者",
+        "membership": "会員"
+      },
+      "coupon": {
+        "none": "なし",
+        "riloClub": "リロクラブ",
+        "joymate": "ジョイメイトしまね",
+        "saninActive": "山陰アクティブクラブ",
+        "disability": "障害者割引"
+      },
+      "timeSlot": {
+        "day": "日中料金(開館〜午後5時)",
+        "evening": "イブニング料金(午後5時以降)"
+      },
+      "season": {
+        "normal": "通常営業(9〜6月)",
+        "summer": "夏季営業(7・8月)"
+      },
+      "membershipPeriod": {
+        "30days": "30日",
+        "halfYear": "半年",
+        "1year": "1年"
+      },
+      "membershipCategory": {
+        "adult": "大人",
+        "senior": "シルバー(65歳以上)",
+        "student": "小・中・高生",
+        "family": "家族",
+        "corporate": "法人"
+      }
+    }
   }
 }

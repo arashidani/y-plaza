@@ -25,12 +25,20 @@
     "confirm": "Confirmar",
     "back": "Voltar",
     "next": "Próximo",
-    "previous": "Anterior"
+    "previous": "Anterior",
+    "monetary": {
+      "unit": "iene"
+    }
   },
   "meta": {
     "title": "Y Plaza - Plataforma Abrangente",
     "description": "Y Plaza é uma plataforma abrangente que suporta seu negócio.",
     "keywords": "plataforma, negócios, serviços"
+  },
+  "notFound": {
+    "title": "404 - Página Não Encontrada",
+    "description": "A página que você está procurando não foi encontrada.",
+    "backToHome": "Voltar ao Início"
   },
   "poolCalculator": {
     "title": "Calculadora de Taxas da Piscina",
@@ -57,7 +65,11 @@
       "coupon": "Subtotal do Talão de Cupons"
     },
     "total": "Total",
+    "price": "Preço",
+    "notForSale": "Não disponível para esta combinação",
+    "deleteCard": "Excluir cartão",
     "notes": "Notas",
+    "categoryLabel": "Categoria",
     "note": {
       "lockerTitle": "Sobre o Armário:",
       "lockerDetail": "É necessário um armário de vestiário ({price} yen/cada) ao usar a piscina. Pode ser compartilhado por cerca de 2 pessoas, mas devido ao espaço para troca de roupa, não pode ser compartilhado por 3 ou mais.",
@@ -104,13 +116,57 @@
     "books": "Livros",
     "couponBookNote": "1 livro = 11 bilhetes",
     "peopleUnit": "pessoas",
+    "peopleCount": "{count, plural, one {# pessoa} other {# pessoas}}",
     "selectServices": "Selecionar itens de serviço",
     "clearAllDescription": "Limpar todos os itens selecionados e reiniciar o cálculo",
     "addLockerDescription": "Adicionar serviço de armário necessário para uso da piscina",
     "totalAmount": "Valor total {amount} yen",
+    "periodLabel": "Período",
     "publicInfoLinkDescription": "Abrir a página oficial de informações de preços do You Plaza Izumo em uma nova aba",
     "externalLink": "(Link externo, abre em nova aba)",
     "lockerDetailPageLink": "Ir para a página de detalhes do armário",
-    "unitPrice": "Preço unitário"
+    "unitPrice": "Preço unitário",
+    "seasonLabel": "Período de operação",
+    "timeSlotLabel": "Faixa de horário",
+    "discountLabel": "Desconto",
+    "labels": {
+      "category": {
+        "adult": "Adulto",
+        "companionAdult": "Adulto acompanhante",
+        "senior": "Sênior (65+)",
+        "student": "Estudante (Ensino Fundamental/Médio)",
+        "preschooler": "Pré-escolar (3+)",
+        "under2": "Menor de 2",
+        "poolUser": "Membro ou usuário da piscina",
+        "membership": "Membro"
+      },
+      "coupon": {
+        "none": "Nenhum",
+        "riloClub": "Relo Club",
+        "joymate": "Joymate Shimane",
+        "saninActive": "San-in Active Club",
+        "disability": "Desconto para pessoas com deficiência"
+      },
+      "timeSlot": {
+        "day": "Tarifa diurna (abertura–17h)",
+        "evening": "Tarifa noturna (após 17h)"
+      },
+      "season": {
+        "normal": "Operação normal (Set–Jun)",
+        "summer": "Operação de verão (Jul–Ago)"
+      },
+      "membershipPeriod": {
+        "30days": "30 dias",
+        "halfYear": "Meio ano",
+        "1year": "1 ano"
+      },
+      "membershipCategory": {
+        "adult": "Adulto",
+        "senior": "Sênior",
+        "student": "Estudante",
+        "family": "Família",
+        "corporate": "Corporativo"
+      }
+    }
   }
 }
