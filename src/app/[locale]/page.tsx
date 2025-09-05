@@ -19,7 +19,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params
   const baseURL =
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://y-plaza.vercel.app'
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://azarashi.work'
   const currentURL = locale === 'ja' ? baseURL : `${baseURL}/${locale}`
 
   return {
