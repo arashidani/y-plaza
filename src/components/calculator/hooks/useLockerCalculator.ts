@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useMemo, useState } from 'react'
 import { calculateLocker } from '@/lib/calculator/service-calculators'
@@ -20,4 +20,3 @@ export function useLockerCalculator() {
 
   return { state: { quantity }, actions: { setQuantity }, total, message }
 }
-

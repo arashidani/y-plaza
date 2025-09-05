@@ -42,7 +42,7 @@ export type GymDetailItem = {
  * @param items 対象者の配列（区分・人数・クーポン）
  * @param season 営業期間（通常/夏季）
  * @param slot 時間帯（昼/夕）
- * @returns 合計金額と、行ごとの明細文字列配列
+ * @returns 合計金額 total と、行ごとの明細アイテム配列 items
  */
 export function calculatePool(
   items: Array<{ category: Category; quantity: number; coupon: Coupon }>,
@@ -88,7 +88,7 @@ export function calculatePool(
 /**
  * ジム利用の合計金額と明細を計算します。
  * @param items 対象者の配列（区分・人数）
- * @returns 合計金額と、行ごとの明細文字列配列
+ * @returns 合計金額 total と、行ごとの明細アイテム配列 items
  */
 export function calculateGym(
   items: Array<{ category: Category; quantity: number }>
@@ -117,7 +117,7 @@ export function calculateGym(
 /**
  * ロッカー利用の料金を計算します。
  * @param quantity ロッカー個数
- * @returns 合計金額と表示用メッセージ
+ * @returns 合計金額 total のみ（文言生成はUI側）
  */
 export function calculateLocker(quantity: number) {
   const total = 100 * quantity
@@ -127,7 +127,7 @@ export function calculateLocker(quantity: number) {
 /**
  * 回数券の料金を計算します。
  * @param category 区分
- * @returns 合計金額と表示用メッセージ（販売なしの場合はその旨の文言）
+ * @returns 合計金額 total と、販売可否 available（文言生成はUI側）
  */
 export function calculateTicketBook(category: Category) {
   const price = ticketBookPrices[category]
@@ -139,9 +139,9 @@ export function calculateTicketBook(category: Category) {
 
 /**
  * 会員料金を計算します。
- * @param period 期間（30日/半年/1年）の3択
+ * @param period 期間（30日/半年/1年）
  * @param category 会員区分
- * @returns 合計金額と表示用メッセージ（販売なしの場合はその旨の文言）
+ * @returns 合計金額 total と、販売可否 available（文言生成はUI側）
  */
 export function calculateMembership(
   period: MembershipPeriod,

@@ -1,8 +1,6 @@
 import type { Coupon } from './types'
 
-// i18nラベルはUI層の useCalculatorLabels で解決します。
-// ここでは lib 層向けのキー集合のみを提供します。
-
+// 利用可能なクーポン一覧（UI選択肢用）
 export const ALL_COUPONS: Coupon[] = [
   'none',
   'riloClub',
