@@ -1,4 +1,4 @@
-import Script from "next/script"
+import Script from 'next/script'
 
 export function GoogleAdSenseScript() {
   const client = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
@@ -13,4 +13,3 @@ export function GoogleAdSenseScript() {
     />
   )
 }
-
