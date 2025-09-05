@@ -43,7 +43,7 @@ export function MembershipSelector({
   return (
     <>
       <div>
-        <label className="block text-sm font-medium mb-2">期間</label>
+        <label className="mb-2 block text-sm font-medium">期間</label>
         <Select
           value={period}
           onValueChange={(v: MembershipPeriod) => setPeriod(v)}
@@ -62,7 +62,7 @@ export function MembershipSelector({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">区分</label>
+        <label className="mb-2 block text-sm font-medium">区分</label>
         <Select
           value={category}
           onValueChange={(v: string) => setCategory(v as MembershipCategory)}

@@ -65,11 +65,11 @@ export function GymEditor({ state, actions }: GymEditorProps) {
       {items.map((item) => (
         <Card
           key={item.id}
-          className="p-4 bg-gray-50 dark:bg-gray-800 relative"
+          className="relative bg-gray-50 p-4 dark:bg-gray-800"
         >
           <div className="flex items-center gap-2">
             <div className="flex-1">
-              <label className="block text-xs text-gray-600 mb-1">区分</label>
+              <label className="mb-1 block text-xs text-gray-600">区分</label>
               <Select
                 value={item.category}
                 onValueChange={(v: Category) =>
@@ -90,7 +90,7 @@ export function GymEditor({ state, actions }: GymEditorProps) {
             </div>
 
             <div>
-              <label className="block text-xs text-gray-600 mb-1">人数</label>
+              <label className="mb-1 block text-xs text-gray-600">人数</label>
               <NumberInput
                 value={item.quantity}
                 onChange={(v) => updateItem(item.id, 'quantity', v)}

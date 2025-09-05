@@ -35,7 +35,7 @@ export function PoolCalculatorClient() {
       <p className="mt-2 text-sm text-gray-700">
         <a
           href="https://y-plaza.sakura.ne.jp/payment"
-          className="text-blue-700 hover:text-blue-800 underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 rounded-sm font-medium"
+          className="rounded-sm font-medium text-blue-700 underline hover:text-blue-800 hover:no-underline focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:outline-none"
           target="_blank"
           rel="noopener noreferrer"
           aria-label={t('poolCalculator.publicInfoLinkDescription', {
@@ -61,7 +61,7 @@ export function PoolCalculatorClient() {
             defaultValue: 'サービス項目を選択'
           })}
         </legend>
-        <div className="flex flex-wrap gap-3 items-center">
+        <div className="flex flex-wrap items-center gap-3">
           {[
             {
               type: 'pool' as LineType,
@@ -92,7 +92,7 @@ export function PoolCalculatorClient() {
           ].map(({ type, label }) => (
             <label
               key={type}
-              className="inline-flex items-center gap-2 cursor-pointer"
+              className="inline-flex cursor-pointer items-center gap-2"
             >
               <Checkbox
                 checked={enabledTypes.has(type)}
@@ -121,7 +121,7 @@ export function PoolCalculatorClient() {
 
       {/* ロッカー必須案内 */}
       {enabledTypes.has('pool') && !enabledTypes.has('locker') && (
-        <div className="mt-3 p-3 bg-orange-50 dark:bg-orange-950/50 border border-orange-300 dark:border-orange-700 rounded-lg">
+        <div className="mt-3 rounded-lg border border-orange-300 bg-orange-50 p-3 dark:border-orange-700 dark:bg-orange-950/50">
           <div className="flex items-center gap-2 text-sm text-orange-800 dark:text-orange-200">
             <span>⚠️</span>
             <div className="flex-1">
@@ -130,7 +130,7 @@ export function PoolCalculatorClient() {
                   defaultValue: 'プール利用時はロッカーが必要です'
                 })}
               </div>
-              <div className="text-xs mt-1">
+              <div className="mt-1 text-xs">
                 {t('poolCalculator.lockerShareNote', {
                   defaultValue:
                     '2人程度での共有は可能ですが、着替えスペースの関係上、3人以上での共有はできません'
@@ -164,7 +164,7 @@ export function PoolCalculatorClient() {
         ))}
         {lines.length === 0 && (
           <Card role="status" aria-live="polite">
-            <CardContent className="p-6 text-sm text-gray-600 text-center">
+            <CardContent className="p-6 text-center text-sm text-gray-600">
               <p>
                 {t('poolCalculator.noRows', {
                   defaultValue:

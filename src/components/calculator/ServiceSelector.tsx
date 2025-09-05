@@ -19,10 +19,10 @@ export function ServiceSelector({
 }: ServiceSelectorProps) {
   return (
     <div>
-      <h2 className="text-xl font-semibold text-primary mb-4">
+      <h2 className="text-primary mb-4 text-xl font-semibold">
         利用サービス選択
       </h2>
-      <div className="flex flex-wrap gap-4 items-center">
+      <div className="flex flex-wrap items-center gap-4">
         {order.map((service) => (
           <div key={service} className="flex items-center space-x-2">
             <Checkbox
@@ -33,7 +33,7 @@ export function ServiceSelector({
             />
             <label
               htmlFor={service}
-              className="text-sm font-medium cursor-pointer"
+              className="cursor-pointer text-sm font-medium"
             >
               {getServiceTypeLabel(service)}
             </label>
@@ -44,7 +44,7 @@ export function ServiceSelector({
           onClick={onClearAll}
           variant="outline"
           size="sm"
-          className="ml-auto border-red-300 text-red-700 bg-red-50 hover:bg-red-100 hover:text-red-800 dark:border-red-600 dark:text-red-400 dark:bg-red-950/30 dark:hover:bg-red-950/50 dark:hover:text-red-300"
+          className="ml-auto border-red-300 bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-800 dark:border-red-600 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-950/50 dark:hover:text-red-300"
           aria-label="すべての選択項目をクリアして計算をリセットする"
         >
           全クリア

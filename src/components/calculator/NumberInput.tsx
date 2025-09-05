@@ -23,7 +23,7 @@ export function NumberInput({
 
   return (
     <Select value={value.toString()} onValueChange={(v) => onChange(Number(v))}>
-      <SelectTrigger className={`w-20 h-8 ${className ?? ''}`}>
+      <SelectTrigger className={`h-8 w-20 ${className ?? ''}`}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent className="max-h-60">

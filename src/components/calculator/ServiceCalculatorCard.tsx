@@ -166,7 +166,7 @@ export function ServiceCalculatorCard({
   ) : (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
-        <CardTitle className="text-lg font-semibold text-primary">
+        <CardTitle className="text-primary text-lg font-semibold">
           {getServiceTypeLabel(serviceType)}
         </CardTitle>
         <Button
@@ -245,7 +245,7 @@ export function ServiceCalculatorCard({
         })()}
 
         {result && (
-          <div className="mt-4 p-4 bg-muted rounded-md">
+          <div className="bg-muted mt-4 rounded-md p-4">
             <pre className="text-sm font-medium whitespace-pre-wrap">
               {result}
             </pre>

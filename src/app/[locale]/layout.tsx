@@ -169,7 +169,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased min-h-screen flex flex-col overflow-x-hidden">
+      <body className="flex min-h-screen flex-col overflow-x-hidden antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -178,10 +178,10 @@ export default async function RootLayout({
         >
           <NextIntlClientProvider messages={messages}>
             <StreamingWrapper
-              fallback={<div className="h-16 bg-gray-100 animate-pulse"></div>}
+              fallback={<div className="h-16 animate-pulse bg-gray-100"></div>}
             >
               <Header />
-              <main className="flex-1 w-full overflow-x-hidden py-6">
+              <main className="w-full flex-1 overflow-x-hidden py-6">
                 {children}
               </main>
             </StreamingWrapper>

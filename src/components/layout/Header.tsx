@@ -28,11 +28,11 @@ export function Header() {
   }
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-b backdrop-blur">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <Link
           href="/"
-          className="font-bold text-primary hover:text-primary/80 transition-colors flex-shrink-0 text-center leading-tight"
+          className="text-primary hover:text-primary/80 flex-shrink-0 text-center leading-tight font-bold transition-colors"
         >
           <div className="text-base sm:text-xl">
             {t('title').split(' ').length > 1 ? (
@@ -57,17 +57,17 @@ export function Header() {
           </div>
         </Link>
 
-        <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+        <div className="flex flex-shrink-0 items-center space-x-2 sm:space-x-4">
           <ThemeToggle />
           <div className="flex items-center space-x-1 sm:space-x-2">
-            <Globe className="h-4 w-4 text-muted-foreground hidden sm:inline" />
+            <Globe className="text-muted-foreground hidden h-4 w-4 sm:inline" />
             <div className="relative">
               <Select
                 value={currentLocale}
                 onValueChange={handleLanguageChange}
               >
                 <SelectTrigger
-                  className="w-20 sm:w-36 relative"
+                  className="relative w-20 sm:w-36"
                   aria-label={t('languageSelector')}
                   aria-describedby="current-language"
                 >
@@ -97,7 +97,7 @@ export function Header() {
                 <SelectContent
                   side="bottom"
                   align="end"
-                  className="z-[9999] min-w-[120px] w-auto"
+                  className="z-[9999] w-auto min-w-[120px]"
                   sideOffset={4}
                   avoidCollisions={true}
                   position="popper"

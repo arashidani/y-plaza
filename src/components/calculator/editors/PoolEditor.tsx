@@ -73,9 +73,9 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
     ) as Array<keyof typeof couponLabels>
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <label className="block text-sm font-medium mb-2">営業期間</label>
+          <label className="mb-2 block text-sm font-medium">営業期間</label>
           <Select
             value={season}
             onValueChange={(v: Season) => onChangeSeason(v)}
@@ -94,7 +94,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">時間帯</label>
+          <label className="mb-2 block text-sm font-medium">時間帯</label>
           <Select value={slot} onValueChange={(v: TimeSlot) => onChangeSlot(v)}>
             <SelectTrigger>
               <SelectValue />
@@ -126,12 +126,12 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
       {items.map((item) => (
         <Card
           key={item.id}
-          className="p-4 bg-gray-50 dark:bg-gray-800 relative"
+          className="relative bg-gray-50 p-4 dark:bg-gray-800"
         >
           {/* モバイル */}
-          <div className="block md:hidden space-y-3">
+          <div className="block space-y-3 md:hidden">
             <div>
-              <label className="block text-xs text-gray-600 mb-1">区分</label>
+              <label className="mb-1 block text-xs text-gray-600">区分</label>
               <Select
                 value={item.category}
                 onValueChange={(v: Category) =>
@@ -152,7 +152,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
             </div>
 
             <div>
-              <label className="block text-xs text-gray-600 mb-1">人数</label>
+              <label className="mb-1 block text-xs text-gray-600">人数</label>
               <NumberInput
                 value={item.quantity}
                 onChange={(v) => onUpdateItem(item.id, 'quantity', v)}
@@ -160,7 +160,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
             </div>
 
             <div>
-              <label className="block text-xs text-gray-600 mb-1">割引</label>
+              <label className="mb-1 block text-xs text-gray-600">割引</label>
               <Select
                 value={item.coupon}
                 onValueChange={(v: Coupon) =>
@@ -182,9 +182,9 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
           </div>
 
           {/* PC */}
-          <div className="hidden md:grid md:grid-cols-3 md:gap-4 md:items-end">
+          <div className="hidden md:grid md:grid-cols-3 md:items-end md:gap-4">
             <div>
-              <label className="block text-xs text-gray-600 mb-1">区分</label>
+              <label className="mb-1 block text-xs text-gray-600">区分</label>
               <Select
                 value={item.category}
                 onValueChange={(v: Category) =>
@@ -205,7 +205,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
             </div>
 
             <div>
-              <label className="block text-xs text-gray-600 mb-1">人数</label>
+              <label className="mb-1 block text-xs text-gray-600">人数</label>
               <NumberInput
                 value={item.quantity}
                 onChange={(v) => onUpdateItem(item.id, 'quantity', v)}
@@ -213,7 +213,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
             </div>
 
             <div>
-              <label className="block text-xs text-gray-600 mb-1">割引</label>
+              <label className="mb-1 block text-xs text-gray-600">割引</label>
               <Select
                 value={item.coupon}
                 onValueChange={(v: Coupon) =>

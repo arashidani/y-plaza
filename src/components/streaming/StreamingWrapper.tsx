@@ -13,7 +13,7 @@ export function StreamingWrapper({
     <Suspense
       fallback={
         fallback || (
-          <div className="animate-pulse bg-gray-200 h-4 rounded"></div>
+          <div className="h-4 animate-pulse rounded bg-gray-200"></div>
         )
       }
     >
