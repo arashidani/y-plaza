@@ -20,7 +20,7 @@ const INITIAL_TOTALS: Record<ServiceType, number> = {
   ticketBook: 0
 }
 
-export function TestCalculator() {
+export function Calculator() {
   const t = useTranslations('poolCalculator')
   const [selectedServices, setSelectedServices] = useState<ServiceType[]>([
     'pool'

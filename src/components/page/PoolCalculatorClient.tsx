@@ -1,6 +1,6 @@
 'use client'
 
-import { TestCalculator } from '@/components/calculator/TestCalculator'
+import { Calculator } from '@/components/calculator/TestCalculator'
 import { useTranslations } from 'next-intl'
 
 export function PoolCalculatorClient() {
@@ -34,7 +34,7 @@ export function PoolCalculatorClient() {
         })}
       </p>
       <div className="mt-4">
-        <TestCalculator />
+        <Calculator />
       </div>
     </main>
   )
