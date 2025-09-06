@@ -1,0 +1,3 @@
+# ads.txt for www.azarashi.work
+
+google.com, pub-4642959350028307, DIRECT, f08c47fec0942fa0

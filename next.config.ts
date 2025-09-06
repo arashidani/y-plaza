@@ -139,6 +139,20 @@ const nextConfig: NextConfig = {
               'public, max-age=86400, s-maxage=86400, stale-while-revalidate=172800'
           }
         ]
+      },
+      {
+        source: '/ads.txt',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/plain'
+          },
+          {
+            key: 'Cache-Control',
+            value:
+              'public, max-age=86400, s-maxage=86400, stale-while-revalidate=172800'
+          }
+        ]
       }
     ]
   },
