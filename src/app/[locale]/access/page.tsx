@@ -4,6 +4,7 @@ import { setRequestLocale } from 'next-intl/server'
 import { generateLocaleParams } from '@/lib/static-params'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { NavitimeLink } from '@/components/access/NavitimeLink'
 import { getTranslations } from 'next-intl/server'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
@@ -50,8 +51,11 @@ export default async function AccessPage({ params }: PageProps) {
   setRequestLocale(locale)
   const t = await getTranslations('accessPage')
 
-  // 今日の日付を取得（YYYY-MM-DD形式）
-  const today = new Date().toISOString().split('T')[0]
+  // Navitime links compute today's date on the client via NavitimeLink
+
+  // バス時刻表データ
+  const izumoDepartures = ['9:43', '11:00', '15:00', '16:30']
+  const youPlazaDepartures = ['11:44', '13:18', '15:38', '17:08']
 
   return (
     <div className="container mx-auto max-w-4xl">
@@ -164,30 +168,26 @@ export default async function AccessPage({ params }: PageProps) {
                       asChild
                       className="border-[#006300] bg-[#006300] font-bold text-white hover:border-[#005200] hover:bg-[#005200]"
                     >
-                      <a
-                        href={`https://www.navitime.co.jp/diagram/depArrTimeList?departure=00003564&arrival=00004791&line=00000067&updown=1&hour=4&date=${today}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <NavitimeLink
                         className="text-xs"
+                        params={{ departure: '00003564', arrival: '00004791', line: '00000067', updown: '1' }}
                       >
                         {t('izumoToNishiIzumo')}
                         <span className="ml-1">↗</span>
-                      </a>
+                      </NavitimeLink>
                     </Button>
                     <Button
                       size="sm"
                       asChild
                       className="border-[#006300] bg-[#006300] font-bold text-white hover:border-[#005200] hover:bg-[#005200]"
                     >
-                      <a
-                        href={`https://www.navitime.co.jp/diagram/depArrTimeList?departure=00007849&arrival=00004791&line=00000067&updown=0&hour=4&date=${today}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <NavitimeLink
                         className="text-xs"
+                        params={{ departure: '00007849', arrival: '00004791', line: '00000067', updown: '0' }}
                       >
                         {t('hamadaToNishiIzumo')}
                         <span className="ml-1">↗</span>
-                      </a>
+                      </NavitimeLink>
                     </Button>
                   </div>
                 </div>
@@ -202,30 +202,26 @@ export default async function AccessPage({ params }: PageProps) {
                       asChild
                       className="border-[#006300] bg-[#006300] font-bold text-white hover:border-[#005200] hover:bg-[#005200]"
                     >
-                      <a
-                        href={`https://www.navitime.co.jp/diagram/depArrTimeList?departure=00004791&arrival=00003564&line=00000067&updown=0&hour=4&date=${today}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <NavitimeLink
                         className="text-xs"
+                        params={{ departure: '00004791', arrival: '00003564', line: '00000067', updown: '0' }}
                       >
                         {t('nishiIzumoToIzumo')}
                         <span className="ml-1">↗</span>
-                      </a>
+                      </NavitimeLink>
                     </Button>
                     <Button
                       size="sm"
                       asChild
                       className="border-[#006300] bg-[#006300] font-bold text-white hover:border-[#005200] hover:bg-[#005200]"
                     >
-                      <a
-                        href={`https://www.navitime.co.jp/diagram/depArrTimeList?departure=00004791&arrival=00007849&line=00000067&updown=1&hour=4&date=${today}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <NavitimeLink
                         className="text-xs"
+                        params={{ departure: '00004791', arrival: '00007849', line: '00000067', updown: '1' }}
                       >
                         {t('nishiIzumoToHamada')}
                         <span className="ml-1">↗</span>
-                      </a>
+                      </NavitimeLink>
                     </Button>
                   </div>
                 </div>
@@ -298,26 +294,13 @@ export default async function AccessPage({ params }: PageProps) {
                   <div className="rounded-md border">
                     <Table className="w-full">
                       <TableBody className="divide-border divide-y">
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            9:43
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            11:00
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            15:00
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            16:30
-                          </TableCell>
-                        </TableRow>
+                        {izumoDepartures.map((time) => (
+                          <TableRow key={time}>
+                            <TableCell className="text-center font-medium">
+                              {time}
+                            </TableCell>
+                          </TableRow>
+                        ))}
                       </TableBody>
                     </Table>
                   </div>
@@ -331,33 +314,20 @@ export default async function AccessPage({ params }: PageProps) {
                   <div className="rounded-md border">
                     <Table className="w-full">
                       <TableBody className="divide-border divide-y">
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            11:44
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            13:18
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            15:38
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="text-center font-medium">
-                            17:08
-                          </TableCell>
-                        </TableRow>
+                        {youPlazaDepartures.map((time) => (
+                          <TableRow key={time}>
+                            <TableCell className="text-center font-medium">
+                              {time}
+                            </TableCell>
+                          </TableRow>
+                        ))}
                       </TableBody>
                     </Table>
                   </div>
                 </div>
               </div>
               <div className="mt-4 space-y-2">
-                <p className="text-xs text-muted-foreground">{t('busNote')}</p>
+                <p className="text-muted-foreground text-xs">{t('busNote')}</p>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
                   <Button variant="outline" size="sm" asChild>
                     <a
