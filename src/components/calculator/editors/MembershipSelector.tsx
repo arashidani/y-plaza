@@ -45,7 +45,7 @@ export function MembershipSelector({
           value={period}
           onValueChange={(v: MembershipPeriod) => setPeriod(v)}
         >
-          <SelectTrigger>
+          <SelectTrigger aria-label={t('periodLabel')}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -64,7 +64,7 @@ export function MembershipSelector({
           value={category}
           onValueChange={(v: string) => setCategory(v as MembershipCategory)}
         >
-          <SelectTrigger>
+          <SelectTrigger aria-label={t('categoryLabel')}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

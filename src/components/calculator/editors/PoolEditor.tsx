@@ -77,7 +77,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
             value={season}
             onValueChange={(v: Season) => onChangeSeason(v)}
           >
-            <SelectTrigger>
+            <SelectTrigger aria-label={t('seasonLabel')}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -93,7 +93,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
         <div>
           <label className="mb-2 block text-sm font-medium">{t('timeSlotLabel')}</label>
           <Select value={slot} onValueChange={(v: TimeSlot) => onChangeSlot(v)}>
-            <SelectTrigger>
+            <SelectTrigger aria-label={t('timeSlotLabel')}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -135,7 +135,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
                   onUpdateItem(item.id, 'category', v)
                 }
               >
-                <SelectTrigger className="h-8">
+                <SelectTrigger className="h-8" aria-label={t('categoryLabel')}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -164,7 +164,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
                   onUpdateItem(item.id, 'coupon', v)
                 }
               >
-                <SelectTrigger className="h-8">
+                <SelectTrigger className="h-8" aria-label={t('discountLabel')}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -188,7 +188,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
                   onUpdateItem(item.id, 'category', v)
                 }
               >
-                <SelectTrigger className="h-8">
+                <SelectTrigger className="h-8" aria-label={t('categoryLabel')}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -217,7 +217,7 @@ export function PoolEditor({ state, actions }: PoolEditorProps) {
                   onUpdateItem(item.id, 'coupon', v)
                 }
               >
-                <SelectTrigger className="h-8">
+                <SelectTrigger className="h-8" aria-label={t('discountLabel')}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

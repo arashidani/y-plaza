@@ -58,7 +58,7 @@ export function TicketBookCalculatorCard({
             value={state.category}
             onValueChange={(v: Category) => actions.setCategory(v)}
           >
-            <SelectTrigger className="w-48">
+            <SelectTrigger className="w-48" aria-label={t('categoryLabel')}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
