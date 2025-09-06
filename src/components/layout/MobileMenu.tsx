@@ -133,6 +133,13 @@ export function MobileMenu() {
               >
                 {tFooter('terms')}
               </Link>
+              <Link
+                href="/access"
+                onClick={close}
+                className="block w-full rounded-md px-3 py-3 text-sm font-medium hover:bg-accent hover:text-foreground"
+              >
+                アクセスマップ
+              </Link>
             </nav>
           </div>
         </div>,
