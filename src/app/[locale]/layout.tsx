@@ -17,9 +17,11 @@ import { LazyAnalytics } from '@/components/analytics/LazyAnalytics'
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
-  // モバイル最適化: blockからoptionalに変更
+  // LCP短縮のため、フォントは後追い読み込みに（即時フォールバック描画）
   display: 'optional',
-  preload: true,
+  preload: false,
+  // 使用する太さだけに限定して転送量を削減
+  weight: ['400', '500', '600', '700'],
   fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
   adjustFontFallback: true
 })
