@@ -1,5 +1,4 @@
 import { cache } from 'react'
-import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
 import { routing } from '@/i18n/routing'
 import { getMinimalMessages } from '@/lib/minimal-i18n'
