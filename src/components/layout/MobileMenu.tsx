@@ -54,90 +54,96 @@ export function MobileMenu() {
         aria-label="Open menu"
         aria-expanded={isOpen}
         aria-controls="mobile-menu-panel"
-        className="sm:hidden inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        className="text-muted-foreground hover:bg-accent hover:text-foreground focus:ring-ring inline-flex items-center justify-center rounded-md p-2 focus:ring-2 focus:ring-offset-2 focus:outline-none sm:hidden"
         onClick={openMenu}
       >
         <Menu className="h-5 w-5" />
       </button>
 
       {/* Overlay */}
-      {isRendered && createPortal(
-        <div
-          className="fixed inset-0 z-[10000]"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="mobile-menu-title"
-          style={{ contain: 'layout paint' }}
-        >
+      {isRendered &&
+        createPortal(
           <div
-            data-state={isOpen ? 'open' : 'closed'}
-            className="absolute inset-0 bg-black/60 transition-opacity duration-300 data-[state=closed]:opacity-0"
-            onClick={close}
-            aria-hidden="true"
-            style={{ contain: 'layout paint' }}
-          />
-
-          {/* Panel */}
-          <div
-            id="mobile-menu-panel"
-            data-state={isOpen ? 'open' : 'closed'}
-            onTransitionEnd={() => {
-              if (!isOpen) setIsRendered(false)
-            }}
-            className={[
-              'fixed inset-y-0 left-0 z-[10001]',
-              'h-dvh max-h-dvh w-[85%] max-w-xs',
-              'bg-background text-foreground shadow-2xl outline-none border-r',
-              'flex flex-col will-change-transform',
-              'transition-transform duration-300 ease-out',
-              'data-[state=open]:translate-x-0',
-              'data-[state=closed]:-translate-x-full'
-            ].join(' ')}
+            className="fixed inset-0 z-[10000]"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mobile-menu-title"
             style={{ contain: 'layout paint' }}
           >
-            <div className="flex items-center justify-between border-b px-4 py-3">
-              <h2 id="mobile-menu-title" className="text-base font-semibold">
-                {tHeader('title')}
-              </h2>
-              <button
-                type="button"
-                aria-label="Close menu"
-                className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                onClick={close}
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
+            <div
+              data-state={isOpen ? 'open' : 'closed'}
+              className="absolute inset-0 bg-black/60 transition-opacity duration-300 data-[state=closed]:opacity-0"
+              onClick={close}
+              aria-hidden="true"
+              style={{ contain: 'layout paint' }}
+            />
 
-            <nav
-              className="flex min-h-0 flex-1 flex-col gap-1 px-2 py-3 bg-background overflow-y-auto pt-[env(safe-area-inset-top)] pb-8 [padding-bottom:env(safe-area-inset-bottom)]"
+            {/* Panel */}
+            <div
+              id="mobile-menu-panel"
+              data-state={isOpen ? 'open' : 'closed'}
+              onTransitionEnd={() => {
+                if (!isOpen) setIsRendered(false)
+              }}
+              className={[
+                'fixed inset-y-0 left-0 z-[10001]',
+                'h-dvh max-h-dvh w-[85%] max-w-xs',
+                'bg-background text-foreground border-r shadow-2xl outline-none',
+                'flex flex-col will-change-transform',
+                'transition-transform duration-300 ease-out',
+                'data-[state=open]:translate-x-0',
+                'data-[state=closed]:-translate-x-full'
+              ].join(' ')}
+              style={{ contain: 'layout paint' }}
             >
-              <Link
-                href="/"
-                onClick={close}
-                className="block w-full rounded-md px-3 py-3 text-sm font-medium hover:bg-accent hover:text-foreground"
-              >
-                {tHeader('home')}
-              </Link>
-              <Link
-                href="/privacy"
-                onClick={close}
-                className="block w-full rounded-md px-3 py-3 text-sm font-medium hover:bg-accent hover:text-foreground"
-              >
-                {tFooter('privacy')}
-              </Link>
-              <Link
-                href="/terms"
-                onClick={close}
-                className="block w-full rounded-md px-3 py-3 text-sm font-medium hover:bg-accent hover:text-foreground"
-              >
-                {tFooter('terms')}
-              </Link>
-            </nav>
-          </div>
-        </div>,
-        document.body
-      )}
+              <div className="flex items-center justify-between border-b px-4 py-3">
+                <h2 id="mobile-menu-title" className="text-base font-semibold">
+                  {tHeader('title')}
+                </h2>
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  className="text-muted-foreground hover:bg-accent hover:text-foreground focus:ring-ring inline-flex items-center justify-center rounded-md p-2 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+                  onClick={close}
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <nav className="bg-background flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-2 py-3 pt-[env(safe-area-inset-top)] [padding-bottom:env(safe-area-inset-bottom)] pb-8">
+                <Link
+                  href="/"
+                  onClick={close}
+                  className="hover:bg-accent hover:text-foreground block w-full rounded-md px-3 py-3 text-sm font-medium"
+                >
+                  {tHeader('home')}
+                </Link>
+                <Link
+                  href="/privacy"
+                  onClick={close}
+                  className="hover:bg-accent hover:text-foreground block w-full rounded-md px-3 py-3 text-sm font-medium"
+                >
+                  {tFooter('privacy')}
+                </Link>
+                <Link
+                  href="/terms"
+                  onClick={close}
+                  className="hover:bg-accent hover:text-foreground block w-full rounded-md px-3 py-3 text-sm font-medium"
+                >
+                  {tFooter('terms')}
+                </Link>
+                <Link
+                  href="/access"
+                  onClick={close}
+                  className="hover:bg-accent hover:text-foreground block w-full rounded-md px-3 py-3 text-sm font-medium"
+                >
+                  {tHeader('access')}
+                </Link>
+              </nav>
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   )
 }

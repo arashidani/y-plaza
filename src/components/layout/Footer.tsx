@@ -27,6 +27,12 @@ export async function Footer() {
             >
               {t('terms')}
             </Link>
+            <Link
+              href="/access"
+              className="text-muted-foreground hover:text-primary text-sm transition-colors"
+            >
+              アクセスマップ
+            </Link>
             <CookieResetDev />
           </div>
         </div>

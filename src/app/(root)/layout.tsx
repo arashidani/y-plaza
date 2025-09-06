@@ -4,7 +4,7 @@ export default function RootLayout({
   // 最小のHTMLラッパー（即時リダイレクト用）
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body>{children}</body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   )
 }

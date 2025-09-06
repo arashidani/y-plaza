@@ -208,7 +208,10 @@ export default async function LocaleLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-screen flex-col overflow-x-hidden antialiased">
+      <body
+        className="flex min-h-screen flex-col overflow-x-hidden antialiased"
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
