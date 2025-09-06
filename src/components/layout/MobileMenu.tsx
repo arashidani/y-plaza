@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, usePathname } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import { Menu, X } from 'lucide-react'
@@ -34,22 +35,15 @@ export function MobileMenu() {
     return () => document.removeEventListener('keydown', onKey)
   }, [isRendered])
 
-  // Prevent body scroll when open (class-based, compensate scrollbar width)
+  // Prevent body scroll when open (class-based, no layout reads)
   useEffect(() => {
     if (isRendered) {
-      const scrollbar = window.innerWidth - document.documentElement.clientWidth
-      document.documentElement.style.setProperty(
-        '--removed-scrollbar-width',
-        `${Math.max(0, scrollbar)}px`
-      )
       document.body.classList.add('is-menu-open')
     } else {
       document.body.classList.remove('is-menu-open')
-      document.documentElement.style.removeProperty('--removed-scrollbar-width')
     }
     return () => {
       document.body.classList.remove('is-menu-open')
-      document.documentElement.style.removeProperty('--removed-scrollbar-width')
     }
   }, [isRendered])
 
@@ -67,18 +61,20 @@ export function MobileMenu() {
       </button>
 
       {/* Overlay */}
-      {isRendered && (
+      {isRendered && createPortal(
         <div
           className="fixed inset-0 z-[10000]"
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-menu-title"
+          style={{ contain: 'layout paint' }}
         >
           <div
             data-state={isOpen ? 'open' : 'closed'}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 data-[state=closed]:opacity-0"
+            className="absolute inset-0 bg-black/60 transition-opacity duration-300 data-[state=closed]:opacity-0"
             onClick={close}
             aria-hidden="true"
+            style={{ contain: 'layout paint' }}
           />
 
           {/* Panel */}
@@ -97,6 +93,7 @@ export function MobileMenu() {
               'data-[state=open]:translate-x-0',
               'data-[state=closed]:-translate-x-full'
             ].join(' ')}
+            style={{ contain: 'layout paint' }}
           >
             <div className="flex items-center justify-between border-b px-4 py-3">
               <h2 id="mobile-menu-title" className="text-base font-semibold">
@@ -138,7 +135,8 @@ export function MobileMenu() {
               </Link>
             </nav>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )
