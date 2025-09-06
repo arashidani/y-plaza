@@ -20,13 +20,14 @@ export async function generateMetadata({
   const { locale } = await params
   const baseURL =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://www.azarashi.work'
-  const currentURL = locale === 'ja' ? baseURL : `${baseURL}/${locale}`
+  // Always locale-prefixed for canonical consistency
+  const currentURL = `${baseURL}/${locale}`
 
   return {
     alternates: {
       canonical: currentURL,
       languages: {
-        ja: baseURL,
+        ja: `${baseURL}/ja`,
         en: `${baseURL}/en`,
         pt: `${baseURL}/pt`,
         'x-default': baseURL

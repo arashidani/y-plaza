@@ -21,8 +21,12 @@ const countryNames: Record<string, string> = {
 }
 
 export function Flag({ countryCode, className, style, alt, role }: FlagProps) {
-  const flagSrc = flagMap[countryCode.toUpperCase()]
-  const countryName = countryNames[countryCode.toUpperCase()]
+  if (!countryCode) {
+    return null
+  }
+  const code = countryCode.toUpperCase()
+  const flagSrc = flagMap[code]
+  const countryName = countryNames[code]
   
   if (!flagSrc) {
     return null

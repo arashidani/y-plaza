@@ -7,8 +7,8 @@ import { DEFAULT_LOCALE } from '../constants/locales'
 export const routing = defineRouting({
   locales: SUPPORTED_LOCALES,
   defaultLocale: DEFAULT_LOCALE,
-  // 必要に応じてロケールプレフィックスを使用
-  localePrefix: 'as-needed'
+  // すべてのロケールでプレフィックスを常に付与
+  localePrefix: 'always'
 })
 
 // ナビゲーション用のユーティリティを作成
