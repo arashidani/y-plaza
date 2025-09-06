@@ -139,6 +139,13 @@ export function MobileMenu() {
                 >
                   {tHeader('access')}
                 </Link>
+                <Link
+                  href="/calendar"
+                  onClick={close}
+                  className="hover:bg-accent hover:text-foreground block w-full rounded-md px-3 py-3 text-sm font-medium"
+                >
+                  {tHeader('calendar')}
+                </Link>
               </nav>
             </div>
           </div>,

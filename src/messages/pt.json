@@ -6,6 +6,7 @@
     "services": "Serviços",
     "contact": "Contato",
     "access": "Mapa de Acesso",
+    "calendar": "Calendário",
     "language": "Idioma",
     "languageSelector": "Seletor de idioma",
     "switchTo": "Mudar para {language}"
