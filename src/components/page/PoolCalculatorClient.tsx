@@ -1,10 +1,9 @@
-'use client'
+import { getTranslations } from 'next-intl/server'
+import React from 'react'
+import { CalculatorLoader } from './CalculatorLoader'
 
-import { Calculator } from '@/components/calculator/Calculator'
-import { useTranslations } from 'next-intl'
-
-export function PoolCalculatorClient() {
-  const t = useTranslations()
+export async function PoolCalculatorClient() {
+  const t = await getTranslations()
 
   return (
     <main className="pool-calculator-container">
@@ -33,9 +32,7 @@ export function PoolCalculatorClient() {
             'を基に作成した試算用ツールです。最終的な金額は施設の最新案内をご確認ください。'
         })}
       </p>
-      <div className="mt-4">
-        <Calculator />
-      </div>
+      <CalculatorLoader />
     </main>
   )
 }

@@ -8,25 +8,58 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { type Locale } from '@/constants/locales'
-import { locales, localeNames, localeFlagCodes } from '@/lib/i18n'
+import { locales, localeNames, localeFlagCodes, isValidLocale, defaultLocale } from '@/lib/i18n'
 import { Globe } from 'lucide-react'
 import { Flag } from '@/components/ui/flag'
 import { Link, useRouter, usePathname } from '@/i18n/routing'
-import { useParams } from 'next/navigation'
+import {
+  useParams,
+  useSearchParams,
+  useRouter as useNextRouter
+} from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { MobileMenu } from '@/components/layout/MobileMenu'
 
 export function Header() {
   const router = useRouter()
+  const nextRouter = useNextRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const params = useParams()
-  const currentLocale = params.locale as Locale
+  const rawLocale = params.locale as string | undefined
+  const currentLocale: Locale = isValidLocale(rawLocale ?? '')
+    ? (rawLocale as Locale)
+    : defaultLocale
   const t = useTranslations('header')
   const tFooter = useTranslations('footer')
 
+  const stripLocalePrefix = (path: string) => {
+    const m = path.match(/^\/(ja|en|pt)(\/.*)?$/)
+    if (m) return m[2] || '/'
+    return path || '/'
+  }
+
+  const prefetchLocales = () => {
+    const qs = searchParams?.toString()
+    const basePath = stripLocalePrefix(pathname)
+    locales
+      .filter((l) => l !== currentLocale)
+      .forEach((l) => {
+        try {
+          const path = `/${l}${basePath === '/' ? '' : basePath}`
+          const href = qs ? `${path}?${qs}` : path
+          nextRouter.prefetch(href)
+        } catch {}
+      })
+  }
+
   const handleLanguageChange = (value: Locale) => {
-    router.push(pathname, { locale: value })
+    const qs = searchParams?.toString()
+    const basePath = stripLocalePrefix(pathname)
+    const targetPath = basePath
+    const href = qs ? `${targetPath}?${qs}` : targetPath
+    router.push(href, { locale: value })
   }
 
   return (
@@ -36,28 +69,35 @@ export function Header() {
           <MobileMenu />
           <Link
             href="/"
+            locale={currentLocale}
             className="text-primary hover:text-primary/80 flex-shrink-0 text-center leading-tight font-bold transition-colors"
           >
             <div className="text-base sm:text-xl">
-              {t('title').split(' ').length > 1 ? (
-                <>
-                  {t('title')
-                    .split(' ')
-                    .slice(0, Math.ceil(t('title').split(' ').length / 2))
-                    .join(' ')}
-                  <br />
-                  {t('title')
-                    .split(' ')
-                    .slice(Math.ceil(t('title').split(' ').length / 2))
-                    .join(' ')}
-                </>
-              ) : (
-                <>
-                  {t('title').slice(0, Math.ceil(t('title').length / 2))}
-                  <br />
-                  {t('title').slice(Math.ceil(t('title').length / 2))}
-                </>
-              )}
+              {(() => {
+                const title = t('title')
+                // スペースがある言語は単語ベースで分割
+                if (title.includes(' ')) {
+                  const words = title.split(' ')
+                  const mid = Math.ceil(words.length / 2)
+                  return (
+                    <>
+                      {words.slice(0, mid).join(' ')}
+                      <br />
+                      {words.slice(mid).join(' ')}
+                    </>
+                  )
+                }
+                // スペースが無い（日本語など）はコードポイント単位で中央分割
+                const glyphs = Array.from(title)
+                const mid = Math.ceil(glyphs.length / 2)
+                return (
+                  <>
+                    {glyphs.slice(0, mid).join('')}
+                    <br />
+                    {glyphs.slice(mid).join('')}
+                  </>
+                )
+              })()}
             </div>
           </Link>
         </div>
@@ -86,6 +126,9 @@ export function Header() {
               <Select
                 value={currentLocale}
                 onValueChange={handleLanguageChange}
+                onOpenChange={(open) => {
+                  if (open) prefetchLocales()
+                }}
               >
                 <SelectTrigger
                   className="relative w-20 sm:w-36"
