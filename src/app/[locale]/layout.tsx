@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { StreamingWrapper } from '@/components/streaming/StreamingWrapper'
-import { getCachedJsonLd } from '@/lib/cached-jsonld'
 import { setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { getCachedMessages, validateLocale } from '@/lib/i18n-cache'
@@ -12,28 +10,6 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { CriticalCSS } from '@/components/layout/CriticalCSS'
 import './globals.css'
 import { LazyAnalytics } from '@/components/analytics/LazyAnalytics'
-
-// フォント最適化: 必要最小限のサブセットのみ読み込み
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-  // LCP短縮のため、フォントは後追い読み込みに（即時フォールバック描画）
-  display: 'optional',
-  preload: false,
-  // 使用する太さだけに限定して転送量を削減
-  weight: ['400', '500', '600', '700'],
-  fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
-  adjustFontFallback: true
-})
-
-// モノスペースフォントは遅延読み込み
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-  display: 'optional',
-  preload: false,
-  fallback: ['ui-monospace', 'monospace']
-})
 
 // Node.js Runtime (generateStaticParams使用のため)
 export const runtime = 'nodejs'
@@ -123,7 +99,7 @@ export const metadata: Metadata = {
   }
 }
 
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
   params
 }: Readonly<{
@@ -142,59 +118,25 @@ export default async function RootLayout({
   const messages = await getCachedMessages(validatedLocale)
 
   return (
-    <html
-      lang={validatedLocale}
-      className={`${geistSans.variable} ${geistMono.variable}`}
-      suppressHydrationWarning
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
     >
-      <head>
-        {/* 重要リソースの優先プリロード */}
-        <link
-          rel="preload"
-          href="/flags/jp.svg"
-          as="image"
-          type="image/svg+xml"
-        />
-
-        {/* DNS プリフェッチ（低優先度） */}
-        <link rel="dns-prefetch" href="//vercel.live" />
-
-        <meta name="theme-color" content="#0077b6" />
-        {process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT ? (
-          <meta
-            name="google-adsense-account"
-            content={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT}
-          />
-        ) : null}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getCachedJsonLd())
-          }}
-        />
-      </head>
-      <body className="flex min-h-screen flex-col overflow-x-hidden antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+      <NextIntlClientProvider messages={messages}>
+        <StreamingWrapper
+          fallback={<div className="h-16 animate-pulse bg-gray-100"></div>}
         >
-          <NextIntlClientProvider messages={messages}>
-            <StreamingWrapper
-              fallback={<div className="h-16 animate-pulse bg-gray-100"></div>}
-            >
-              <Header />
-              <main className="w-full flex-1 overflow-x-hidden px-4 py-6 md:px-6">
-                {children}
-              </main>
-            </StreamingWrapper>
-            <Footer />
-          </NextIntlClientProvider>
-        </ThemeProvider>
-        <CriticalCSS />
-        <LazyAnalytics />
-      </body>
-    </html>
+          <Header />
+          <main className="w-full flex-1 overflow-x-hidden px-4 py-6 md:px-6">
+            {children}
+          </main>
+        </StreamingWrapper>
+        <Footer />
+      </NextIntlClientProvider>
+      <CriticalCSS />
+      <LazyAnalytics />
+    </ThemeProvider>
   )
 }
