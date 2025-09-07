@@ -9,13 +9,16 @@ export type LocalizedText = {
 
 export type FirestoreEvent = {
   id: string
+  // "YYYY-MM-DD"
   date: string
+  // "HH:mm:ss"（nullで終日）
   starts_at?: string | null
   ends_at?: string | null
   title: LocalizedText
   instructor?: LocalizedText | null
   areaCategory: AreaCategory
   color?: string | null
+  paid: boolean
   published: boolean
   source?: unknown | null
   created_at?: string
