@@ -73,12 +73,12 @@ export default async function AccessPage({ params }: PageProps) {
                 {t('address')}:
               </span>
               <a
-                href="https://maps.google.com/?q=島根県出雲市西新町1丁目2547-2"
+                href={`https://maps.google.com/?q=${encodeURIComponent(t('addressValue'))}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary ml-2 underline"
               >
-                〒693-0021 島根県出雲市西新町1丁目2547-2
+                {t('addressValue')}
               </a>
             </div>
             <div>

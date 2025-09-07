@@ -6,6 +6,7 @@
     "services": "Serviços",
     "contact": "Contato",
     "access": "Mapa de Acesso",
+    "calendar": "Calendário",
     "language": "Idioma",
     "languageSelector": "Seletor de idioma",
     "switchTo": "Mudar para {language}"
@@ -180,6 +181,7 @@
     "title": "Mapa de Acesso",
     "facilityInfo": "Informações da Instalação",
     "address": "Endereço",
+    "addressValue": "1-2547-2 Nishishinmachi, Izumo, Shimane 693-0021, Japão",
     "tel": "TEL",
     "operatingHours": "Horário de Funcionamento",
     "normalHours": "Normal: 10:00 ~ 21:00 (Última admissão 20:30)",
@@ -226,5 +228,16 @@
     "detailInfo": "Informações Detalhadas",
     "detailInfoDesc": "Por favor, verifique o site oficial para os horários de funcionamento e taxas mais recentes.",
     "officialSite": "Site Oficial do You Plaza Izumo"
+  },
+  "calendar": {
+    "title": "Calendário",
+    "alphaVersion": "Versão Alpha",
+    "alphaWarning": "Esta funcionalidade de calendário está em desenvolvimento. Por favor, use as informações exibidas apenas como referência.",
+    "category": "Categoria",
+    "start": "Início",
+    "end": "Fim",
+    "instructor": "Instrutor",
+    "close": "Fechar",
+    "closedDay": "Dia de Fechamento"
   }
 }
