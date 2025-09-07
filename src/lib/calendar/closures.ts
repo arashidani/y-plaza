@@ -1,17 +1,7 @@
 import { POLICY } from '@/data/policy'
 import { getHolidayDateSet } from '@/data/holidays'
 import { type ClosedReason } from '@/constants/calendar'
-
-function pad(n: number) {
-  return String(n).padStart(2, '0')
-}
-
-function toDateString(d: Date) {
-  const y = d.getFullYear()
-  const m = pad(d.getMonth() + 1)
-  const day = pad(d.getDate())
-  return `${y}-${m}-${day}`
-}
+import { toDateString } from '@/lib/date-utils'
 
 // その年の7月第3土曜を返す
 export function thirdSaturdayOfJuly(year: number): Date {

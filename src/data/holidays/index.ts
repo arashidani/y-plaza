@@ -1,4 +1,5 @@
 import y2022 from './2022.json'
+import y2023 from './2023.json'
 import y2024 from './2024.json'
 import y2025 from './2025.json'
 import y2026 from './2026.json'
@@ -14,6 +15,7 @@ export type HolidaysYearData = {
 
 export const HOLIDAYS_BY_YEAR: Record<number, HolidaysYearData> = {
   [y2022.year]: y2022 as HolidaysYearData,
+  [y2023.year]: y2023 as HolidaysYearData,
   [y2024.year]: y2024 as HolidaysYearData,
   [y2025.year]: y2025 as HolidaysYearData,
   [y2026.year]: y2026 as HolidaysYearData

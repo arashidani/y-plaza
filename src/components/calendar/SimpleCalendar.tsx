@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect, useCallback } from 'react'
 import { HOLIDAY_RED, WEEKEND_BLUE } from '@/constants/calendar'
+import { toDateString } from '@/lib/date-utils'
 import { useTranslations } from 'next-intl'
 import {
   Dialog,
@@ -104,10 +105,7 @@ export function SimpleCalendar({
     if (dow === 6) el.style.color = WEEKEND_BLUE
   }, [])
 
-  const toDateString = useCallback((d: Date) => {
-    const pad = (n: number) => String(n).padStart(2, '0')
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-  }, [])
+  // Use shared date util for YYYY-MM-DD
 
   return (
     <div className={className}>
@@ -217,8 +215,7 @@ export function SimpleCalendar({
             '.fc-date'
           ) as HTMLElement | null
 
-          const pad = (n: number) => String(n).padStart(2, '0')
-          const ds = `${arg.date.getFullYear()}-${pad(arg.date.getMonth() + 1)}-${pad(arg.date.getDate())}`
+          const ds = toDateString(arg.date)
           const isHoliday = holidayDateSet?.has(ds) ?? false
 
           // In week/day views (timeGrid or dayGridWeek), header corresponds to specific dates
@@ -242,8 +239,7 @@ export function SimpleCalendar({
             '.fc-daygrid-day-number'
           ) as HTMLElement | null
           if (num) {
-            const pad = (n: number) => String(n).padStart(2, '0')
-            const ds = `${arg.date.getFullYear()}-${pad(arg.date.getMonth() + 1)}-${pad(arg.date.getDate())}`
+            const ds = toDateString(arg.date)
             const isHoliday = holidayDateSet?.has(ds) ?? false
             if (isHoliday) {
               num.style.color = HOLIDAY_RED
