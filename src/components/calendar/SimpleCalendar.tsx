@@ -56,30 +56,6 @@ export function SimpleCalendar({
 }: Props) {
   const t = useTranslations('calendar')
   const fcLocale = useMemo(() => (locale === 'pt' ? 'pt-br' : locale), [locale])
-  const now = useMemo(() => new Date(), [])
-  const fallbackEvents = useMemo(
-    () => [
-      {
-        id: 'evt-1',
-        title: 'Sample Event',
-        start: new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate()
-        ).toISOString()
-      },
-      {
-        id: 'evt-2',
-        title: 'Another Event',
-        start: new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate() + 3
-        ).toISOString()
-      }
-    ],
-    [now]
-  )
 
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
@@ -104,8 +80,6 @@ export function SimpleCalendar({
     if (dow === 0) el.style.color = HOLIDAY_RED
     if (dow === 6) el.style.color = WEEKEND_BLUE
   }, [])
-
-  // Use shared date util for YYYY-MM-DD
 
   return (
     <div className={className}>
@@ -133,7 +107,7 @@ export function SimpleCalendar({
         selectable={false}
         selectMirror={false}
         dayMaxEvents
-        events={inputEvents ?? fallbackEvents}
+        events={inputEvents ?? []}
         height="auto"
         dayHeaderClassNames={(arg) => {
           const dow = arg.date.getDay()

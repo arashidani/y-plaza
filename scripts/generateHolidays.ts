@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs'
 import * as path from 'path'
 import { getHolidaysOf } from 'japanese-holidays'
+import { pad } from '@/lib/date-utils'
 
 // 使い方: pnpm generate:holidays 2026
 const year = parseInt(process.argv[2] || '', 10)
@@ -12,7 +13,7 @@ if (!year) {
 type JpHoliday = { month: number; date: number; name: string }
 const raw = getHolidaysOf(year) as JpHoliday[]
 const holidays = raw.map((h) => ({
-  date: `${year}-${String(h.month).padStart(2, '0')}-${String(h.date).padStart(2, '0')}`,
+  date: `${year}-${pad(h.month)}-${pad(h.date)}`,
   name: h.name
 }))
 
