@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { NavitimeLink } from '@/components/access/NavitimeLink'
 import { getTranslations } from 'next-intl/server'
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+import { BusTimes } from './_components/BusTimes'
 
 // Node.js Runtime (generateStaticParams使用のため)
 export const runtime = 'nodejs'
@@ -17,6 +17,50 @@ export const revalidate = 86400
 interface PageProps {
   params: Promise<{ locale: string }>
 }
+
+// バス時刻表データ（路線ごと/行き・帰りで統合）
+type FromKey = 'izumo' | 'youPlaza' | 'kounan' | 'nishiIzumo'
+const busTimetables = {
+  heisei: {
+    outbound: {
+      from: 'izumo' as FromKey,
+      times: ['9:43', '11:00', '15:00', '16:30']
+    },
+    return: {
+      from: 'youPlaza' as FromKey,
+      times: ['11:44', '13:18', '15:38', '17:08']
+    }
+  },
+  kounan: {
+    outbound: {
+      from: 'kounan' as FromKey,
+      times: ['8:34', '10:31', '12:34']
+    },
+    return: {
+      from: 'nishiIzumo' as FromKey,
+      times: ['8:24', '9:57', '10:16', '12:24']
+    }
+  }
+} as const
+
+// PDFリンクデータ（路線別）
+type LineName = keyof typeof busTimetables
+const busLinesPdfs: {
+  lineName: LineName
+  timeTableUrl: string
+  fareTableUrl: string
+}[] = [
+  {
+    lineName: 'heisei',
+    timeTableUrl: 'http://www.susanoo.co.jp/image/rosen/heisei_jikoku.pdf',
+    fareTableUrl: 'http://www.susanoo.co.jp/image/rosen/heisei_unchin.pdf'
+  },
+  {
+    lineName: 'kounan',
+    timeTableUrl: 'http://www.susanoo.co.jp/image/rosen/kounan_jikoku.pdf',
+    fareTableUrl: 'http://www.susanoo.co.jp/image/rosen/kounan_unchin.pdf'
+  }
+]
 
 export async function generateMetadata({
   params
@@ -51,11 +95,36 @@ export default async function AccessPage({ params }: PageProps) {
   setRequestLocale(locale)
   const t = await getTranslations('accessPage')
 
-  // Navitime links compute today's date on the client via NavitimeLink
+  const getFromLabel = (key: FromKey) => {
+    switch (key) {
+      case 'izumo':
+        return t('izumoDeparture')
+      case 'youPlaza':
+        return t('youPlazaDeparture')
+      case 'kounan':
+        return t('kounanDeparture')
+      case 'nishiIzumo':
+        return t('nishiIzumoDeparture')
+    }
+  }
 
-  // バス時刻表データ
-  const izumoDepartures = ['9:43', '11:00', '15:00', '16:30']
-  const youPlazaDepartures = ['11:44', '13:18', '15:38', '17:08']
+  const getTimePdfLabel = (line: LineName) => {
+    switch (line) {
+      case 'heisei':
+        return t('heiseiLineTimeTablePdf')
+      case 'kounan':
+        return t('kounanLineTimeTablePdf')
+    }
+  }
+
+  const getFarePdfLabel = (line: LineName) => {
+    switch (line) {
+      case 'heisei':
+        return t('heiseiLineFareTablePdf')
+      case 'kounan':
+        return t('kounanLineFareTablePdf')
+    }
+  }
 
   return (
     <div className="container mx-auto max-w-4xl">
@@ -170,7 +239,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00003564', arrival: '00004791', line: '00000067', updown: '1' }}
+                        params={{
+                          departure: '00003564',
+                          arrival: '00004791',
+                          line: '00000067',
+                          updown: '1'
+                        }}
                       >
                         {t('izumoToNishiIzumo')}
                         <span className="ml-1">↗</span>
@@ -183,7 +257,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00007849', arrival: '00004791', line: '00000067', updown: '0' }}
+                        params={{
+                          departure: '00007849',
+                          arrival: '00004791',
+                          line: '00000067',
+                          updown: '0'
+                        }}
                       >
                         {t('hamadaToNishiIzumo')}
                         <span className="ml-1">↗</span>
@@ -204,7 +283,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00004791', arrival: '00003564', line: '00000067', updown: '0' }}
+                        params={{
+                          departure: '00004791',
+                          arrival: '00003564',
+                          line: '00000067',
+                          updown: '0'
+                        }}
                       >
                         {t('nishiIzumoToIzumo')}
                         <span className="ml-1">↗</span>
@@ -217,7 +301,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00004791', arrival: '00007849', line: '00000067', updown: '1' }}
+                        params={{
+                          departure: '00004791',
+                          arrival: '00007849',
+                          line: '00000067',
+                          updown: '1'
+                        }}
                       >
                         {t('nishiIzumoToHamada')}
                         <span className="ml-1">↗</span>
@@ -280,77 +369,84 @@ export default async function AccessPage({ params }: PageProps) {
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
             <p className="text-muted-foreground">{t('busAccessDetail')}</p>
+            <p className="text-muted-foreground">
+              {t('busAccessDetailKounan')}
+            </p>
 
             <div>
               <h4 className="text-foreground mb-3 font-medium">
                 {t('busTimetable')}
               </h4>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {/* 出雲発 */}
-                <div className="space-y-2">
-                  <h5 className="text-foreground text-sm font-medium">
-                    {t('izumoDeparture')}
+              <div className="space-y-6">
+                <div>
+                  <h5 className="text-foreground mb-2 text-sm font-medium">
+                    {t('outbound')}
                   </h5>
-                  <div className="rounded-md border">
-                    <Table className="w-full">
-                      <TableBody className="divide-border divide-y">
-                        {izumoDepartures.map((time) => (
-                          <TableRow key={time}>
-                            <TableCell className="text-center font-medium">
-                              {time}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {/* 平成温泉線（行き） */}
+                    <BusTimes
+                      title={getFromLabel(busTimetables.heisei.outbound.from)}
+                      times={busTimetables.heisei.outbound.times}
+                    />
+                    {/* 江南線（行き） */}
+                    <BusTimes
+                      title={getFromLabel(busTimetables.kounan.outbound.from)}
+                      times={busTimetables.kounan.outbound.times}
+                    />
                   </div>
                 </div>
 
-                {/* ゆうプラザ前発 */}
-                <div className="space-y-2">
-                  <h5 className="text-foreground text-sm font-medium">
-                    {t('youPlazaDeparture')}
+                <div>
+                  <h5 className="text-foreground mb-2 text-sm font-medium">
+                    {t('return')}
                   </h5>
-                  <div className="rounded-md border">
-                    <Table className="w-full">
-                      <TableBody className="divide-border divide-y">
-                        {youPlazaDepartures.map((time) => (
-                          <TableRow key={time}>
-                            <TableCell className="text-center font-medium">
-                              {time}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {/* 平成温泉線（帰り） */}
+                    <BusTimes
+                      title={getFromLabel(busTimetables.heisei.return.from)}
+                      times={busTimetables.heisei.return.times}
+                    />
+                    {/* 江南線（帰り） */}
+                    <BusTimes
+                      title={getFromLabel(busTimetables.kounan.return.from)}
+                      times={busTimetables.kounan.return.times}
+                    />
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 space-y-2">
-                <p className="text-muted-foreground text-xs">{t('busNote')}</p>
-                <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
-                  <Button variant="outline" size="sm" asChild>
-                    <a
-                      href="http://www.susanoo.co.jp/image/rosen/heisei_jikoku.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs"
+
+                <div className="mt-4 space-y-2">
+                  {busLinesPdfs.map((line) => (
+                    <div
+                      key={line.lineName}
+                      className="flex flex-col gap-2 sm:flex-row sm:gap-4"
                     >
-                      {t('busTimeTablePdf')}
-                      <span className="ml-1">↗</span>
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" asChild>
-                    <a
-                      href="http://www.susanoo.co.jp/image/rosen/heisei_unchin.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs"
-                    >
-                      {t('busFareTablePdf')}
-                      <span className="ml-1">↗</span>
-                    </a>
-                  </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <a
+                          href={line.timeTableUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs"
+                        >
+                          {getTimePdfLabel(line.lineName)}
+                          <span className="ml-1">↗</span>
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <a
+                          href={line.fareTableUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs"
+                        >
+                          {getFarePdfLabel(line.lineName)}
+                          <span className="ml-1">↗</span>
+                        </a>
+                      </Button>
+                    </div>
+                  ))}
+                  <p className="text-muted-foreground text-xs">
+                    {t('busNote')}
+                  </p>
                 </div>
               </div>
             </div>
