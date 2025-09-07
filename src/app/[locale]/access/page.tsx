@@ -56,6 +56,8 @@ export default async function AccessPage({ params }: PageProps) {
   // バス時刻表データ
   const izumoDepartures = ['9:43', '11:00', '15:00', '16:30']
   const youPlazaDepartures = ['11:44', '13:18', '15:38', '17:08']
+  const kounanOutboundTimes = ['8:34', '10:31', '12:34']
+  const kounanReturnTimes = ['8:24', '9:57', '10:16', '12:24']
 
   return (
     <div className="container mx-auto max-w-4xl">
@@ -170,7 +172,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00003564', arrival: '00004791', line: '00000067', updown: '1' }}
+                        params={{
+                          departure: '00003564',
+                          arrival: '00004791',
+                          line: '00000067',
+                          updown: '1'
+                        }}
                       >
                         {t('izumoToNishiIzumo')}
                         <span className="ml-1">↗</span>
@@ -183,7 +190,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00007849', arrival: '00004791', line: '00000067', updown: '0' }}
+                        params={{
+                          departure: '00007849',
+                          arrival: '00004791',
+                          line: '00000067',
+                          updown: '0'
+                        }}
                       >
                         {t('hamadaToNishiIzumo')}
                         <span className="ml-1">↗</span>
@@ -204,7 +216,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00004791', arrival: '00003564', line: '00000067', updown: '0' }}
+                        params={{
+                          departure: '00004791',
+                          arrival: '00003564',
+                          line: '00000067',
+                          updown: '0'
+                        }}
                       >
                         {t('nishiIzumoToIzumo')}
                         <span className="ml-1">↗</span>
@@ -217,7 +234,12 @@ export default async function AccessPage({ params }: PageProps) {
                     >
                       <NavitimeLink
                         className="text-xs"
-                        params={{ departure: '00004791', arrival: '00007849', line: '00000067', updown: '1' }}
+                        params={{
+                          departure: '00004791',
+                          arrival: '00007849',
+                          line: '00000067',
+                          updown: '1'
+                        }}
                       >
                         {t('nishiIzumoToHamada')}
                         <span className="ml-1">↗</span>
@@ -280,77 +302,151 @@ export default async function AccessPage({ params }: PageProps) {
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
             <p className="text-muted-foreground">{t('busAccessDetail')}</p>
+            <p className="text-muted-foreground">{t('busAccessDetailKounan')}</p>
 
             <div>
               <h4 className="text-foreground mb-3 font-medium">
                 {t('busTimetable')}
               </h4>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {/* 出雲発 */}
-                <div className="space-y-2">
-                  <h5 className="text-foreground text-sm font-medium">
-                    {t('izumoDeparture')}
+              <div className="space-y-6">
+                <div>
+                  <h5 className="text-foreground mb-2 text-sm font-medium">
+                    {t('outbound')}
                   </h5>
-                  <div className="rounded-md border">
-                    <Table className="w-full">
-                      <TableBody className="divide-border divide-y">
-                        {izumoDepartures.map((time) => (
-                          <TableRow key={time}>
-                            <TableCell className="text-center font-medium">
-                              {time}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {/* 出雲発 */}
+                    <div className="space-y-2">
+                      <h6 className="text-foreground text-sm font-medium">
+                        {t('izumoDeparture')}
+                      </h6>
+                      <div className="rounded-md border">
+                        <Table className="w-full">
+                          <TableBody className="divide-border divide-y">
+                            {izumoDepartures.map((time) => (
+                              <TableRow key={time}>
+                                <TableCell className="text-center font-medium">
+                                  {time}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                    {/* 江南駅 */}
+                    <div className="space-y-2">
+                      <h6 className="text-foreground text-sm font-medium">{t('kounanDeparture')}</h6>
+                      <div className="rounded-md border">
+                        <Table className="w-full">
+                          <TableBody className="divide-border divide-y">
+                            {kounanOutboundTimes.map((time) => (
+                              <TableRow key={time}>
+                                <TableCell className="text-center font-medium">
+                                  {time}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* ゆうプラザ前発 */}
-                <div className="space-y-2">
-                  <h5 className="text-foreground text-sm font-medium">
-                    {t('youPlazaDeparture')}
+                <div>
+                  <h5 className="text-foreground mb-2 text-sm font-medium">
+                    {t('return')}
                   </h5>
-                  <div className="rounded-md border">
-                    <Table className="w-full">
-                      <TableBody className="divide-border divide-y">
-                        {youPlazaDepartures.map((time) => (
-                          <TableRow key={time}>
-                            <TableCell className="text-center font-medium">
-                              {time}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {/* ゆうプラザ前発 */}
+                    <div className="space-y-2">
+                      <h6 className="text-foreground text-sm font-medium">
+                        {t('youPlazaDeparture')}
+                      </h6>
+                      <div className="rounded-md border">
+                        <Table className="w-full">
+                          <TableBody className="divide-border divide-y">
+                            {youPlazaDepartures.map((time) => (
+                              <TableRow key={time}>
+                                <TableCell className="text-center font-medium">
+                                  {time}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                    {/* 西出雲駅 */}
+                    <div className="space-y-2">
+                      <h6 className="text-foreground text-sm font-medium">{t('nishiIzumoDeparture')}</h6>
+                      <div className="rounded-md border">
+                        <Table className="w-full">
+                          <TableBody className="divide-border divide-y">
+                            {kounanReturnTimes.map((time) => (
+                              <TableRow key={time}>
+                                <TableCell className="text-center font-medium">
+                                  {time}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 space-y-2">
-                <p className="text-muted-foreground text-xs">{t('busNote')}</p>
-                <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
-                  <Button variant="outline" size="sm" asChild>
-                    <a
-                      href="http://www.susanoo.co.jp/image/rosen/heisei_jikoku.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs"
-                    >
-                      {t('busTimeTablePdf')}
-                      <span className="ml-1">↗</span>
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" asChild>
-                    <a
-                      href="http://www.susanoo.co.jp/image/rosen/heisei_unchin.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs"
-                    >
-                      {t('busFareTablePdf')}
-                      <span className="ml-1">↗</span>
-                    </a>
-                  </Button>
+
+                <div className="mt-4 space-y-2">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="http://www.susanoo.co.jp/image/rosen/heisei_jikoku.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs"
+                      >
+                        {t('heiseiLineTimeTablePdf')}
+                        <span className="ml-1">↗</span>
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="http://www.susanoo.co.jp/image/rosen/heisei_unchin.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs"
+                      >
+                        {t('heiseiLineFareTablePdf')}
+                        <span className="ml-1">↗</span>
+                      </a>
+                    </Button>
+                  </div>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="http://www.susanoo.co.jp/image/rosen/kounan_jikoku.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs"
+                      >
+                        {t('kounanLineTimeTablePdf')}
+                        <span className="ml-1">↗</span>
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="http://www.susanoo.co.jp/image/rosen/kounan_unchin.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs"
+                      >
+                        {t('kounanLineFareTablePdf')}
+                        <span className="ml-1">↗</span>
+                      </a>
+                    </Button>
+                  </div>
+                  <p className="text-muted-foreground text-xs">{t('busNote')}</p>
                 </div>
               </div>
             </div>
