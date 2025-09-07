@@ -228,5 +228,16 @@
     "detailInfo": "Informações Detalhadas",
     "detailInfoDesc": "Por favor, verifique o site oficial para os horários de funcionamento e taxas mais recentes.",
     "officialSite": "Site Oficial do You Plaza Izumo"
+  },
+  "calendar": {
+    "title": "Calendário",
+    "alphaVersion": "Versão Alpha",
+    "alphaWarning": "Esta funcionalidade de calendário está em desenvolvimento. Por favor, use as informações exibidas apenas como referência.",
+    "category": "Categoria",
+    "start": "Início",
+    "end": "Fim",
+    "instructor": "Instrutor",
+    "close": "Fechar",
+    "closedDay": "Dia de Fechamento"
   }
 }

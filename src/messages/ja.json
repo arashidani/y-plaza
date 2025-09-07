@@ -228,5 +228,16 @@
     "detailInfo": "詳細情報",
     "detailInfoDesc": "最新の営業時間や料金については、公式サイトをご確認ください。",
     "officialSite": "出雲ゆうプラザ 公式サイト"
+  },
+  "calendar": {
+    "title": "カレンダー",
+    "alphaVersion": "アルファ版",
+    "alphaWarning": "このカレンダー機能は開発中です。表示される情報は参考程度にご利用ください。",
+    "category": "カテゴリ",
+    "start": "開始",
+    "end": "終了",
+    "instructor": "講師",
+    "close": "閉じる",
+    "closedDay": "休館日"
   }
 }
