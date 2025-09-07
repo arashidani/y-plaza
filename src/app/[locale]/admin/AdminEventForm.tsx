@@ -44,6 +44,14 @@ const generateTimeOptions = () => {
 
 const TIME_OPTIONS = generateTimeOptions()
 
+// 型ガード関数
+function isObjectWithKey<T extends string>(
+  obj: unknown,
+  key: T
+): obj is { [key in T]: unknown } {
+  return typeof obj === 'object' && obj !== null && key in obj
+}
+
 // 曜日の選択肢
 const DAYS_OF_WEEK = [
   { value: '0', label: '日曜日' },
@@ -113,27 +121,18 @@ export function AdminEventForm() {
       })
       const result: unknown = await res.json()
       if (!res.ok) {
-        const msg =
-          typeof result === 'object' && result && 'error' in result
-            ? String((result as { error: unknown }).error)
-            : 'Request failed'
+        const msg = isObjectWithKey(result, 'error')
+          ? String(result.error)
+          : 'Request failed'
         throw new Error(msg)
       }
+      
       if (data.inputMode === 'single') {
-        const id =
-          typeof result === 'object' && result && 'id' in result
-            ? String((result as { id: unknown }).id)
-            : ''
+        const id = isObjectWithKey(result, 'id') ? String(result.id) : ''
         setResult(`作成完了: ${id}`)
       } else {
-        const count =
-          typeof result === 'object' && result && 'count' in result
-            ? Number((result as { count: unknown }).count)
-            : 0
-        const dates =
-          typeof result === 'object' && result && 'dates' in result
-            ? (result as { dates: unknown }).dates
-            : []
+        const count = isObjectWithKey(result, 'count') ? Number(result.count) : 0
+        const dates = isObjectWithKey(result, 'dates') ? result.dates : []
         setResult(
           `一括作成完了: ${count}件のイベントを作成しました（日付: ${Array.isArray(dates) ? dates.join(', ') : ''}）`
         )

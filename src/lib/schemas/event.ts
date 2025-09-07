@@ -66,13 +66,13 @@ export const EventFormSchema = z
     startsAt: z.string().optional(),
     endsAt: z.string().optional(),
     title: LocalizedTextSchema,
-    instructor: LocalizedTextSchema.optional().or(
-      z.object({
+    instructor: z
+      .object({
         ja: z.string(),
         en: z.string(),
         pt: z.string()
       })
-    ),
+      .optional(),
     areaCategory: z.enum(AREA_CATEGORIES, {
       message: 'エリアカテゴリを選択してください'
     }),
@@ -81,21 +81,33 @@ export const EventFormSchema = z
     published: z.boolean(),
     source: z.string().optional().nullable()
   })
-  .refine(
-    (data) => {
-      // 入力モードに応じた必須項目チェック
-      if (data.inputMode === 'single') {
-        return !!data.date
-      } else if (data.inputMode === 'bulk') {
-        return !!data.yearMonth && !!data.dayOfWeek
+  .superRefine((data, ctx) => {
+    // 入力モードに応じた必須項目チェック
+    if (data.inputMode === 'single') {
+      if (!data.date) {
+        ctx.addIssue({
+          path: ['date'],
+          message: '日付は必須です',
+          code: 'custom'
+        })
       }
-      return true
-    },
-    {
-      message: '必須項目を入力してください',
-      path: ['date']
+    } else if (data.inputMode === 'bulk') {
+      if (!data.yearMonth) {
+        ctx.addIssue({
+          path: ['yearMonth'],
+          message: '年月は必須です',
+          code: 'custom'
+        })
+      }
+      if (!data.dayOfWeek) {
+        ctx.addIssue({
+          path: ['dayOfWeek'],
+          message: '曜日は必須です',
+          code: 'custom'
+        })
+      }
     }
-  )
+  })
   .refine(
     (data) => {
       // 両方の時刻が設定されている場合のみバリデーション

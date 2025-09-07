@@ -42,8 +42,6 @@ function getDatesForYearMonthAndDayOfWeek(
 
 export async function POST(req: NextRequest) {
   try {
-    console.log('DEBUG: Using JSON service account')
-    
     // Firebase初期化
     const db = initializeFirebase()
 
@@ -87,7 +85,10 @@ export async function POST(req: NextRequest) {
       starts_at,
       ends_at,
       title,
-      instructor: instructor ?? null,
+      instructor:
+        instructor && (instructor.ja || instructor.en || instructor.pt)
+          ? instructor
+          : null,
       areaCategory,
       color: color ?? null,
       paid: !!paid,
