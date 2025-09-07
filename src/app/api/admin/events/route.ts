@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { FieldValue } from 'firebase-admin/firestore'
-import { db } from '@/lib/firebase'
+import { initializeFirebase } from '@/lib/firebase'
 import { EventFormSchema } from '@/lib/schemas/event'
 
 export const runtime = 'nodejs'
@@ -43,6 +43,9 @@ function getDatesForYearMonthAndDayOfWeek(
 export async function POST(req: NextRequest) {
   try {
     console.log('DEBUG: Using JSON service account')
+    
+    // Firebase初期化
+    const db = initializeFirebase()
 
     const body = await req.json()
 

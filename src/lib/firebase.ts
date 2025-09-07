@@ -1,25 +1,35 @@
 import { initializeApp, getApps, cert, ServiceAccount } from 'firebase-admin/app'
 import { getFirestore } from 'firebase-admin/firestore'
 
-const projectId = process.env.FIREBASE_PROJECT_ID
-const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
-let privateKey = process.env.FIREBASE_PRIVATE_KEY
+let db: FirebaseFirestore.Firestore
 
-if (!projectId || !clientEmail || !privateKey) {
-  throw new Error('Firebase Admin env vars are not set.')
+function initializeFirebase() {
+  if (db) return db
+
+  const projectId = process.env.FIREBASE_PROJECT_ID
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
+  let privateKey = process.env.FIREBASE_PRIVATE_KEY
+
+  if (!projectId || !clientEmail || !privateKey) {
+    throw new Error('Firebase Admin env vars are not set.')
+  }
+
+  // \nを実際の改行へ
+  privateKey = privateKey.replace(/\\n/g, '\n')
+
+  const serviceAccount: ServiceAccount = {
+    projectId,
+    clientEmail,
+    privateKey
+  }
+
+  const app = getApps()[0] ?? initializeApp({
+    credential: cert(serviceAccount)
+  })
+
+  db = getFirestore(app, 'calendar')
+  return db
 }
 
-// \nを実際の改行へ
-privateKey = privateKey.replace(/\\n/g, '\n')
-
-const serviceAccount: ServiceAccount = {
-  projectId,
-  clientEmail,
-  privateKey
-}
-
-const app = getApps()[0] ?? initializeApp({
-  credential: cert(serviceAccount)
-})
-
-export const db = getFirestore(app, 'calendar')
+export { initializeFirebase }
+export { db }
