@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ).replace(/\/$/, '')
 
   // Known content pages per locale
-  const paths = ['/', '/terms', '/privacy']
+  const paths = ['/', '/terms', '/privacy', '/access']
 
   const now = new Date()
 
