@@ -18,6 +18,46 @@ interface PageProps {
   params: Promise<{ locale: string }>
 }
 
+// バス時刻表データ（路線ごと/行き・帰りで統合）
+type FromKey = 'izumo' | 'youPlaza' | 'kounan' | 'nishiIzumo'
+const busTimetables = {
+  heisei: {
+    outbound: {
+      from: 'izumo' as FromKey,
+      times: ['9:43', '11:00', '15:00', '16:30']
+    },
+    return: {
+      from: 'youPlaza' as FromKey,
+      times: ['11:44', '13:18', '15:38', '17:08']
+    }
+  },
+  kounan: {
+    outbound: {
+      from: 'kounan' as FromKey,
+      times: ['8:34', '10:31', '12:34']
+    },
+    return: {
+      from: 'nishiIzumo' as FromKey,
+      times: ['8:24', '9:57', '10:16', '12:24']
+    }
+  }
+} as const
+
+// PDFリンクデータ（路線別）
+type LineName = keyof typeof busTimetables
+const busLinesPdfs: { lineName: LineName; timeTableUrl: string; fareTableUrl: string }[] = [
+  {
+    lineName: 'heisei',
+    timeTableUrl: 'http://www.susanoo.co.jp/image/rosen/heisei_jikoku.pdf',
+    fareTableUrl: 'http://www.susanoo.co.jp/image/rosen/heisei_unchin.pdf'
+  },
+  {
+    lineName: 'kounan',
+    timeTableUrl: 'http://www.susanoo.co.jp/image/rosen/kounan_jikoku.pdf',
+    fareTableUrl: 'http://www.susanoo.co.jp/image/rosen/kounan_unchin.pdf'
+  }
+]
+
 export async function generateMetadata({
   params
 }: PageProps): Promise<Metadata> {
@@ -51,13 +91,36 @@ export default async function AccessPage({ params }: PageProps) {
   setRequestLocale(locale)
   const t = await getTranslations('accessPage')
 
-  // Navitime links compute today's date on the client via NavitimeLink
+  const getFromLabel = (key: FromKey) => {
+    switch (key) {
+      case 'izumo':
+        return t('izumoDeparture')
+      case 'youPlaza':
+        return t('youPlazaDeparture')
+      case 'kounan':
+        return t('kounanDeparture')
+      case 'nishiIzumo':
+        return t('nishiIzumoDeparture')
+    }
+  }
 
-  // バス時刻表データ
-  const izumoDepartures = ['9:43', '11:00', '15:00', '16:30']
-  const youPlazaDepartures = ['11:44', '13:18', '15:38', '17:08']
-  const kounanOutboundTimes = ['8:34', '10:31', '12:34']
-  const kounanReturnTimes = ['8:24', '9:57', '10:16', '12:24']
+  const getTimePdfLabel = (line: LineName) => {
+    switch (line) {
+      case 'heisei':
+        return t('heiseiLineTimeTablePdf')
+      case 'kounan':
+        return t('kounanLineTimeTablePdf')
+    }
+  }
+
+  const getFarePdfLabel = (line: LineName) => {
+    switch (line) {
+      case 'heisei':
+        return t('heiseiLineFareTablePdf')
+      case 'kounan':
+        return t('kounanLineFareTablePdf')
+    }
+  }
 
   return (
     <div className="container mx-auto max-w-4xl">
@@ -302,7 +365,9 @@ export default async function AccessPage({ params }: PageProps) {
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
             <p className="text-muted-foreground">{t('busAccessDetail')}</p>
-            <p className="text-muted-foreground">{t('busAccessDetailKounan')}</p>
+            <p className="text-muted-foreground">
+              {t('busAccessDetailKounan')}
+            </p>
 
             <div>
               <h4 className="text-foreground mb-3 font-medium">
@@ -314,15 +379,15 @@ export default async function AccessPage({ params }: PageProps) {
                     {t('outbound')}
                   </h5>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    {/* 出雲発 */}
+                    {/* 平成温泉線（行き） */}
                     <div className="space-y-2">
                       <h6 className="text-foreground text-sm font-medium">
-                        {t('izumoDeparture')}
+                        {getFromLabel(busTimetables.heisei.outbound.from)}
                       </h6>
                       <div className="rounded-md border">
                         <Table className="w-full">
                           <TableBody className="divide-border divide-y">
-                            {izumoDepartures.map((time) => (
+                            {busTimetables.heisei.outbound.times.map((time) => (
                               <TableRow key={time}>
                                 <TableCell className="text-center font-medium">
                                   {time}
@@ -333,13 +398,15 @@ export default async function AccessPage({ params }: PageProps) {
                         </Table>
                       </div>
                     </div>
-                    {/* 江南駅 */}
+                    {/* 江南線（行き） */}
                     <div className="space-y-2">
-                      <h6 className="text-foreground text-sm font-medium">{t('kounanDeparture')}</h6>
+                      <h6 className="text-foreground text-sm font-medium">
+                        {getFromLabel(busTimetables.kounan.outbound.from)}
+                      </h6>
                       <div className="rounded-md border">
                         <Table className="w-full">
                           <TableBody className="divide-border divide-y">
-                            {kounanOutboundTimes.map((time) => (
+                            {busTimetables.kounan.outbound.times.map((time) => (
                               <TableRow key={time}>
                                 <TableCell className="text-center font-medium">
                                   {time}
@@ -358,15 +425,15 @@ export default async function AccessPage({ params }: PageProps) {
                     {t('return')}
                   </h5>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    {/* ゆうプラザ前発 */}
+                    {/* 平成温泉線（帰り） */}
                     <div className="space-y-2">
                       <h6 className="text-foreground text-sm font-medium">
-                        {t('youPlazaDeparture')}
+                        {getFromLabel(busTimetables.heisei.return.from)}
                       </h6>
                       <div className="rounded-md border">
                         <Table className="w-full">
                           <TableBody className="divide-border divide-y">
-                            {youPlazaDepartures.map((time) => (
+                            {busTimetables.heisei.return.times.map((time) => (
                               <TableRow key={time}>
                                 <TableCell className="text-center font-medium">
                                   {time}
@@ -377,13 +444,15 @@ export default async function AccessPage({ params }: PageProps) {
                         </Table>
                       </div>
                     </div>
-                    {/* 西出雲駅 */}
+                    {/* 江南線（帰り） */}
                     <div className="space-y-2">
-                      <h6 className="text-foreground text-sm font-medium">{t('nishiIzumoDeparture')}</h6>
+                      <h6 className="text-foreground text-sm font-medium">
+                        {getFromLabel(busTimetables.kounan.return.from)}
+                      </h6>
                       <div className="rounded-md border">
                         <Table className="w-full">
                           <TableBody className="divide-border divide-y">
-                            {kounanReturnTimes.map((time) => (
+                            {busTimetables.kounan.return.times.map((time) => (
                               <TableRow key={time}>
                                 <TableCell className="text-center font-medium">
                                   {time}
@@ -398,55 +467,38 @@ export default async function AccessPage({ params }: PageProps) {
                 </div>
 
                 <div className="mt-4 space-y-2">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="http://www.susanoo.co.jp/image/rosen/heisei_jikoku.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs"
-                      >
-                        {t('heiseiLineTimeTablePdf')}
-                        <span className="ml-1">↗</span>
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="http://www.susanoo.co.jp/image/rosen/heisei_unchin.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs"
-                      >
-                        {t('heiseiLineFareTablePdf')}
-                        <span className="ml-1">↗</span>
-                      </a>
-                    </Button>
-                  </div>
-                  <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="http://www.susanoo.co.jp/image/rosen/kounan_jikoku.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs"
-                      >
-                        {t('kounanLineTimeTablePdf')}
-                        <span className="ml-1">↗</span>
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="http://www.susanoo.co.jp/image/rosen/kounan_unchin.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs"
-                      >
-                        {t('kounanLineFareTablePdf')}
-                        <span className="ml-1">↗</span>
-                      </a>
-                    </Button>
-                  </div>
-                  <p className="text-muted-foreground text-xs">{t('busNote')}</p>
+                  {busLinesPdfs.map((line) => (
+                    <div
+                      key={line.lineName}
+                      className="flex flex-col gap-2 sm:flex-row sm:gap-4"
+                    >
+                      <Button variant="outline" size="sm" asChild>
+                        <a
+                          href={line.timeTableUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs"
+                        >
+                          {getTimePdfLabel(line.lineName)}
+                          <span className="ml-1">↗</span>
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <a
+                          href={line.fareTableUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs"
+                        >
+                          {getFarePdfLabel(line.lineName)}
+                          <span className="ml-1">↗</span>
+                        </a>
+                      </Button>
+                    </div>
+                  ))}
+                  <p className="text-muted-foreground text-xs">
+                    {t('busNote')}
+                  </p>
                 </div>
               </div>
             </div>
