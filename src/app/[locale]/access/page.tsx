@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { NavitimeLink } from '@/components/access/NavitimeLink'
 import { getTranslations } from 'next-intl/server'
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+import { BusTimes } from './_components/BusTimes'
 
 // Node.js Runtime (generateStaticParams使用のため)
 export const runtime = 'nodejs'
@@ -45,7 +45,11 @@ const busTimetables = {
 
 // PDFリンクデータ（路線別）
 type LineName = keyof typeof busTimetables
-const busLinesPdfs: { lineName: LineName; timeTableUrl: string; fareTableUrl: string }[] = [
+const busLinesPdfs: {
+  lineName: LineName
+  timeTableUrl: string
+  fareTableUrl: string
+}[] = [
   {
     lineName: 'heisei',
     timeTableUrl: 'http://www.susanoo.co.jp/image/rosen/heisei_jikoku.pdf',
@@ -380,43 +384,15 @@ export default async function AccessPage({ params }: PageProps) {
                   </h5>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {/* 平成温泉線（行き） */}
-                    <div className="space-y-2">
-                      <h6 className="text-foreground text-sm font-medium">
-                        {getFromLabel(busTimetables.heisei.outbound.from)}
-                      </h6>
-                      <div className="rounded-md border">
-                        <Table className="w-full">
-                          <TableBody className="divide-border divide-y">
-                            {busTimetables.heisei.outbound.times.map((time) => (
-                              <TableRow key={time}>
-                                <TableCell className="text-center font-medium">
-                                  {time}
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </div>
-                    </div>
+                    <BusTimes
+                      title={getFromLabel(busTimetables.heisei.outbound.from)}
+                      times={busTimetables.heisei.outbound.times}
+                    />
                     {/* 江南線（行き） */}
-                    <div className="space-y-2">
-                      <h6 className="text-foreground text-sm font-medium">
-                        {getFromLabel(busTimetables.kounan.outbound.from)}
-                      </h6>
-                      <div className="rounded-md border">
-                        <Table className="w-full">
-                          <TableBody className="divide-border divide-y">
-                            {busTimetables.kounan.outbound.times.map((time) => (
-                              <TableRow key={time}>
-                                <TableCell className="text-center font-medium">
-                                  {time}
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </div>
-                    </div>
+                    <BusTimes
+                      title={getFromLabel(busTimetables.kounan.outbound.from)}
+                      times={busTimetables.kounan.outbound.times}
+                    />
                   </div>
                 </div>
 
@@ -426,43 +402,15 @@ export default async function AccessPage({ params }: PageProps) {
                   </h5>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {/* 平成温泉線（帰り） */}
-                    <div className="space-y-2">
-                      <h6 className="text-foreground text-sm font-medium">
-                        {getFromLabel(busTimetables.heisei.return.from)}
-                      </h6>
-                      <div className="rounded-md border">
-                        <Table className="w-full">
-                          <TableBody className="divide-border divide-y">
-                            {busTimetables.heisei.return.times.map((time) => (
-                              <TableRow key={time}>
-                                <TableCell className="text-center font-medium">
-                                  {time}
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </div>
-                    </div>
+                    <BusTimes
+                      title={getFromLabel(busTimetables.heisei.return.from)}
+                      times={busTimetables.heisei.return.times}
+                    />
                     {/* 江南線（帰り） */}
-                    <div className="space-y-2">
-                      <h6 className="text-foreground text-sm font-medium">
-                        {getFromLabel(busTimetables.kounan.return.from)}
-                      </h6>
-                      <div className="rounded-md border">
-                        <Table className="w-full">
-                          <TableBody className="divide-border divide-y">
-                            {busTimetables.kounan.return.times.map((time) => (
-                              <TableRow key={time}>
-                                <TableCell className="text-center font-medium">
-                                  {time}
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </div>
-                    </div>
+                    <BusTimes
+                      title={getFromLabel(busTimetables.kounan.return.from)}
+                      times={busTimetables.kounan.return.times}
+                    />
                   </div>
                 </div>
 
