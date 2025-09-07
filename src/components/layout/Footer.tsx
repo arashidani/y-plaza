@@ -5,6 +5,7 @@ import { CookieResetDev } from '@/components/privacy/CookieResetDev'
 
 export async function Footer() {
   const t = await getTranslations('footer')
+  const headerT = await getTranslations('header')
 
   return (
     <footer className="bg-background border-t">
@@ -31,7 +32,7 @@ export async function Footer() {
               href="/access"
               className="text-muted-foreground hover:text-primary text-sm transition-colors"
             >
-              アクセスマップ
+              {headerT('access')}
             </Link>
             <CookieResetDev />
           </div>
